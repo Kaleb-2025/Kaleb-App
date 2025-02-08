@@ -1,7 +1,7 @@
 
 
 <div align="center">
-<img src="img/WhatsApp_Image_2025-01-24_at_21.13.30__1_-removebg-preview.png" alt="logo"  height="280px">
+<img src="img/WhatsApp_Image_2025-01-24_at_21.13.30__1_-removebg-preview.png" alt="logo"  height="200px">
 <h1 align="center" text="times">KALEB</h1>
 
 
