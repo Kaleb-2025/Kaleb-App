@@ -58,9 +58,9 @@ const EditorWindow = () => {
               </View>
             </View>
             <View style={styles.editorHeaderD}>
-              <Text style={styles.editorHeaderText}>Escreva o código abaixo.</Text>
+              <Text style={styles.editorHeaderText}>Em PYTHON, imprima a seguinte mensagem.</Text>
             </View>
-            <Text style={styles.editorCode}>print("Olá Mundo!")</Text>
+            <Text style={styles.editorCode}>"Olá Mundo!"</Text>
           </View>
         </View>
       </View>
@@ -69,13 +69,15 @@ const EditorWindow = () => {
   );
 };
 
-const InputBar = () => {
+const InputBar = ({ value, onChangeText }) => {
   return (
     <View style={styles.inputContainer}>
       <TextInput
         style={styles.input}
         placeholder="|"
         placeholderTextColor="#aaa"
+        value={value}
+        onChangeText={onChangeText} 
       />
     </View>
   );
@@ -90,34 +92,66 @@ const Button = () => {
 };
 
 const CodeEditor = () => {
-  const [showCard, setShowCard] = useState(false);
+  const [showCard, setShowCard] = useState(false); 
+  const [inputText, setInputText] = useState('');
+  const [error, setError] = useState(false); 
 
   const toggleCard = () => {
-    setShowCard(!showCard);
+    if (inputText === 'print("Olá Mundo!")') {
+      setShowCard(true); 
+      setError(false); 
+    } else {
+      setError(true);
+      setShowCard(false); 
+    }
   };
+
+  useEffect(() => {
+    if (inputText === '') {
+      setShowCard(false);
+      setError(false);
+    }
+  }, [inputText]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ height: 50 }} />
       <Header />
       <EditorWindow />
-      <InputBar />
 
-      <TouchableOpacity onPress={toggleCard} style={styles.toggleButton}>
+      <InputBar value={inputText} onChangeText={setInputText} />
+
+      <TouchableOpacity
+        onPress={toggleCard}
+        style={[styles.toggleButton, inputText === '' && styles.disabledButton]} 
+        disabled={inputText === ''}
+      >
         <Text style={styles.toggleButtonText}>Verificar</Text>
       </TouchableOpacity>
 
+      {/*CARD DO DEU CERTO VERY GOOD*/}
       {showCard && (
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Parabéns!</Text>
           <Text style={styles.cardText}>
-            <b>print("olá mundo!")</b>
+            <b>print("Olá Mundo!")</b>
             <p>
               “print()” é uma função que permite a saída de dados na tela. O texto deve ser escrito
               entre com as aspas (“”) para indicar o que será mostrado.
             </p>
           </Text>
           <Button />
+        </View>
+      )}
+
+      {/* CARD/TELA DO ERRO (lelets mude aqui a sua parte diva) */}
+      {error && (
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Erro!</Text>
+          <Text style={styles.cardText}>
+            <b>O código digitado está incorreto.</b>
+            <p>Tente novamente!</p>
+          </Text>
         </View>
       )}
     </ScrollView>
@@ -286,7 +320,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 150,
     boxShadow: '0px 2px 3px 0px #9E9E9E',
-
+  },
+  disabledButton: {
+    backgroundColor: '#CCCCCC',
   },
   toggleButtonText: {
     fontSize: 16,
@@ -303,7 +339,7 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     color: '#FF880A',
-    textWeight: "bold",
+    fontWeight: "bold",
     fontSize: 20,
   },
   cardText: {
