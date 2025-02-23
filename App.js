@@ -131,6 +131,8 @@ const CodeEditor = () => {
 
       {/*CARD DO DEU CERTO VERY GOOD*/}
       {showCard && (
+        // p ficar no meio centralizado
+        <View style={styles.overlay}> 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Parabéns!</Text>
           <Text style={styles.cardText}>
@@ -142,16 +144,19 @@ const CodeEditor = () => {
           </Text>
           <Button />
         </View>
+        </View>
       )}
 
       {/* CARD/TELA DO ERRO (lelets mude aqui a sua parte diva) */}
       {error && (
+        <View style={styles.overlay}> 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Erro!</Text>
           <Text style={styles.cardText}>
             <b>O código digitado está incorreto.</b>
             <p>Tente novamente!</p>
           </Text>
+        </View>
         </View>
       )}
     </ScrollView>
@@ -163,6 +168,17 @@ export default function App() {
 };
 
 const styles = StyleSheet.create({
+  // p o card ficar na frente de tudo.
+  overlay: {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  justifyContent: "center", 
+  alignItems: "center",
+},
   container: {
     flexGrow: 1,
     alignItems: 'center',
@@ -330,12 +346,14 @@ const styles = StyleSheet.create({
   },
   card: {
     marginTop: 20,
-    padding: 40,
+    padding: 20,
     backgroundColor: '#FFECD8',
-    width: 250,
-    height: 240,
+    width: "250px",
+    height:"240px",
     borderRadius: 15,
     alignItems: 'center',
+    justifyContent: "center",
+    boxShadow: '0px 2px 3px 0px #9E9E9E',
   },
   cardTitle: {
     color: '#FF880A',
