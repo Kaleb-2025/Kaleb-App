@@ -1,13 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  StyleSheet,
-  ScrollView,
-  Animated,
-} from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ScrollView, Animated, TouchableOpacity } from 'react-native';
 
 const Header = () => {
   const loaderValue = useRef(new Animated.Value(0)).current;
@@ -15,8 +7,8 @@ const Header = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCount((prev) => (prev >= 33 ? 33 : prev + 5)); // Para no 33%
-    }, 200); // Reduzi para 200ms
+      setCount((prev) => (prev >= 33 ? 33 : prev + 5));
+    }, 100);
 
     return () => clearInterval(interval);
   }, []);
@@ -24,7 +16,7 @@ const Header = () => {
   useEffect(() => {
     Animated.timing(loaderValue, {
       toValue: count,
-      duration: 100, // Reduzi para 100ms
+      duration: 100,
       useNativeDriver: false,
     }).start();
   }, [count, loaderValue]);
@@ -38,9 +30,7 @@ const Header = () => {
   return (
     <View style={styles.headerContainer}>
       <Image
-        source={{
-          uri: 'https://cdn.builder.io/api/v1/image/assets/TEMP/ef6e6e1aac8397bbaf663ac7c84718fa28dffa6c0e476f6444cb015a2878833c',
-        }}
+        source={{ uri: 'https://cdn.builder.io/api/v1/image/assets/TEMP/ef6e6e1aac8397bbaf663ac7c84718fa28dffa6c0e476f6444cb015a2878833c' }}
         style={styles.headerIcon}
       />
       <View style={styles.headerTitleContainer}>
@@ -51,7 +41,7 @@ const Header = () => {
     </View>
   );
 };
-// Editor de código fake, só pra enfeite, mostrando um trecho "Olá Mundo!"
+
 const EditorWindow = () => {
   return (
     <View style={styles.editorContainer}>
@@ -59,37 +49,26 @@ const EditorWindow = () => {
         <View style={styles.editorInnerBorder}>
           <View style={styles.editorContent}>
             <View style={styles.editorHeader}>
-              {/* Simula aqueles botões que aparecem em editores tipo VS Code */}
               <View style={styles.editorButtons}>
                 <View style={styles.editorButton} />
                 <Image
-                  source={{
-                    uri: 'https://cdn.builder.io/api/v1/image/assets/TEMP/ef6e6e1aac8397bbaf663ac7c84718fa28dffa6c0e476f6444cb015a2878833c',
-                  }}
+                  source={{ uri: 'https://cdn.builder.io/api/v1/image/assets/TEMP/ef6e6e1aac8397bbaf663ac7c84718fa28dffa6c0e476f6444cb015a2878833c' }}
                   style={styles.headerIconRed}
                 />
               </View>
             </View>
-            // Parte branca do cabeçalho
             <View style={styles.editorHeaderD}>
-              {/* Simula aqueles botões que aparecem em editores tipo VS Code */}
-              <Text style={styles.editorHeaderText}>
-                Escreva o código abaixo.
-              </Text>
+              <Text style={styles.editorHeaderText}>Escreva o código abaixo.</Text>
             </View>
-            {/* Trecho de código fake dentro do editor */}
-            <Text style={styles.editorCode}>Imprima: "Olá Mundo!";</Text>
+            <Text style={styles.editorCode}>print("Olá Mundo!")</Text>
           </View>
         </View>
       </View>
-      <Text style={styles.editorHeaderTextEnd}>
-        {'\n'}● ● ● ⚫ {'\n'}
-      </Text>
+      <Text style={styles.editorHeaderTextEnd}>{'\n'}● ● ● ⚫ {'\n'}</Text>
     </View>
   );
 };
 
-// Caixa de input onde o usuário pode digitar alguma coisa (mas sem funcionalidade real)
 const InputBar = () => {
   return (
     <View style={styles.inputContainer}>
@@ -102,26 +81,53 @@ const InputBar = () => {
   );
 };
 
-// Junta tudo num componente só, pra organizar a tela bonitinha.
+const Button = () => {
+  return (
+    <TouchableOpacity style={styles.button}>
+      <Text style={styles.buttonText}>Continuar</Text>
+    </TouchableOpacity>
+  );
+};
+
 const CodeEditor = () => {
+  const [showCard, setShowCard] = useState(false);
+
+  const toggleCard = () => {
+    setShowCard(!showCard);
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {' '}
-      // espaço invisivel
       <View style={{ height: 50 }} />
       <Header />
       <EditorWindow />
       <InputBar />
+
+      <TouchableOpacity onPress={toggleCard} style={styles.toggleButton}>
+        <Text style={styles.toggleButtonText}>Verificar</Text>
+      </TouchableOpacity>
+
+      {showCard && (
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Parabéns!</Text>
+          <Text style={styles.cardText}>
+            <b>print("olá mundo!")</b>
+            <p>
+              “print()” é uma função que permite a saída de dados na tela. O texto deve ser escrito
+              entre com as aspas (“”) para indicar o que será mostrado.
+            </p>
+          </Text>
+          <Button />
+        </View>
+      )}
     </ScrollView>
   );
 };
 
-// Função que faz o app rodar.
 export default function App() {
   return <CodeEditor />;
-}
+};
 
-// CSS
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -161,7 +167,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 20,
   },
-  //css da barra de carregamento
   progressBar: {
     height: 15,
     flexDirection: 'row',
@@ -190,7 +195,6 @@ const styles = StyleSheet.create({
     padding: 5,
     height: 250,
   },
-
   editorInnerBorder: {
     borderWidth: 2,
     borderColor: 'black',
@@ -223,7 +227,6 @@ const styles = StyleSheet.create({
     gap: 5,
     justifyContent: 'flex-end',
   },
-
   editorButton: {
     width: 20,
     height: 20,
@@ -260,5 +263,50 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     color: '#374151',
+  },
+  button: {
+    backgroundColor: '#FF880A',
+    padding: 10,
+    borderRadius: 50,
+    width: 100,
+    textAlign: 'center',
+    boxShadow: '0px 2px 3px 0px #9E9E9E',
+  },
+  buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  toggleButton: {
+    backgroundColor: '#FF880A',
+    display: "flex",
+    alignItems: "center",
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 50,
+    width: 150,
+    boxShadow: '0px 2px 3px 0px #9E9E9E',
+
+  },
+  toggleButtonText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+  },
+  card: {
+    marginTop: 20,
+    padding: 40,
+    backgroundColor: '#FFECD8',
+    width: 250,
+    height: 240,
+    borderRadius: 15,
+    alignItems: 'center',
+  },
+  cardTitle: {
+    color: '#FF880A',
+    textWeight: "bold",
+    fontSize: 20,
+  },
+  cardText: {
+    textAlign: 'center',
   },
 });
