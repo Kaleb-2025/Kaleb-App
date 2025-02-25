@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, TextInput, Image, StyleSheet, ScrollView, Animated, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Importando ícones do Ionicons
 
 const Header = () => {
   const loaderValue = useRef(new Animated.Value(0)).current;
@@ -83,10 +84,19 @@ const InputBar = ({ value, onChangeText }) => {
   );
 };
 
+// Botão Acerto
 const Button = () => {
   return (
     <TouchableOpacity style={styles.button}>
       <Text style={styles.buttonText}>Continuar</Text>
+    </TouchableOpacity>
+  );
+};
+//Botão Erro
+const ButtonErro = ({ onRetry }) => { // onRetry: Recebe a função handleRetry como propriedade || utilizando outro nome dá pra reutilizar o componente
+  return (
+    <TouchableOpacity style={styles.button_erro} onPress={onRetry}>
+      <Text style={styles.buttonText_erro}>Tente novamente!</Text>
     </TouchableOpacity>
   );
 };
@@ -112,6 +122,12 @@ const CodeEditor = () => {
       setError(false);
     }
   }, [inputText]);
+
+  const handleRetry = () => { /* função é responsável por definir setError
+   handleRetry:  usado para reset ou recuperação de estado em um app*/
+    setError(false); // Fecha o card de erro
+    setInputText(''); // Limpa a caixa de texto (inputText)
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -147,15 +163,19 @@ const CodeEditor = () => {
         </View>
       )}
 
-      {/* CARD/TELA DO ERRO (lelets mude aqui a sua parte diva) */}
+      {/* CARD/TELA DO ERRO */}
       {error && (
         <View style={styles.overlay}> 
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Erro!</Text>
+        <View style={styles.card_erro}>
+        <View style={styles.card_header}>
+          <Ionicons name="close-circle" size={24} color="#f00" />
+          <Text style={styles.cardTitle_erro}>Erro!</Text>
+          </View>
           <Text style={styles.cardText}>
-            <b>O código digitado está incorreto.</b>
-            <p>Tente novamente!</p>
+            <b>Resposta correta:</b>
+            <p>print("Olá Mundo!")</p>
           </Text>
+          <ButtonErro onRetry={handleRetry} /> {/* Passa a função de handleRetry */}
         </View>
         </View>
       )}
@@ -318,14 +338,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF880A',
     padding: 10,
     borderRadius: 50,
-    width: 100,
+    width: 150,
+    textAlign: 'center',
+    boxShadow: '0px 2px 3px 0px #9E9E9E',
+  },
+   button_erro: {
+    backgroundColor: '#FF4A4A',
+    padding: 10,
+    borderRadius: 50,
+    width: 150,
     textAlign: 'center',
     boxShadow: '0px 2px 3px 0px #9E9E9E',
   },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 15,
+  },
+  buttonText_erro: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 15,
   },
   toggleButton: {
     backgroundColor: '#FF880A',
@@ -355,8 +388,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     boxShadow: '0px 2px 3px 0px #9E9E9E',
   },
+    card_erro: {
+    marginTop: 20,
+    padding: 20,
+    backgroundColor: '#FFE8E8',
+    width: "250px",
+    height:"200px",
+    borderRadius: 15,
+    alignItems: 'center',
+    justifyContent: "center",
+    boxShadow: '0px 2px 3px 0px #9E9E9E',
+  },
+    card_header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   cardTitle: {
     color: '#FF880A',
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+    cardTitle_erro: {
+    color: '#CF0000',
     fontWeight: "bold",
     fontSize: 20,
   },
