@@ -5,7 +5,7 @@
 <h1 align="center" text="times">KALEB</h1>
 
 
-<p>Este é umprojeto de conclusão de curso de desenvolvimento de sistemas<span style="color:#ffb301"> 🦜</span></p></div>
+<p>Este é um projeto de conclusão de curso de desenvolvimento de sistemas<span style="color:#ffb301"> 🦜</span></p></div>
   <br>
 
     
@@ -31,7 +31,7 @@
     </td>
     <td align="center">
       <img src="" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 3"/>
-      <br /><a href="https://github.com/Julia-Khristina">Letícia Maria</b></a>
+      <br /><a href="https://github.com/leticiaamaro">Letícia Maria</b></a>
       <br /><small>Desenvolvedora</small>
     </td>
      <td align="center">
