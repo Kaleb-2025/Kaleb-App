@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, StyleSheet, ScrollView, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ScrollView, Animated, TouchableOpacity, BackHandler } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Importando ícones do Ionicons
 
 const Header = () => {
@@ -84,10 +84,13 @@ const InputBar = ({ value, onChangeText }) => {
   );
 };
 
+const sairDoApp = () => {
+  BackHandler.exitApp()
+} 
 // Botão Acerto
-const Button = () => {
+const ContinuarButton = () => {
   return (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity onPress={sairDoApp}style={styles.button}>
       <Text style={styles.buttonText}>Continuar</Text>
     </TouchableOpacity>
   );
@@ -145,23 +148,24 @@ const CodeEditor = () => {
         <Text style={styles.toggleButtonText}>Verificar</Text>
       </TouchableOpacity>
 
-      {/*CARD DO DEU CERTO VERY GOOD*/}
+   {/*CARD DO DEU CERTO VERY GOOD*/}
       {showCard && (
         // p ficar no meio centralizado
         <View style={styles.overlay}> 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Parabéns!</Text>
-          <Text style={styles.cardText}>
-            <b>print("Olá Mundo!")</b>
-            <p>
+          <Text style={styles.cardSubText}>
+            print("Olá Mundo!")
+            </Text>
+            <Text style={styles.cardText}>
               “print()” é uma função que permite a saída de dados na tela. O texto deve ser escrito
               entre com as aspas (“”) para indicar o que será mostrado.
-            </p>
-          </Text>
-          <Button />
+            </Text>
+          <ContinuarButton />
         </View>
         </View>
       )}
+
 
       {/* CARD/TELA DO ERRO */}
       {error && (
@@ -381,12 +385,24 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     backgroundColor: '#FFECD8',
-    width: "250px",
-    height:"240px",
+    width: 250,
+    height:240,
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: "center",
     boxShadow: '0px 2px 3px 0px #9E9E9E',
+  },
+  cardTitle: {
+    color: '#FF880A',
+    fontWeight: "bold",
+    fontSize: 20,
+  },
+    cardSubText: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  cardText: {
+    textAlign: 'center',
   },
     card_erro: {
     marginTop: 20,
@@ -403,17 +419,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  cardTitle: {
-    color: '#FF880A',
-    fontWeight: "bold",
-    fontSize: 20,
-  },
     cardTitle_erro: {
     color: '#CF0000',
     fontWeight: "bold",
     fontSize: 20,
-  },
-  cardText: {
-    textAlign: 'center',
   },
 });
