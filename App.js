@@ -9,7 +9,7 @@ const Header = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCount((prev) => (prev >= 33 ? 33 : prev + 5));
-    }, 100);
+    }, 300);
 
     return () => clearInterval(interval);
   }, []);
@@ -113,6 +113,10 @@ const CodeEditor = () => {
     if (inputText === 'print("Olá Mundo!")') {
       setShowCard(true); 
       setError(false); 
+    }
+     else if (inputText === 'print("Ola Mundo!")') {
+      setShowCard(true); 
+      setError(false); 
     } else {
       setError(true);
       setShowCard(false); 
@@ -176,8 +180,8 @@ const CodeEditor = () => {
           <Text style={styles.cardTitle_erro}>Erro!</Text>
           </View>
           <Text style={styles.cardText}>
-            <b>Resposta correta:</b>
-            <p>print("Olá Mundo!")</p>
+            Resposta correta:
+            print("Olá Mundo!")
           </Text>
           <ButtonErro onRetry={handleRetry} /> {/* Passa a função de handleRetry */}
         </View>
