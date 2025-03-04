@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
+     marginTop: 50,
   },
   headerIcon: {
     borderWidth: 2,
