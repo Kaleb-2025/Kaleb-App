@@ -31,7 +31,7 @@
     </td>
     <td align="center">
       <img src="https://github.com/leticiaamaro.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 3"/>
-      <br /><a href="https://github.com/leticiaamaro">Letícia Maria</b></a>
+      <br /><a href="https://github.com/leticiaamaro">Letícia Amaro</b></a>
       <br /><small>Desenvolvedora</small>
     </td>
      <td align="center">
