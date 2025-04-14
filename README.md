@@ -29,14 +29,14 @@
       <br /><a href="https://github.com/Gigiovh"><b>Giovanna Clemente</b></a>
       <br /><small>Desenvolvedora</small>
     </td>
+       <td align="center">
+      <img src="https://github.com/Julia-Khristina/EscapEtec/blob/main/readme/11.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 3"/>
+      <br /><a href="https://github.com/Lale-Araujo"><b>Laura Letícia</b></a>
+      <br /><small>Desenvolvedora</small>
+    </td>
     <td align="center">
       <img src="https://github.com/leticiaamaro.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 3"/>
       <br /><a href="https://github.com/leticiaamaro">Letícia Amaro</b></a>
-      <br /><small>Desenvolvedora</small>
-    </td>
-     <td align="center">
-      <img src="https://github.com/Julia-Khristina/EscapEtec/blob/main/readme/11.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 3"/>
-      <br /><a href="https://github.com/Lale-Araujo"><b>Laura Letícia</b></a>
       <br /><small>Desenvolvedora</small>
     </td>
   </tr>
