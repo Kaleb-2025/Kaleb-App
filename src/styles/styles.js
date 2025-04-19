@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 20,
     backgroundColor: '#FFECD8',
-    width: 250,
-    height:240,
+    width: 300,
+    height:250,
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: "center",
@@ -232,6 +232,12 @@ const styles = StyleSheet.create({
     color: '#CF0000',
     fontWeight: "bold",
     fontSize: 20,
+  },
+  editorResposta: {
+  fontSize: 16,
+  marginVertical: 4,
+  paddingHorizontal: 10,
+  color: '#333',
   },
 });
 

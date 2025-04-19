@@ -14,7 +14,7 @@ const CodeEditor = () => {
   const [error, setError] = useState(false);
 
   const toggleCard = () => {
-    if (inputText === 'print("Olá Mundo!")' || inputText === 'print("Ola Mundo!")'|| inputText === 'print("Hello Word!")') {
+    if (inputText === 'print("Olá Mundo!")' || inputText === 'print("Ola Mundo!")'|| inputText === 'print("Hello World!")') {
       setShowCard(true);
       setError(false);
     } else {
@@ -37,28 +37,32 @@ const CodeEditor = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Header />
+      <Header progresso={showCard ? 1 : 0} />
       <EditorWindow />
       <InputBar value={inputText} onChangeText={setInputText} />
       <TouchableOpacity onPress={toggleCard} style={[styles.toggleButton, inputText === '' && styles.disabledButton]} disabled={inputText === ''}>
         <Text style={styles.toggleButtonText}>Verificar</Text>
       </TouchableOpacity>
-      {/*CARD DO DEU CERTO VERY GOOD*/}
-      {showCard && (
-        <View style={styles.overlay}>
-          <View style={styles.card}>
-            <Text style={styles.cardTitle}>Parabéns!</Text>
-            <Text style={styles.cardSubText}>print("Olá Mundo!")</Text>
-            <Text style={styles.cardText}>
-              “print()” é uma função que permite a saída de dados na tela. O texto deve ser escrito
-              entre aspas (“”) para indicar o que será mostrado.
-            </Text>
-            <ContinuarButton />
-          </View>
-        </View>
-      )}
-      {error && <ButtonErro onRetry={handleRetry} />}
-    </ScrollView>
+    {/*CARD DO DEU CERTO VERY GOOD*/}
+{showCard && (
+  <View style={styles.overlay}>
+    <View style={styles.card}>
+      <Text style={styles.cardTitle}>Parabéns!</Text>
+        <Text style={styles.cardSubText}>print("ㅤ")</Text>
+      <Text style={styles.cardSubText}>print("Olá Mundo!")</Text>
+         <Text style={styles.cardSubText}>print("ㅤ")</Text>
+      <Text style={styles.cardText}>
+        “print()” é uma função que permite a saída de dados na tela. O texto deve ser escrito
+        entre aspas (“”) para indicar o que será mostrado.
+      </Text>
+        <Text style={styles.cardSubText}>print("ㅤ")</Text>
+      <ContinuarButton />
+    </View>
+  </View>
+)}
+{error && <ButtonErro onRetry={handleRetry} />}
+</ScrollView>
+
   );
 };
 

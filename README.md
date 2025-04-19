@@ -1,49 +1,11 @@
+# Sample Snack app
 
+Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
 
-<div align="center">
-<img src="img/WhatsApp_Image_2025-01-24_at_21.13.30__1_-removebg-preview.png" alt="logo"  height="200px">
-<h1 align="center" text="times">KALEB</h1>
+When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).
 
+All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
 
-<p>Este é um projeto de conclusão de curso de desenvolvimento de sistemas<span style="color:#ffb301"> 🦜</span></p></div>
-  <br>
+If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).
 
-    
- <hr><br>
-<h3  >Linguagens Utilizadas</h3>
-  <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=html,css,javascript" />
-  </a>
-<br>
-<br>
-<h2 >🧑‍💻 Autores</h2>
-<table>
-  <tr>
-    <td align="center">
-    <img src="https://github.com/beaxx.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 1"/>
-      <br /><a href="https://github.com/beaxx"><b>Beatriz Oliveira</b></a>
-      <br /><small>Desenvolvedora</small>
-    </td>
-    <td align="center">
-      <img src="https://github.com/Gigiovh.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 2"/>
-      <br /><a href="https://github.com/Gigiovh"><b>Giovanna Clemente</b></a>
-      <br /><small>Desenvolvedora</small>
-    </td>
-       <td align="center">
-      <img src="https://github.com/Julia-Khristina/EscapEtec/blob/main/readme/11.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 3"/>
-      <br /><a href="https://github.com/Lale-Araujo"><b>Laura Letícia</b></a>
-      <br /><small>Desenvolvedora</small>
-    </td>
-    <td align="center">
-      <img src="https://github.com/leticiaamaro.png" width="100px;" style="border-radius:50%;" alt="Nome do Colaborador 3"/>
-      <br /><a href="https://github.com/leticiaamaro">Letícia Amaro</b></a>
-      <br /><small>Desenvolvedora</small>
-    </td>
-  </tr>
-</table>
-  
-</ul>
-   
-  </tr>
-</table>
-
+Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
