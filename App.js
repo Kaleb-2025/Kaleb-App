@@ -1,7 +1,5 @@
-import React from 'react';
-import TelaEspecial from './src/screens/telaEspecial.js'; 
+import Tela8 from './src/screens/tela8.js';
 
 export default function App() {
-  return <TelaEspecial />; 
+  return <Tela8 />;
 }
-
