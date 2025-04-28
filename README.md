@@ -43,16 +43,16 @@ Agradecemos às seguintes pessoas que contribuíram para este projeto:
           <b>Giovanna Clemente</b>
       </a>
     </td>
+        <td align="center">
+      <a href="https://github.com/Lale-Araujo" title="Perfil">
+        <img src="https://avatars.githubusercontent.com/u/132352942?v=4" width="100px;" alt="Laura Araújo"/><br>
+          <b>Laura Araújo</b>
+      </a>
+    </td>
     <td align="center">
       <a href="https://github.com/leticiaamaro" title="Perfil">
         <img src="https://avatars.githubusercontent.com/u/101998517?v=4" width="100px;" alt="Letíca Maria"/><br>
           <b>Letíca Maria</b>
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://github.com/Lale-Araujo" title="Perfil">
-        <img src="https://avatars.githubusercontent.com/u/132352942?v=4" width="100px;" alt="Laura Araújo"/><br>
-          <b>Laura Araújo</b>
       </a>
     </td>
   </tr>
