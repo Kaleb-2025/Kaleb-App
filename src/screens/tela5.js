@@ -7,7 +7,7 @@ import CodeExample from '../components/TesteDeLogica4/CodeExemple.js';
 import MultipleChoiceOptions from '../components/TesteDeLogica4/MultipleChoiceOptions.js'; 
 import { handleTermsPress, handlePrivacyPress } from '../links/links.js';
 
-const telaEspecial = () => {
+const tela5 = () => {
   return (
     <ScrollView contentContainerStyle={styles.quizContainer}>
       <Header /> 
@@ -44,4 +44,4 @@ const telaEspecial = () => {
   );
 };
 
-export default telaEspecial;
+export default tela5;
