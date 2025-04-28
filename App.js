@@ -1,6 +1,7 @@
 import React from 'react';
-import CodeEditor from './src/screens/CodeEditor';
+import TelaEspecial from './src/screens/telaEspecial.js'; 
 
 export default function App() {
-  return <CodeEditor />;
+  return <TelaEspecial />; 
 }
+
