@@ -111,22 +111,27 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingHorizontal: 16,
   },
-  nextButton: {
-    borderRadius: 20,
-    backgroundColor: 'rgba(8, 12, 46, 1)',
-    marginTop: 20,
-    width: 200,
-    maxWidth: '100%',
-    padding: 11,
-    alignSelf: 'center',
-  },
+nextButton: {
+  borderRadius: 20,
+  backgroundColor: 'rgba(8, 12, 46, 1)',
+  marginTop: 20,
+  width: 200,
+  maxWidth: '100%',
+  padding: 11,
+  alignSelf: 'center',
+},
+
   nextButtonText: {
     fontSize: 12,
     color: 'white',
     fontWeight: '400',
     textAlign: 'center',
   },
-  
+  dica:{
+ 
+    paddingHorizontal:20,
+       color:'#0B1658',
+  },
  
   footerText: {
     color: 'black',
