@@ -1,13 +1,12 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native'; 
-import styles from '../styles/styleEspecial';  
+import styles from '../../styles/styleEspecial';  
 import { Ionicons } from '@expo/vector-icons';
-import Header from '../components/TesteDeLogica4/header.js'; 
-import CodeExample from '../components/TesteDeLogica4/CodeExemple.js'; 
-import MultipleChoiceOptions from '../components/TesteDeLogica4/MultipleChoiceOptions.js'; 
-import { handleTermsPress, handlePrivacyPress } from '../links/links.js';
+import Header from '../../components/TesteDeLogica4/header.js'; 
+import QuizOption from '../../components/TesteDeLogica4/QuizOption.js'; 
+import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 
-const telaEspecial = () => {
+const TesteDeLogica41 = () => {
   return (
     <ScrollView contentContainerStyle={styles.quizContainer}>
       <Header /> 
@@ -17,11 +16,10 @@ const telaEspecial = () => {
         </Text>
 
         <Text style={styles.question}>
-          Observe o código abaixo. O que está acontecendo?
+          Pensando em dois valores, como verificar qual dos dois é maior?
         </Text>
 
-        <CodeExample />
-        <MultipleChoiceOptions />
+        <QuizOption />
 
         <TouchableOpacity style={styles.nextButton}>
           <Text style={styles.nextButtonText}>Próxima Pergunta</Text>
@@ -44,4 +42,4 @@ const telaEspecial = () => {
   );
 };
 
-export default telaEspecial;
+export default TesteDeLogica41;
