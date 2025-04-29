@@ -1,5 +1,5 @@
-import Tela8 from './src/screens/tela8.js';
-
+import React from 'react';
+import TesteDeLogica41 from './src/screens/TesteDeLogica4/TesteDeLogica41';
 export default function App() {
-  return <Tela8 />;
+  return <TesteDeLogica41 />;
 }
