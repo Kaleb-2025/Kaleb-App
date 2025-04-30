@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../../styles/styleteste';  
+import styles from '../../styles/styleteste'; 
 import { handleTermsPress, handlePrivacyPress } from '../../links/links';  
 
 const QuizOption = ({ content, isSelected, onSelect }) => {
@@ -10,7 +10,7 @@ const QuizOption = ({ content, isSelected, onSelect }) => {
         style={[
           styles.radioButton,
           isSelected && styles.radioButtonSelected,
-          { marginRight: 10 },  
+          { marginRight: 10 },
         ]}
       />
       <Text style={styles.optionText}>{content}</Text>
