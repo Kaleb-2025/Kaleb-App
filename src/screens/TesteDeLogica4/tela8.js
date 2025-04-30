@@ -1,11 +1,11 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native'; 
-import styles from '../styles/styleEspecial';  
+import styles from '../../styles/styleEspecial';  
 import { Ionicons } from '@expo/vector-icons';
-import Header from '../components/TesteDeLogica4/header.js'; 
-import TelinhaDo8 from '../components/TesteDeLogica4/TelinhaDo8.js'; 
-import OptionsTela8 from '../components/TesteDeLogica4/OptionsTela8';
-import { handleTermsPress, handlePrivacyPress } from '../links/links.js';
+import Header from '../../components/TesteDeLogica4/header.js'; 
+import TelinhaDo8 from '../../components/TesteDeLogica4/TelinhaDo8.js'; 
+import OptionsTela8 from '../../components/TesteDeLogica4/OptionsTela8';
+import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 
 const tela8 = () => {
   return (

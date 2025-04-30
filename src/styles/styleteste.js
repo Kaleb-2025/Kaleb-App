@@ -110,6 +110,9 @@ const css = StyleSheet.create({
     width: 284,
     alignSelf: 'center',
   },
+  dica:{
+    color:'#0B1658'
+  },
   link: {
     textDecorationLine: 'underline',
     color: 'blue',

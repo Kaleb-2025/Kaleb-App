@@ -233,12 +233,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
   },
-  editorResposta: {
-  fontSize: 16,
-  marginVertical: 4,
-  paddingHorizontal: 10,
-  color: '#333',
-  },
 });
 
 export default styles;

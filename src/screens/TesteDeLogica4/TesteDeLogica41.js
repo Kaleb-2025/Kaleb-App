@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from '../styles/styleteste';
-import Header from '../components/TesteDeLogica4/header.js';
-import QuizOption from '../components/TesteDeLogica4/QuizOption';
-import ButtonNextQuestion from '../components/TesteDeLogica4/nextQuestion';
-import { handleTermsPress, handlePrivacyPress } from '../links/links.js';
-import { supabase } from '../../App'; // Mantém essa linha para importar corretamente o supabase
+import styles from '../../styles/styleteste';
+import Header from '../../components/TesteDeLogica4/header.js';
+import QuizOption from '../../components/TesteDeLogica4/QuizOption';
+import ButtonNextQuestion from '../../components/TesteDeLogica4/NextQuestion';
+import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
+import { supabase } from '../../../App'; // Mantém essa linha para importar corretamente o supabase
 
 const TesteDeLogica4 = () => {
   const [question, setQuestion] = useState('');

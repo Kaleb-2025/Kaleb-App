@@ -1,11 +1,11 @@
 import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native'; 
-import styles from '../styles/styleEspecial';  
+import styles from '../../styles/styleEspecial';  
 import { Ionicons } from '@expo/vector-icons';
-import Header from '../components/TesteDeLogica4/header.js'; 
-import CodeExample from '../components/TesteDeLogica4/CodeExemple.js'; 
-import MultipleChoiceOptions from '../components/TesteDeLogica4/MultipleChoiceOptions.js'; 
-import { handleTermsPress, handlePrivacyPress } from '../links/links.js';
+import Header from '../../components/TesteDeLogica4/header.js'; 
+import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
+import MultipleChoiceOptions from '../../components/TesteDeLogica4/MultipleChoiceOptions.js'; 
+import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 
 const tela5 = () => {
   return (
