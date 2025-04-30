@@ -22,7 +22,8 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 - [x] Prototipação
 - [x] Criação das perguntas
 - [x] Desenvolvimento do Banco de dados
-- [ ] Desenvolvimento do Banco de dados
+- [x] Conexão com o Banco de dados
+- [ ] Desenvolvimento das telas do 1° teste
 - [ ] Divisão do material extra
 
 ## 🤝 Colaboradores
