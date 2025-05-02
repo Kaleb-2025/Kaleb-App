@@ -1,11 +1,15 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet,Text, TouchableOpacity } from 'react-native';
+import NextButton from '../../components/TesteDeLogica4/NextButton'; 
 import styles from '../../styles/styleEspecial';
 import Header from '../../components/TesteDeLogica4/header.js';
 import Escolha7 from '../../components/TesteDeLogica4/Escolha7.js';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 
-const Tela7 = () => {
+const Tela7 = ({ navigation }) => {
+  const handleNext = () => {
+    navigation.navigate('Tela8');
+  };
   return (
     <ScrollView contentContainerStyle={styles.quizContainer}>
       <Header />
@@ -27,9 +31,7 @@ const Tela7 = () => {
 
         <Escolha7 />
 
-        <TouchableOpacity style={styles.nextButton}>
-          <Text style={styles.nextButtonText}>Próxima Pergunta</Text>
-        </TouchableOpacity>
+         <NextButton onPress={handleNext} />
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>

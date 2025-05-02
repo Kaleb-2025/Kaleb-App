@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "github.com/kaleb-2025/kaleb-app",
-    "slug": "snack-6e03eb05-9e66-4161-9578-5fce0fd7c7c3",
+    "name": "kaleb-_estruturado",
+    "slug": "snack-dcbde4de-56f5-46df-97f3-822156d68890",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,7 +23,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "description": "github.com/Kaleb-2025/Kaleb-App @ Apr 30, 2025"
+    }
   }
 }

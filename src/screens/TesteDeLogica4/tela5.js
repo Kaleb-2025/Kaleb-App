@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, } from 'react-native'; 
-import styles from '../../styles/styleEspecial';  
-import { Ionicons } from '@expo/vector-icons';
-import Header from '../../components/TesteDeLogica4/header.js'; 
+import { ScrollView, View, Text } from 'react-native';
+import styles from '../../styles/styleEspecial';
+import Header from '../../components/TesteDeLogica4/header.js';
 import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
-import MultipleChoiceOptions from '../../components/TesteDeLogica4/MultipleChoiceOptions.js'; 
+import NextButton from '../../components/TesteDeLogica4/NextButton'; 
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App'; // Mantém essa linha para importar corretamente o supabase
 
-const tela5 = () => {
-   const [question, setQuestion] = useState('');
+
+const Tela5 = ({ navigation }) => {
+  const handleNext = () => {
+    navigation.navigate('Tela7');
+  };    const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   
@@ -23,7 +25,7 @@ const tela5 = () => {
       const { data: pergunta, error: perguntaError } = await supabase
         .from('perguntasteste') // Tabela correta
         .select('*')
-        .eq('cdpergunta', 4) // Alterei para usar a chave primária cdPergunta
+        .eq('cdpergunta', 7) // Alterei para usar a chave primária cdPergunta
         .single();
 
       if (perguntaError) {
@@ -37,7 +39,7 @@ const tela5 = () => {
       const { data: respostas, error: respostasError } = await supabase
         .from('testelogica')
         .select('correta, respostateste(*)') // agora inclui 'correta'
-        .eq('idpergunta', 4); // filtra por pergunta
+        .eq('idpergunta', 7); // filtra por pergunta
 
       if (respostasError) {
         console.error('Erro ao buscar respostas:', respostasError);
@@ -65,24 +67,33 @@ const tela5 = () => {
     setSelectedOption(index); // Marca a opção selecionada
   };
 
-
   return (
     <ScrollView contentContainerStyle={styles.quizContainer}>
-      <Header /> 
+      <Header />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
         </Text>
 
+        <Text style={styles.question}>
+          Observe as variáveis definidas abaixo e com
+          base na análise das afirmações escolha a
+          alternativa correta.
+        </Text>
+
+      <CodeExample question={question} />
 
         <Text style={styles.question}>
-            Kaleb estava realizando mais uma de suas tarefas diárias de programação e, ao finalizar, percebeu que havia esquecido de usar a estrutura de repetição adequada. Ajude Kaleb!
-        </Text>
-        <Text style={styles.dica}>
-         *DICA: o exercício de Kaleb pedia para somar todos os números de 1 a 10.
+          I. d pode receber os valores: FALSE ou TRUE.{'\n'}
+          II. a pode receber os valores: 1 ou Maria.{'\n'}
+          III. c pode receber o valor 3.14 e depois 894.{'\n'}
+          IV. b pode receber os valores: Antonio e 7234.{'\n'}
+          V. d pode receber os valores: FALSE ou TRUE.{'\n'}
+          VI. c só pode receber um valor.
         </Text>
 
-        <CodeExample question={question} />
+
+    
          <View style={styles.optionsContainer}> 
           {options.length > 0 ? (
             options.map((option, index) => (
@@ -97,11 +108,7 @@ const tela5 = () => {
             <Text>Carregando respostas...</Text> // Mensagem de carregamento se as respostas não estiverem carregadas
           )}
         </View>
-        
-
-        <TouchableOpacity style={styles.nextButton}>
-          <Text style={styles.nextButtonText}>Próxima Pergunta</Text>
-        </TouchableOpacity>
+        <NextButton onPress={handleNext} />
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -120,4 +127,4 @@ const tela5 = () => {
   );
 };
 
-export default tela5;
+export default Tela5;

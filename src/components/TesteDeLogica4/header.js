@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Image, Text } from 'react-native'; // Adicionando importação do Text
-import styles from '../../styles/styleteste'; 
+import { View, Image, Text } from 'react-native';
+import styles from '../../styles/styleteste';
 
-const Header = () => {
+const Header = ({ current = 1, total = 6 }) => {
   return (
     <View style={styles.header}>
       <Image
@@ -18,11 +18,10 @@ const Header = () => {
           }}
           style={[styles.progressIcon, { marginRight: 10 }]}
         />
-        <Text style={styles.progressText}>4/8</Text> 
+        <Text style={styles.progressText}>{current}/{total}</Text>
       </View>
     </View>
   );
 };
 
 export default Header;
-// fazer a função de count de paginas!!

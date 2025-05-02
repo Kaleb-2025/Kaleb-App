@@ -9,7 +9,7 @@ import MultipleChoiceOptions from '../../components/TesteDeLogica4/MultipleChoic
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App'; // Mantém essa linha para importar corretamente o supabase
 
-const tela5 = () => {
+const Tela8 = () => {
    const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -120,4 +120,4 @@ const tela5 = () => {
   );
 };
 
-export default tela5;
+export default Tela8;

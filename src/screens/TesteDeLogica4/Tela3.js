@@ -1,7 +1,9 @@
+// src/screens/TesteDeLogica4/Tela3.js
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, } from 'react-native'; 
+import { ScrollView, View, Text } from 'react-native'; 
 import styles from '../../styles/styleEspecial';  
-import { Ionicons } from '@expo/vector-icons';
+
+import NextButton from '../../components/TesteDeLogica4/NextButton'; 
 import Header from '../../components/TesteDeLogica4/header.js'; 
 import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
@@ -10,8 +12,16 @@ import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App'; // Mantém essa linha para importar corretamente o supabase
 
 
-const Tela3 = () => {
-  const [question, setQuestion] = useState('');
+import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
+
+const Tela3 = ({ navigation }) => {
+  const { next } = useProgress(); // ✅ Hook usado corretamente dentro do componente
+
+  const handleNext = () => {
+    next(); // ✅ Avança a contagem
+    navigation.navigate('Tela4'); // ✅ Navega para a próxima tela
+  };
+ const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   
@@ -93,11 +103,8 @@ const Tela3 = () => {
             <Text>Carregando respostas...</Text> // Mensagem de carregamento se as respostas não estiverem carregadas
           )}
         </View>
-        
 
-        <TouchableOpacity style={styles.nextButton}>
-          <Text style={styles.nextButtonText}>Próxima Pergunta</Text>
-        </TouchableOpacity>
+        <NextButton onPress={handleNext} /> {/* ✅ Passando corretamente a função */}
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
