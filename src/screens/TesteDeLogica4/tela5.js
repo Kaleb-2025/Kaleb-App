@@ -1,27 +1,38 @@
 import React from 'react';
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native'; 
-import styles from '../../styles/styleEspecial';  
-import { Ionicons } from '@expo/vector-icons';
-import Header from '../../components/TesteDeLogica4/header.js'; 
-import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
-import MultipleChoiceOptions from '../../components/TesteDeLogica4/MultipleChoiceOptions.js'; 
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import styles from '../../styles/styleEspecial';
+import Header from '../../components/TesteDeLogica4/header.js';
+import Telinha5 from '../../components/TesteDeLogica4/Telinha5.js';
+import Escolha5 from '../../components/TesteDeLogica4/escolha5.js';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 
-const tela5 = () => {
+const Tela5 = () => {
   return (
     <ScrollView contentContainerStyle={styles.quizContainer}>
-      <Header /> 
+      <Header />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
         </Text>
 
         <Text style={styles.question}>
-          Observe o código abaixo. O que está acontecendo?
+          Observe as variáveis definidas abaixo e com
+          base na análise das afirmações escolha a
+          alternativa correta.
         </Text>
 
-        <CodeExample />
-        <MultipleChoiceOptions />
+        <Telinha5 />
+
+        <Text style={styles.question}>
+          I. d pode receber os valores: FALSE ou TRUE.{'\n'}
+          II. a pode receber os valores: 1 ou Maria.{'\n'}
+          III. c pode receber o valor 3.14 e depois 894.{'\n'}
+          IV. b pode receber os valores: Antonio e 7234.{'\n'}
+          V. d pode receber os valores: FALSE ou TRUE.{'\n'}
+          VI. c só pode receber um valor.
+        </Text>
+
+        <Escolha5 />
 
         <TouchableOpacity style={styles.nextButton}>
           <Text style={styles.nextButtonText}>Próxima Pergunta</Text>
@@ -44,4 +55,4 @@ const tela5 = () => {
   );
 };
 
-export default tela5;
+export default Tela5;
