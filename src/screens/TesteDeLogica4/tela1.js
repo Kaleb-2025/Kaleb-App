@@ -1,37 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import styles from '../../styles/styleteste';
-import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
 import Header from '../../components/TesteDeLogica4/header.js';
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
 import NextButton from '../../components/TesteDeLogica4/NextButton'; 
+import ButtonNextQuestion from '../../components/TesteDeLogica4/NextQuestion';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App';
 
+
 import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
 
-const Tela4 = ({ navigation }) => {
+const Tela1 = ({ navigation }) => {
   const { next } = useProgress(); 
 
   const handleNext = () => {
     next(); // ✅ Avança a contagem
-    navigation.navigate('Tela4'); // ✅ Navega para a próxima tela
-  };
-
-const [question, setQuestion] = useState('');
+    navigation.navigate('Tela3'); // ✅ Navega para a próxima tela
+};
+  const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-  
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchQuestionAndAnswers = async () => {
       console.log('Buscando pergunta e respostas...');
 
-      // Busca uma pergunta (exemplo: id = 1)
       const { data: pergunta, error: perguntaError } = await supabase
-        .from('perguntasteste') // Tabela correta
+        .from('perguntasteste')
         .select('*')
-        .eq('cdpergunta', 2) // Alterei para usar a chave primária cdPergunta
+        .eq('cdpergunta', 1)
         .single();
 
       if (perguntaError) {
@@ -39,55 +38,48 @@ const [question, setQuestion] = useState('');
         return;
       }
 
-      console.log('Pergunta encontrada:', pergunta);
-
-      // Busca as alternativas da pergunta (ajustando para pegar todas as respostas)
       const { data: respostas, error: respostasError } = await supabase
         .from('testelogica')
-        .select('correta, respostateste(*)') // agora inclui 'correta'
-        .eq('idpergunta', 2); // filtra por pergunta
+        .select('correta, respostateste(*)')
+        .eq('idpergunta', 1);
 
       if (respostasError) {
         console.error('Erro ao buscar respostas:', respostasError);
         return;
       }
 
-      console.log('Respostas encontradas:', respostas);
-
-      // Mapeia as respostas para obter apenas o texto das alternativas
       const respostasFormatadas = respostas.map((resposta) => ({
-        texto: resposta.respostateste.conteudoresposta,
+        texto: resposta.respostateste?.conteudoresposta || 'Sem texto',
         iscorrect: resposta.correta,
       }));
-      setOptions(respostasFormatadas);
 
-      // Atualiza o estado com os dados da pergunta e as respostas
       setQuestion(pergunta.enunciado);
-      setOptions(respostasText); // Armazena as respostas
+      setOptions(respostasFormatadas);
+      setLoading(false);
     };
 
     fetchQuestionAndAnswers();
-  }, []); // Apenas uma vez no início
+  }, []);
 
   const handleOptionSelect = (index) => {
-    setSelectedOption(index); // Marca a opção selecionada
+    setSelectedOption(index);
   };
 
+
   return (
-    <ScrollView contentContainerStyle={styles.quizContainer}>
-      <Header /> 
+    <>
+      <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
         </Text>
 
-        <Text style={styles.question}>
-          Observe o código abaixo. O que está acontecendo?
-        </Text>
+        <Text style={styles.question}>{question}</Text>
 
-        <CodeExample question={question} />
-        <View style={styles.optionsContainer}> 
-          {options.length > 0 ? (
+        <View style={styles.optionsContainer}>
+          {loading ? (
+            <Text>Carregando respostas...</Text>
+          ) : (
             options.map((option, index) => (
               <QuizOption
                 key={index}
@@ -96,14 +88,10 @@ const [question, setQuestion] = useState('');
                 onSelect={() => handleOptionSelect(index)}
               />
             ))
-          ) : (
-            <Text>Carregando respostas...</Text> // Mensagem de carregamento se as respostas não estiverem carregadas
           )}
         </View>
-        
 
-
-        <NextButton onPress={handleNext} />
+        <NextButton onPress={handleNext} /> {/* ✅ código button */}
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -118,8 +106,8 @@ const [question, setQuestion] = useState('');
           </Text>
         </View>
       </View>
-    </ScrollView>
+    </>
   );
 };
 
-export default Tela4;
+export default Tela1;

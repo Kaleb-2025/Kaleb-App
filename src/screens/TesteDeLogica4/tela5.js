@@ -5,14 +5,19 @@ import Header from '../../components/TesteDeLogica4/header.js';
 import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
 import NextButton from '../../components/TesteDeLogica4/NextButton'; 
+import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App'; // Mantém essa linha para importar corretamente o supabase
 
-
+// count das telas
 const Tela5 = ({ navigation }) => {
-  const handleNext = () => {
-    navigation.navigate('Tela7');
-  };    const [question, setQuestion] = useState('');
+ const { next } = useProgress();
+const handleNext = () => {
+  next(); 
+  navigation.navigate('Tela7');
+};
+
+  const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   
@@ -57,7 +62,7 @@ const Tela5 = ({ navigation }) => {
 
       // Atualiza o estado com os dados da pergunta e as respostas
       setQuestion(pergunta.enunciado);
-      setOptions(respostasText); // Armazena as respostas
+      setOptions(respostasFormatadas);// Armazena as respostas
     };
 
     fetchQuestionAndAnswers();
@@ -69,7 +74,7 @@ const Tela5 = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.quizContainer}>
-      <Header />
+     <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>

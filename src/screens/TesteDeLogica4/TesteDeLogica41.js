@@ -4,10 +4,19 @@ import styles from '../../styles/styleteste';
 import Header from '../../components/TesteDeLogica4/header.js';
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
 import ButtonNextQuestion from '../../components/TesteDeLogica4/NextQuestion';
+import NextButton from '../../components/TesteDeLogica4/NextButton'; 
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App';
 
+import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
+
 const Tela4 = ({ navigation }) => {
+  const { next } = useProgress(); 
+
+  const handleNext = () => {
+    next(); // ✅ Avança a contagem
+    navigation.navigate('Tela5'); // ✅ Navega para a próxima tela
+  };
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -20,7 +29,7 @@ const Tela4 = ({ navigation }) => {
       const { data: pergunta, error: perguntaError } = await supabase
         .from('perguntasteste')
         .select('*')
-        .eq('cdpergunta', 1)
+        .eq('cdpergunta', 3)
         .single();
 
       if (perguntaError) {
@@ -31,7 +40,7 @@ const Tela4 = ({ navigation }) => {
       const { data: respostas, error: respostasError } = await supabase
         .from('testelogica')
         .select('correta, respostateste(*)')
-        .eq('idpergunta', 1);
+        .eq('idpergunta', 3);
 
       if (respostasError) {
         console.error('Erro ao buscar respostas:', respostasError);
@@ -55,17 +64,9 @@ const Tela4 = ({ navigation }) => {
     setSelectedOption(index);
   };
 
-  const handleNext = () => {
-    if (options[selectedOption]?.iscorrect) {
-      navigation.navigate('Tela5');
-    } else {
-      alert('Tente novamente ou selecione uma resposta correta.');
-    }
-  };
-
   return (
     <>
-      <Header current={4} total={6} />
+      <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
@@ -88,10 +89,8 @@ const Tela4 = ({ navigation }) => {
           )}
         </View>
 
-        <ButtonNextQuestion
-          isCorrect={options[selectedOption]?.iscorrect === true}
-          onNext={handleNext}
-        />
+
+        <NextButton onPress={handleNext} /> {/* ✅ Função do button */}
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
