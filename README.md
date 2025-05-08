@@ -1,12 +1,34 @@
 # Kaleb
- <img src="https://github.com/user-attachments/assets/4d32b458-a34b-46a6-b078-24ce574495f6" alt="ilustração de um computador" min-width="200px" max-width="200px" width="200px" align="right">
+ <img src="https://github.com/user-attachments/assets/4d32b458-a34b-46a6-b078-24ce574495f6" alt="ilustração de um computador" min-width="160px" max-width="160px" width="160px" align="right">
  
  <p align="left"> 
  <b>Kaleb</b> é um aplicativo mobile desenvolvido para ensinar e testar seus conhecimentos em programação.
  Utilizando elementos de gamificação, ele torna o aprendizado de lógica de programação e Python mais divertido e eficaz.
    
- O projeto surge como uma resposta à defasagem no mercado de tecnologia e ao esquecimento de conceitos por parte de quem já programou, mas está fora de prática.
+ O projeto nasce como uma resposta à defasagem no mercado de tecnologia e à dificuldade enfrentada por profissionais que, embora já tenham programado, estão fora de prática e esqueceram conceitos importantes.
+‎
+ 
  </p>
+
+ ##
+
+ | Sprint | Previsão | Status |
+ | ------ | -------- | ------ |
+ | 01     | 30/03/2025 | Concluído |
+ | 02     | 01/07/2025 | Em progresso |
+ | 03     | 20/09/25   | A fazer |
+
+ ## ✏️ Objetivo do Projeto
+
+O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício do raciocínio lógico e aprendizado de linguagem de programação. Como também: 
+
+- Implementar a gamificação na plataforma; 
+
+- Criar sistema de recomendação e material de apoio; 
+
+- Inserir recursos visuais de acompanhamento do progresso; 
+
+- Criar exercícios interativos. 
  
  ## 🚀 Tecnologias Utilizadas
  
