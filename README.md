@@ -17,6 +17,7 @@
  | 01     | 30/03/2025 | Concluído |
  | 02     | 01/07/2025 | Em progresso |
  | 03     | 20/09/25   | A fazer |
+ | 04     | 01/11/25   | A fazer |
 
  ## ✏️ Objetivo do Projeto
 
@@ -34,46 +35,71 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  
  [![My Skills](https://skillicons.dev/icons?i=react,mysql,supabase,figma,vscode,github)](https://skillicons.dev)
  
- ### Ajustes e melhorias
+ ## ⚙️ Backlog do Produto
+
+ ### Sprint 1. Concepção
  
- O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas para as seguintes tarefas:
+ - [x] Definição do propósito do template;
+ - [x] Esboço do layout;
+ - [x] Escolha de cores e fontes;
+ - [x] Desenvolvimento do design;
+-  [x] Documentação da introdução;
+ - [x] Criação da logo;
+ - [ ] Teste e revisão;
+ - [ ] Finalização e aprovação.
+
+ ### Sprint 2. Desenvolvimento
  
- - [x] Prototipação
- - [x] Criação das perguntas
- - [x] Desenvolvimento do Banco de dados
- - [x] Conexão com o Banco de dados
- - [ ] Desenvolvimento das telas do 1° teste
- - [ ] Divisão do material extra
- 
+ - [ ] Documentação ;
+ - [ ] Vídeos de funcionalidade;
+ - [x] Treinamento com os professores;
+-  [ ] Monitoramente e ajudas;
+ - [x] Desenvolvimento do banco de dados;
+ - [ ] Esquematização do dicionário de dados;
+ - [ ] Desenvolvimentos das telas (programação);
+
  ## 🤝 Colaboradores
  
  Agradecemos às seguintes pessoas que contribuíram para este projeto:
  
- <table>
-   <tr>
-     <td align="center">
-       <a href="https://github.com/beaxx" title="Perfil">
-         <img src="https://avatars.githubusercontent.com/u/132356935?v=4" width="100px;" alt="Beatriz Oliveira"/><br>
-           <b>Beatriz Oliveira</b>
-       </a>
-     </td>
-     <td align="center">
-       <a href="https://github.com/Gigiovh" title="Perfil">
-         <img src="https://avatars.githubusercontent.com/u/132226469?v=4" width="100px;" alt="Giovanna Clemente"/><br>
-           <b>Giovanna Clemente</b>
-       </a>
-     </td>
-         <td align="center">
-       <a href="https://github.com/Lale-Araujo" title="Perfil">
-         <img src="https://avatars.githubusercontent.com/u/132352942?v=4" width="100px;" alt="Laura Araújo"/><br>
-           <b>Laura Araújo</b>
-       </a>
-     </td>
-     <td align="center">
-       <a href="https://github.com/leticiaamaro" title="Perfil">
-         <img src="https://avatars.githubusercontent.com/u/101998517?v=4" width="100px;" alt="Letíca Maria"/><br>
-           <b>Letíca Maria</b>
-       </a>
-     </td>
-   </tr>
- </table>
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/beaxx" title="GitHub">
+        <img src="https://avatars.githubusercontent.com/u/132356935?v=4" width="100px;" alt="Beatriz Oliveira"/><br>
+        <strong>Beatriz Oliveira</strong>
+      </a><br><br>
+      <a href="https://www.linkedin.com/in/beatriz-oliveira2007/" title="LinkedIn">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Gigiovh" title="GitHub">
+        <img src="https://avatars.githubusercontent.com/u/132226469?v=4" width="100px;" alt="Giovanna Clemente"/><br>
+        <strong>Giovanna Clemente</strong>
+      </a><br><br>
+      <a href="#" title="LinkedIn">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Lale-Araujo" title="GitHub">
+        <img src="https://avatars.githubusercontent.com/u/132352942?v=4" width="100px;" alt="Laura Araújo"/><br>
+        <strong>Laura Araújo</strong>
+      </a><br><br>
+      <a href="#" title="LinkedIn">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/leticiaamaro" title="GitHub">
+        <img src="https://avatars.githubusercontent.com/u/101998517?v=4" width="100px;" alt="Letícia Maria"/><br>
+        <strong>Letícia Maria</strong>
+      </a><br><br>
+      <a href="#" title="LinkedIn">
+        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+      </a>
+    </td>
+  </tr>
+</table>
+
