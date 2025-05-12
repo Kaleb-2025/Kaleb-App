@@ -45,8 +45,8 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  
  ## ⚙️ Backlog do Produto
 
- ### Sprint 1. Concepção
- 
+ ### Sprint 1. Concepção, Definição e Design Inicial
+ ---
  - [x] Definição do propósito do template;
  - [x] Esboço do layout;
  - [x] Escolha de cores e fontes;
@@ -56,15 +56,46 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  - [ ] Teste e revisão;
  - [ ] Finalização e aprovação.
 
- ### Sprint 2. Desenvolvimento
+ ### Sprint 2. Desenvolvimento Inicial e Banco de Dados
+  ---
+ - [x] Prototipação da aplicação (telas específicas)
+ - [x] Documentação do Relatório tecnico (inicial);
+ - [ ] Documentação Módulos (inicial)
+-  [ ] Documentação dos Matériais Complementares (inicial)
+ - [ ] Esquematização do dicionário de dados
+ - [ ] Desenvolvimento do banco de dados;
+ - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend).
+
+### Sprint 3. Desenvolvimento Frontend e Backend
+ ---
+- [ ] Desenvolvimento das telas (programação do frontend)
+- [ ] Desenvolvimento das funcionalidades principais (programação do backend)
+- [ ] Implementação da lógica básica de navegação.
+- [ ] Documentação do Relatório tecnico (desenvolvimento);
+- [ ] Documentação Módulos (final)
+- [ ] Documentação dos Matériais Complementares (final)
+- [ ] Teste e revisão das funcionalidades desenvolvidas
+- [ ] Desenvolvimento do chatbot
+
  
- - [ ] Documentação ;
- - [ ] Vídeos de funcionalidade;
- - [x] Treinamento com os professores;
--  [ ] Monitoramente e ajudas;
- - [x] Desenvolvimento do banco de dados;
- - [ ] Esquematização do dicionário de dados;
- - [ ] Desenvolvimentos das telas (programação);
+### Sprint 4. Testes, Ajustes, Treinamento e Implementação
+ ---
+- [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança)
+- [ ] Monitoramento e ajustes (correção de bugs e melhorias)
+- [ ] Treinamento com professores (para feedback inicial)
+- [ ] Treinamento com alunos (para feedback final)
+- [ ] Documentação do Relatório tecnico (final);
+
+### Sprint 5. Operacionalização e Publicação
+ ---
+- [ ] Preparação dos materiais de apresentação (slides finais)
+- [ ] Geração da versão final do aplicativo
+- [ ] Criação do Vídeo de Funcionalidades
+
+## 💪 Competências Desenvolvidas 
+### Hard Skill (saber tecnológico)
+
+### Soft Skill (saber comportamental)
 
  ## 🤝 Colaboradores
  
