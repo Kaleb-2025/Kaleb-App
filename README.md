@@ -21,10 +21,10 @@
  | 05     | 01/11/25   | A fazer |
 
  ## 📚 Índice
-- [✏️ Objetivo do Projeto](#️-Objetivo-do-Projeto)
-- [🚀 Tecnologias Utilizadas](#️-Tecnologias-Utilizadas)
-- [⚙️ Backlog do Produto](#️-Backlog-do-Produto)
-- [🤝 Colaboradores](#️-Colaboradores)
+- [✏️ Objetivo do Projeto](#%EF%B8%8F-objetivo-do-projeto)
+- [🚀 Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- [⚙️ Backlog do Produto](#%EF%B8%8F-backlog-do-produto)
+- [🤝 Colaboradores](#-colaboradores)
 
 
  ## ✏️ Objetivo do Projeto
