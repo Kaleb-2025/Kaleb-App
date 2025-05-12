@@ -6,7 +6,7 @@
  Utilizando elementos de gamificação, ele torna o aprendizado de lógica de programação e Python mais divertido e eficaz.
    
  O projeto nasce como uma resposta à defasagem no mercado de tecnologia e à dificuldade enfrentada por profissionais que, embora já tenham programado, estão fora de prática e esqueceram conceitos importantes.
-‎
+
  
  </p>
 
@@ -18,6 +18,9 @@
  | 02     | 01/07/2025 | Em progresso |
  | 03     | 20/09/25   | A fazer |
  | 04     | 01/11/25   | A fazer |
+
+ ## 📚 Índice
+
 
  ## ✏️ Objetivo do Projeto
 
