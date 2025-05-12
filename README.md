@@ -20,7 +20,8 @@
  | 04     | 01/11/25   | A fazer |
 
  ## 📚 Índice
-
+- [✏️ Objetivo do Projeto](#️-Objetivo-do-Projeto)
+- [✏️ Objetivo do Projeto](#️-tecnologias-Utilizadas)
 
  ## ✏️ Objetivo do Projeto
 
