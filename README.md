@@ -94,8 +94,21 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
 
 ## 💪 Competências Desenvolvidas 
 ### Hard Skill (saber tecnológico)
+- React Native
+- Supabase
+- Github
+- Gestão de projetos
+- Expo 
 
 ### Soft Skill (saber comportamental)
+- Autonomia
+- Colaboração
+- Gerenciamento de tempo
+- Pensamento Crítico
+- Resiliência
+- Adaptabilidade
+- Comunicação
+- Criatividade
 
  ## 🤝 Colaboradores
  
