@@ -22,8 +22,13 @@
 
  ## 📚 Índice
 - [✏️ Objetivo do Projeto](#%EF%B8%8F-objetivo-do-projeto)
+- 
 - [🚀 Tecnologias Utilizadas](#-tecnologias-utilizadas)
+- 
 - [⚙️ Backlog do Produto](#%EF%B8%8F-backlog-do-produto)
+
+- [💪 Competências Desenvolvidas](#-competências-desenvolvidas)
+ 
 - [🤝 Colaboradores](#-colaboradores)
 
 
