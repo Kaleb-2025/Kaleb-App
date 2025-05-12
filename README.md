@@ -16,12 +16,16 @@
  | ------ | -------- | ------ |
  | 01     | 30/03/2025 | Concluído |
  | 02     | 01/07/2025 | Em progresso |
- | 03     | 20/09/25   | A fazer |
- | 04     | 01/11/25   | A fazer |
+ | 03     | 20/08/25   | A fazer |
+ | 04     | 01/10/25   | A fazer |
+ | 05     | 01/11/25   | A fazer |
 
  ## 📚 Índice
 - [✏️ Objetivo do Projeto](#️-Objetivo-do-Projeto)
-- [✏️ Objetivo do Projeto](#️-tecnologias-Utilizadas)
+- [🚀 Tecnologias Utilizadas](#️-Tecnologias-Utilizadas)
+- [⚙️ Backlog do Produto](#️-Backlog-do-Produto)
+- [🤝 Colaboradores](#️-Colaboradores)
+
 
  ## ✏️ Objetivo do Projeto
 
