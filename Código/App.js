@@ -6,8 +6,7 @@ import { ProgressProvider } from './src/components/TesteDeLogica4/ProgressContex
 // Supabase
 import { createClient } from '@supabase/supabase-js';
 export const supabase = createClient(
-  'https://rsggftidydvuzvmealpg.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJzZ2dmdGlkeWR2dXp2bWVhbHBnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0NTg3ODIxOSwiZXhwIjoyMDYxNDU0MjE5fQ.JBY4tmTXE_G9ttK-7fejA5TGsg34SadEDVeaBvDQAwI'
+  // linha de código retirada para privacidade do banco de dados. 
 );
 
 // Telas
