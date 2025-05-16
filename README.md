@@ -58,8 +58,8 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  - [x] Desenvolvimento do design;
 -  [x] Documentação da introdução;
  - [x] Criação da logo;
- - [ ] Teste e revisão;
- - [ ] Finalização e aprovação.
+ - [x] Teste e revisão;
+ - [x] Finalização e aprovação.
 
  ### Sprint 2. Desenvolvimento Inicial e Banco de Dados
   ---
@@ -68,7 +68,7 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  - [ ] Documentação Módulos (inicial)
 -  [ ] Documentação dos Matériais Complementares (inicial)
  - [ ] Esquematização do dicionário de dados
- - [ ] Desenvolvimento do banco de dados;
+ - [x] Desenvolvimento do banco de dados;
  - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend).
 
 ### Sprint 3. Desenvolvimento Frontend e Backend
