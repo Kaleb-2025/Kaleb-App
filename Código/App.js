@@ -11,6 +11,7 @@ import Login from './src/screens/Login/Login';
 import EmailPag from './src/screens/Login/EmailPag';
 import CadastroInicial from './src/screens/Login/CadastroInicial';
 import Senha from './src/screens/Login/Senha';
+import Programa from './src/screens/Login/Programa'; 
 import Nome from './src/screens/Login/Nome';
 import Tela1 from './src/screens/TesteDeLogica4/tela1';
 import Tela3 from './src/screens/TesteDeLogica4/Tela3';
@@ -18,6 +19,7 @@ import Tela4 from  './src/screens/TesteDeLogica4/TesteDeLogica41';
 import Tela5 from './src/screens/TesteDeLogica4/tela5';
 import Tela7 from './src/screens/TesteDeLogica4/Tela7';
 import Tela8 from './src/screens/TesteDeLogica4/tela8';
+import Opcao from './src/screens/Login/Opcao';
 import TelaAnalise from './src/screens/TesteDeLogica4/analise';
 
 
@@ -32,7 +34,9 @@ export default function App() {
       <QuizProgressProvider>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="CadastroInicial" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Opcao" component={Opcao} />
             <Stack.Screen name="EmailPag" component={EmailPag} />
+            <Stack.Screen name="Programa" component={Programa} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Senha" component={Senha} />
             <Stack.Screen name="Nome" component={Nome} />
