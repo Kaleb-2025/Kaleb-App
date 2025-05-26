@@ -8,7 +8,7 @@ const Telinha5 = () => {
       <View style={styles.codeWrapper}>
         <Text style={styleInterno.codeContent}>
           <Text style={styleInterno.yellow}> var</Text>
-         <Text style={styleInterno.yellow}>{"\n"}</Text>
+         
           <Text style={styleInterno.blue}>a:</Text>
          <Text style={styleInterno.green}> numérica</Text>
           <Text style={styleInterno.yellow}>{"\n"}</Text>

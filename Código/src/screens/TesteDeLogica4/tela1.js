@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import {ScrollView, View, Text } from 'react-native';
 import styles from '../../styles/styleteste';
 import Header from '../../components/TesteDeLogica4/header.js';
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
@@ -7,17 +7,10 @@ import NextButton from '../../components/TesteDeLogica4/NextButton';
 import ButtonNextQuestion from '../../components/TesteDeLogica4/NextQuestion';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App';
-
-
-import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
+import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 
 const Tela1 = ({ navigation }) => {
-  const { next } = useProgress(); 
-
-  const handleNext = () => {
-    next(); // ✅ Avança a contagem
-    navigation.navigate('Tela3'); // ✅ Navega para a próxima tela
-};
+  const { next, incrementCorrect } = useQuizProgress();
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -65,10 +58,21 @@ const Tela1 = ({ navigation }) => {
     setSelectedOption(index);
   };
 
+  const handleNext = () => {
+    const selected = options[selectedOption];
+
+    if (selected?.iscorrect) {
+      incrementCorrect(); 
+    }
+
+    next();
+    navigation.navigate('Tela3');
+  };
+
 
   return (
-    <>
-      <Header total={6} />
+     <ScrollView contentContainerStyle={styles.quizContainer}>
+     <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
@@ -106,7 +110,7 @@ const Tela1 = ({ navigation }) => {
           </Text>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 

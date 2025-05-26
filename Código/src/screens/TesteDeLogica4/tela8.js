@@ -5,12 +5,15 @@ import { Ionicons } from '@expo/vector-icons';
 import Header from '../../components/TesteDeLogica4/header.js'; 
 import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
+import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 import MultipleChoiceOptions from '../../components/TesteDeLogica4/MultipleChoiceOptions.js'; 
+import NextButton from '../../components/TesteDeLogica4/NextButton'; 
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App'; // Mantém essa linha para importar corretamente o supabase
 
-const Tela8 = () => {
-   const [question, setQuestion] = useState('');
+const Tela8 = ({ navigation }) => {
+  const { next, incrementCorrect } = useQuizProgress();
+  const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   
@@ -61,14 +64,26 @@ const Tela8 = () => {
     fetchQuestionAndAnswers();
   }, []); // Apenas uma vez no início
 
+
   const handleOptionSelect = (index) => {
-    setSelectedOption(index); // Marca a opção selecionada
+    setSelectedOption(index);
+  };
+
+  const handleNext = () => {
+    const selected = options[selectedOption];
+
+    if (selected?.iscorrect) {
+      incrementCorrect(); // ✅ Soma acerto
+    }
+
+    next(); // ✅ Avança a contagem
+    navigation.navigate('TelaAnalise'); // ✅ Vai para próxima tela
   };
 
 
   return (
     <ScrollView contentContainerStyle={styles.quizContainer}>
-      <Header /> 
+      <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
@@ -99,9 +114,7 @@ const Tela8 = () => {
         </View>
         
 
-        <TouchableOpacity style={styles.nextButton}>
-          <Text style={styles.nextButtonText}>Próxima Pergunta</Text>
-        </TouchableOpacity>
+      <NextButton onPress={handleNext} />
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>

@@ -2,17 +2,13 @@ import React from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { CadastroStyles as styles } from '../../styles/CadastroStyle';
 
-const LoginDados = ({ onPress, navigation }) => {
-  const handleLoginPress = () => {
-    navigation.navigate('Redefinir');
-  };
-
+const Esqueci = ({ onPress }) => {
   return (
-    <View style={styles.formContainer}>
-      <View style={styleInterno.inputContainer}>
+  <View style={styles.formContainer}>
+          <View style={styleInterno.inputContainer}>
         <TextInput
           style={styles.inputField}
-          placeholder="Digite seu Email"
+          placeholder="Digite  o email a qual deseja redefinir"
           placeholderTextColor="rgba(0, 0, 0, 0.5)"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -22,7 +18,7 @@ const LoginDados = ({ onPress, navigation }) => {
       <View style={styleInterno.inputContainer}>
         <TextInput
           style={styleInterno.inputField}
-          placeholder="Digite sua Senha"
+          placeholder="Digite  sua  nova Senha"
           placeholderTextColor="rgba(0, 0, 0, 0.5)"
           secureTextEntry
           underlineColorAndroid="transparent"
@@ -31,19 +27,14 @@ const LoginDados = ({ onPress, navigation }) => {
       <View style={styleInterno.divider} />
 
       <TouchableOpacity style={styles.submitButton}>
-        <Text style={styles.submitButtonText}>Login</Text>
+        <Text style={styles.submitButtonText}>Redefinir Senha</Text>
       </TouchableOpacity>
 
-      <Text style={styles.welcomeText}> Esqueceu a senha?
-      <Text style={styles.highlight} onPress={handleLoginPress}> Recuperar senha</Text>
-      </Text>
 
-      
     </View>
   );
 };
 const styleInterno = StyleSheet.create({
-   
   inputContainer: {
     borderRadius: 20,
     backgroundColor: 'rgba(237, 237, 237, 1)',
@@ -67,5 +58,4 @@ const styleInterno = StyleSheet.create({
     marginBottom: 30,
   },
 });
-
-export default LoginDados;
+export default Esqueci;

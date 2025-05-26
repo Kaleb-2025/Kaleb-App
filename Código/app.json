@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "kaleb-_estruturado",
-    "slug": "snack-dcbde4de-56f5-46df-97f3-822156d68890",
+    "slug": "snack-eaddf803-ba07-4159-9775-93d25098445e",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"

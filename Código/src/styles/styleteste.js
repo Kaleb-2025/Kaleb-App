@@ -20,6 +20,7 @@ const css = StyleSheet.create({
     backgroundColor: '#f8faf0',
     paddingHorizontal: 30,
     paddingVertical: 12,
+    marginBottom:80,
     width: '100%',
     alignSelf: 'center',
   },

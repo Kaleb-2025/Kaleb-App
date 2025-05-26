@@ -15,7 +15,7 @@ const CadastroInicial = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Logo />
       <Text style={styles.welcomeText}>
-        Acesse o Kaleb e comece a programar com uma inscrição rápida e gratuita.
+        Acesse o Kaleb e revise seu conhecimento de programação  com uma inscrição rápida e gratuita.
       </Text>
       <View style={styles.socialLoginSection}>
         <SocialLoginButton

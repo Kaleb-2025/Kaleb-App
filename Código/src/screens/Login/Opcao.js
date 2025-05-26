@@ -14,16 +14,21 @@ const Opcao = ({ navigation }) => {
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
   };
+const handleSignupPress = () => {
+  if (!selectedOption) {
+    Alert.alert('Atenção', 'Por favor, selecione uma opção.');
+  } else {
+    next();
 
-  const handleSignupPress = () => {
-    if (!selectedOption) {
-      Alert.alert('Atenção', 'Por favor, selecione uma opção.');
+    if (selectedOption === 'Mediano') {
+        Alert.alert('Teste de Lógica', `Você irá passar  por um teste de lógica, para sabermos o seu nivel a respeito dos conceitos de programação`);
+      navigation.navigate('Tela1'); 
+      
     } else {
-      Alert.alert('Inscrição', `Você selecionou: ${selectedOption}`);
-      next();
-      navigation.navigate('Nome');
+      navigation.navigate('Nome'); 
     }
-  };
+  }
+};
 
   return (
     <ScrollView contentContainerStyle={styleInterno.container}>

@@ -3,9 +3,12 @@ import { View, TextInput } from 'react-native';
 import { Styleprogress as styles } from '../../styles/styleprogress';
 import BotttonContinuar from './BotttonContinuar';
 
-const SenhaLogin = ({ onNext }) => {
+const NomeLogin = ({ onNext }) => {
   const handleSubmit = () => {
-    onNext();
+    console.log('Nome enviado');
+    if (onNext) {
+      onNext(); // Navegar para a próxima tela
+    }
   };
 
   return (
@@ -13,9 +16,12 @@ const SenhaLogin = ({ onNext }) => {
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputField}
-          placeholder="Senha"
+          placeholder="Nome"
           placeholderTextColor="rgba(0, 0, 0, 0.5)"
-          secureTextEntry
+          keyboardType="default"
+          autoCapitalize="none"
+          underlineColorAndroid="transparent"
+          secureTextEntry={false}
         />
       </View>
       <BotttonContinuar title="Continuar" onPress={handleSubmit} />
@@ -23,4 +29,4 @@ const SenhaLogin = ({ onNext }) => {
   );
 };
 
-export default SenhaLogin;
+export default NomeLogin;

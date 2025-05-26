@@ -5,17 +5,13 @@ import Header from '../../components/TesteDeLogica4/header.js';
 import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
 import NextButton from '../../components/TesteDeLogica4/NextButton'; 
-import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
+import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App'; // Mantém essa linha para importar corretamente o supabase
 
 // count das telas
 const Tela5 = ({ navigation }) => {
- const { next } = useProgress();
-const handleNext = () => {
-  next(); 
-  navigation.navigate('Tela7');
-};
+  const { next, incrementCorrect } = useQuizProgress();
 
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
@@ -69,7 +65,18 @@ const handleNext = () => {
   }, []); // Apenas uma vez no início
 
   const handleOptionSelect = (index) => {
-    setSelectedOption(index); // Marca a opção selecionada
+    setSelectedOption(index);
+  };
+
+  const handleNext = () => {
+    const selected = options[selectedOption];
+
+    if (selected?.iscorrect) {
+      incrementCorrect(); // ✅ Soma acerto
+    }
+
+    next(); // ✅ Avança a contagem
+    navigation.navigate('Tela7'); // ✅ Vai para próxima tela
   };
 
   return (

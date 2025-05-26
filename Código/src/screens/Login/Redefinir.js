@@ -2,10 +2,10 @@ import React from 'react';
 import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import Logo from '../../components/Login/Logo';
 import { CadastroStyles as styles } from '../../styles/CadastroStyle';
-import LoginDados from '../../components/Login/login';
+import Esqueci from '../../components/Login/esqueci';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 
-const Login = ({ navigation }) => {
+const Redefinir = ({ navigation }) => {
   const handleEmailSignup = () => {
     navigation.navigate('CadastroInicial');
   };
@@ -14,10 +14,10 @@ const Login = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
     
       <Logo />
-      <Text style={styleInterno.welcomeText}>Faça Login para acessar a plataforma</Text>
+      <Text style={styleInterno.welcomeText}>Redefinir Senha</Text>
       
     
-    <LoginDados onPress={handleEmailSignup} navigation={navigation} />
+      <Esqueci onPress={handleEmailSignup} />
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           Ao se inscrever no Kaleb você concorda com os nossos{' '}
@@ -45,4 +45,4 @@ const styleInterno = StyleSheet.create({
 
 });
 
-export default Login;
+export default Redefinir;

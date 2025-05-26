@@ -1,22 +1,39 @@
-// src/screens/Login/Senha.js
+// src/screens/Login/Nome.js
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import LogoPags from '../../components/Login/LogoPags';
 import HeaderLogin from '../../components/Login/headerLogin';
-import { handleTermsPress, handlePrivacyPress } from '../../links/links';
 import { Styleprogress as styles } from '../../styles/styleprogress';
 import { useCadastro } from './CadastroContext';
+import { supabase } from '../../../App';
 
-const Senha = ({ navigation }) => {
-  const [senhaDigitada, setSenhaDigitada] = useState('');
-  const { setSenha } = useCadastro();
+const Nome = ({ navigation }) => {
+  const [nomeDigitado, setNomeDigitado] = useState('');
+  const { email, senha, setNome } = useCadastro();
 
-  const handleNext = () => {
-    if (senhaDigitada.trim() !== '') {
-      setSenha(senhaDigitada);
-      navigation.navigate('Nome');
+  const handleCadastro = async () => {
+    if (nomeDigitado.trim() === '') {
+      alert('Digite seu nome');
+      return;
+    }
+
+    setNome(nomeDigitado);
+
+    const { error } = await supabase.auth.signUp({
+      email: email,
+      password: senha,
+      options: {
+        data: {
+          nome: nomeDigitado,
+        },
+      },
+    });
+
+    if (error) {
+      alert('Erro ao cadastrar: ' + error.message);
     } else {
-      alert('Digite uma senha válida');
+      alert('Cadastro realizado com sucesso!');
+      navigation.navigate('Programa'); // ou outra tela de boas-vindas
     }
   };
 
@@ -25,27 +42,18 @@ const Senha = ({ navigation }) => {
       <HeaderLogin total={5} />
       <LogoPags />
       <View style={{ width: '100%' }}>
-        <Text style={styles.welcomeText}>Crie uma senha</Text>
+        <Text style={styles.welcomeText}>Qual é o seu nome?</Text>
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Digite sua senha"
-            value={senhaDigitada}
-            onChangeText={setSenhaDigitada}
-            secureTextEntry
-            style={styleInterno.inputField}
+            placeholder="Digite seu nome"
+            value={nomeDigitado}
+            onChangeText={setNomeDigitado}
+            style={styleInterno.input}
           />
         </View>
-         <TouchableOpacity style={styles.submitButton} onPress={handleNext}>
-        <Text style={styles.submitButtonText}>Avançar</Text>
+         <TouchableOpacity style={styles.submitButton} onPress={handleCadastro}>
+        <Text style={styles.submitButtonText}>Finalizar cadastro</Text>
       </TouchableOpacity>
-      </View>
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          Ao se inscrever no Kaleb você concorda com os nossos{' '}
-          <Text onPress={handleTermsPress} style={styles.link}>Termos de Uso</Text>{' '}
-          e{' '}
-          <Text onPress={handlePrivacyPress} style={styles.link}>Política de Privacidade.</Text>
-        </Text>
       </View>
     </ScrollView>
   );
@@ -64,6 +72,7 @@ const styleInterno = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#f8faf0',
   },
+
     inputField: {
     padding: 0,
     fontSize: 12,
@@ -91,4 +100,4 @@ const styleInterno = StyleSheet.create({
   },
 });
 
-export default Senha;
+export default Nome;

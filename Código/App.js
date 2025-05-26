@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { CadastroProvider } from './src/screens/Login/CadastroContext';
+
 
 import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = 'https://rsggftidydvuzvmealpg.supabase.co'
@@ -19,6 +21,7 @@ import Tela4 from  './src/screens/TesteDeLogica4/TesteDeLogica41';
 import Tela5 from './src/screens/TesteDeLogica4/tela5';
 import Tela7 from './src/screens/TesteDeLogica4/Tela7';
 import Tela8 from './src/screens/TesteDeLogica4/tela8';
+import Redefinir from './src/screens/Login/Redefinir';
 import Opcao from './src/screens/Login/Opcao';
 import TelaAnalise from './src/screens/TesteDeLogica4/analise';
 
@@ -30,27 +33,30 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <LoginProgressProvider>
-      <QuizProgressProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="CadastroInicial" screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Opcao" component={Opcao} />
-            <Stack.Screen name="EmailPag" component={EmailPag} />
-            <Stack.Screen name="Programa" component={Programa} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Senha" component={Senha} />
-            <Stack.Screen name="Nome" component={Nome} />
-            <Stack.Screen name="CadastroInicial" component={CadastroInicial} />
-            <Stack.Screen name="Tela1" component={Tela1} />
-            <Stack.Screen name="Tela3" component={Tela3} />
-            <Stack.Screen name="Tela4" component={Tela4} />
-            <Stack.Screen name="Tela5" component={Tela5} />
-            <Stack.Screen name="Tela7" component={Tela7} />
-            <Stack.Screen name="Tela8" component={Tela8} />
-            <Stack.Screen name="TelaAnalise" component={TelaAnalise} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </QuizProgressProvider>
-    </LoginProgressProvider>
+    <CadastroProvider>
+      <LoginProgressProvider>
+        <QuizProgressProvider>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="CadastroInicial" screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="Opcao" component={Opcao} />
+            <Stack.Screen name="Redefinir" component={Redefinir} />
+              <Stack.Screen name="EmailPag" component={EmailPag} />
+              <Stack.Screen name="Programa" component={Programa} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Senha" component={Senha} />
+              <Stack.Screen name="Nome" component={Nome} />
+              <Stack.Screen name="CadastroInicial" component={CadastroInicial} />
+              <Stack.Screen name="Tela1" component={Tela1} />
+              <Stack.Screen name="Tela3" component={Tela3} />
+              <Stack.Screen name="Tela4" component={Tela4} />
+              <Stack.Screen name="Tela5" component={Tela5} />
+              <Stack.Screen name="Tela7" component={Tela7} />
+              <Stack.Screen name="Tela8" component={Tela8} />
+              <Stack.Screen name="TelaAnalise" component={TelaAnalise} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </QuizProgressProvider>
+      </LoginProgressProvider>
+    </CadastroProvider>
   );
 }

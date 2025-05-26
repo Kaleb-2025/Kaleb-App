@@ -4,16 +4,18 @@ import LogoPags from '../../components/Login/LogoPags';
 import EmailDadp from '../../components/Login/EmailDadp';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links';
 import HeaderLogin from '../../components/Login/headerLogin';
-import { useProgress } from '../../components/Login/ProgressLogin';
+import { useLoginProgress } from '../../components/Login/ProgressLogin';
 import { Styleprogress as styles } from '../../styles/styleprogress';
+import { useCadastro } from './CadastroContext';
 
 const EmailPag = ({ navigation }) => {
-  const { next } = useProgress(); 
+  const { setEmail } = useCadastro();
 
-  const handleNext = () => {
-    next();
-    navigation.navigate('CadastroInicial');
+  const handleNext = (emailDigitado) => {
+    setEmail(emailDigitado);
+    navigation.navigate('Senha');
   };
+
 
   return (
     <ScrollView contentContainerStyle={styleInterno.container}>
@@ -21,7 +23,7 @@ const EmailPag = ({ navigation }) => {
       <LogoPags />
       <View style={{ width: '100%' }}>
         <Text style={styles.welcomeText}>Qual é o seu e-mail?</Text>
-        <EmailDadp onNext={handleNext} />
+      <EmailDadp onNext={handleNext} />
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>
