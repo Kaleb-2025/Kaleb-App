@@ -64,6 +64,7 @@ export const CadastroStyles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 30,
   },
+  
   footerText: {
     marginTop: 20,
     color: 'black',
@@ -88,10 +89,14 @@ export const CadastroStyles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 10,
   },
-    footer: {
+  footer: {
+    position: 'absolute',
+    bottom: 80,
+    left: 0,
+    right: 0,
+    padding: 16,
+    backgroundColor: '#f8faf0',
     alignItems: 'center',
-    marginTop: 16,
-    paddingHorizontal: 16,
   },
   inputField: {
     padding: 0,
@@ -117,18 +122,17 @@ export const CadastroStyles = StyleSheet.create({
     flexDirection: 'row',
     width: 200,
     alignItems: 'flex-start',
-    
+    marginTop: 10,
     gap: 6,
   },
   logoImage: {
-    marginTop: 10,
     aspectRatio: 1.22,
-    width: 55,
+    width: 48,
   },
   logoText: {
     fontWeight: 'bold',
     flexGrow: 1,
-    fontSize: 40,
+    fontSize: 45,
     color: '#000',
   },
     socialButton: {
@@ -143,10 +147,11 @@ export const CadastroStyles = StyleSheet.create({
     alignItems: 'center',
     gap: 50,
   },
-  socialIcon: {
-    aspectRatio: 1,
-    width: 23,
-  },
+socialIcon: {
+  width: 23,
+  height: 23, 
+  resizeMode: 'contain', 
+},
   socialText: {
     flexGrow: 1,
     fontSize: 14,
