@@ -54,48 +54,54 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  ---
  - [x] Definição do propósito do template;
  - [x] Esboço do layout;
- - [x] Escolha de cores e fontes;
- - [x] Desenvolvimento do design;
--  [x] Documentação da introdução;
+ - [x] Esboço da logo;
+ - [x] Prototipação da aplicação (fluxo geral do aplicativo);
  - [x] Criação da logo;
- - [x] Teste e revisão;
+ - [x] Escolha de cores e fontes;
+ - [x] Identificação dos elementos principais da interface;
+-  [x] Definição do método ágil;
  - [x] Finalização e aprovação.
 
  ### Sprint 2. Desenvolvimento Inicial e Banco de Dados
   ---
- - [x] Prototipação da aplicação (telas específicas)
+ - [x] Prototipação da aplicação (telas específicas);
  - [x] Documentação do Relatório tecnico (inicial);
- - [ ] Documentação Módulos (inicial)
--  [ ] Documentação dos Matériais Complementares (inicial)
- - [ ] Esquematização do dicionário de dados
+ - [ ] Documentação Módulos (inicial);
+-  [ ] Documentação dos Matériais Complementares (inicial);
+ - [ ] Esquematização do dicionário de dados;
  - [x] Desenvolvimento do banco de dados;
- - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend).
+ - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
+ - [x] Criação dos repositórios GitHub;
+ - [x] Primeiro commit da documentação inicial e do Readme de cada repositório.
 
 ### Sprint 3. Desenvolvimento Frontend e Backend
  ---
-- [ ] Desenvolvimento das telas (programação do frontend)
-- [ ] Desenvolvimento das funcionalidades principais (programação do backend)
-- [ ] Implementação da lógica básica de navegação.
+- [ ] Desenvolvimento das telas (programação do frontend);
+- [ ] Desenvolvimento das funcionalidades principais (programação do backend);
+- [ ] Implementação da lógica básica de navegação;
 - [ ] Documentação do Relatório tecnico (desenvolvimento);
-- [ ] Documentação Módulos (final)
-- [ ] Documentação dos Matériais Complementares (final)
-- [ ] Teste e revisão das funcionalidades desenvolvidas
-- [ ] Desenvolvimento do chatbot
+- [ ] Documentação Módulos (final);
+- [ ] Documentação dos Matériais Complementares (final);
+- [ ] Teste e revisão das funcionalidades desenvolvidas;
+- [ ] Atualização dos repositórios GitHub.
 
  
 ### Sprint 4. Testes, Ajustes, Treinamento e Implementação
  ---
-- [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança)
-- [ ] Monitoramento e ajustes (correção de bugs e melhorias)
-- [ ] Treinamento com professores (para feedback inicial)
-- [ ] Treinamento com alunos (para feedback final)
+- [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
+- [ ] Monitoramento e ajustes (correção de bugs e melhorias);
+- [ ] Treinamento com professores (para feedback inicial);
+- [ ] Treinamento com alunos (para feedback final);
 - [ ] Documentação do Relatório tecnico (final);
+- [ ] Revisão de código nos repositórios GitHub para garantir a qualidade.
 
 ### Sprint 5. Operacionalização e Publicação
  ---
-- [ ] Preparação dos materiais de apresentação (slides finais)
-- [ ] Geração da versão final do aplicativo
-- [ ] Criação do Vídeo de Funcionalidades
+- [ ] Preparação dos materiais de apresentação (slides finais);
+- [ ] Geração da versão final do aplicativo;
+- [ ] Criação do Vídeo de Funcionalidades;
+- [ ] Encadernamento da documentação (Relatório Técnico);
+- [ ] Revisão e atualização dos repositórios GitHub.
 
 ## 💪 Competências Desenvolvidas 
 ### Hard Skill (saber tecnológico)
