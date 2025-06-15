@@ -7,17 +7,24 @@ const css = StyleSheet.create({
 quizContainer: {
   flexGrow: 1, // em vez de flex: 1
   width: "100%",
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
   backgroundColor: '#f8faf0',
   alignItems: "center",
 },
+  page: {
+    flex: 1,
+    backgroundColor: '#f8faf0',
+  },
  
 quizOption: {
   flexDirection: 'row',
   alignItems: 'center',
   marginTop: 8,
-  justifyContent: 'flex-start', // ou 'center' se quiser centralizar texto também
-  width: '90%',            // ✅ ocupa 90% da tela
-  alignSelf: 'center',     // ✅ centraliza horizontalmente
+  justifyContent: 'flex-start', 
+  width: '90%',           
+  alignSelf: 'center',
   marginVertical: 8,
 },
 
@@ -131,10 +138,11 @@ optionText: {
     textAlign: 'center',
   },
   footer: {
-    position: 'absolute',
-    bottom: 80,
-    left: 0,
-    right: 0,
+    // position: 'absolute',
+    // bottom: 80,
+    // left: 0,
+    // right: 0,
+    marginTop: "auto",
     padding: 16,
     backgroundColor: '#f8faf0',
     alignItems: 'center',

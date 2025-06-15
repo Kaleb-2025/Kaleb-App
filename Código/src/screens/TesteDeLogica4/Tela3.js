@@ -82,51 +82,52 @@ const [question, setQuestion] = useState('');
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.quizContainer}>
+<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+  <View style={{ flex: 1, justifyContent: options.length > 2 ? 'flex-start' : 'center' }}>
+    <View style={styles.container}>
       <Header total={6} />
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Teste de <Text style={styles.highlight}>lógica</Text>
-        </Text>
+      <Text style={styles.title}>
+        Teste de <Text style={styles.highlight}>lógica</Text>
+      </Text>
+      <Text style={styles.question}>
+        Observe o código abaixo. O que está acontecendo?
+      </Text>
 
-        <Text style={styles.question}>
-          Observe o código abaixo. O que está acontecendo?
-        </Text>
+      <CodeExample question={question} />
 
-        <CodeExample question={question} />
-        <View style={styles.optionsContainer}> 
-          {options.length > 0 ? (
-            options.map((option, index) => (
-              <QuizOption
-                key={index}
-                content={option.texto}
-                isSelected={selectedOption === index}
-                onSelect={() => handleOptionSelect(index)}
-              />
-            ))
-          ) : (
-            <Text>Carregando respostas...</Text> // Mensagem de carregamento se as respostas não estiverem carregadas
-          )}
-        </View>
-        
-
-
-        <NextButton onPress={handleNext} />
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            Ao se inscrever no Kaleb você concorda com os nossos{' '}
-            <Text onPress={handleTermsPress} style={styles.link}>
-              Termos de Uso
-            </Text>{' '}
-            e{' '}
-            <Text onPress={handlePrivacyPress} style={styles.link}>
-              Política de Privacidade
-            </Text>.
-          </Text>
-        </View>
+      <View style={styles.optionsContainer}>
+        {options.length > 0 ? (
+          options.map((option, index) => (
+            <QuizOption
+              key={index}
+              content={option.texto}
+              isSelected={selectedOption === index}
+              onSelect={() => handleOptionSelect(index)}
+            />
+          ))
+        ) : (
+          <Text>Carregando respostas...</Text>
+        )}
       </View>
-    </ScrollView>
+
+      <NextButton onPress={handleNext} />
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          Ao se inscrever no Kaleb você concorda com os nossos{' '}
+          <Text onPress={handleTermsPress} style={styles.link}>
+            Termos de Uso
+          </Text>{' '}
+          e{' '}
+          <Text onPress={handlePrivacyPress} style={styles.link}>
+            Política de Privacidade
+          </Text>.
+        </Text>
+      </View>
+    </View>
+  </View>
+</ScrollView>
+
   );
 };
 

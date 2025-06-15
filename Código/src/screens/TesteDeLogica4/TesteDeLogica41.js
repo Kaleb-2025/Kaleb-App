@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import styles from '../../styles/styleteste';
 import Header from '../../components/TesteDeLogica4/header.js';
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
@@ -71,8 +71,8 @@ const Tela4 = ({ navigation }) => {
   };
 
   return (
-    <>
-      <Header total={6} />
+ <ScrollView contentContainerStyle={styles.quizContainer}>
+     <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
@@ -110,7 +110,7 @@ const Tela4 = ({ navigation }) => {
           </Text>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 

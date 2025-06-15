@@ -8,16 +8,6 @@ const EmailSignupForm = ({ onPress, navigation }) => {
 
   return (
     <View style={styles.formContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.inputField}
-          placeholder="Digite seu melhor e-mail..."
-          placeholderTextColor="rgba(0, 0, 0, 0.5)"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          underlineColorAndroid="transparent"
-        />
-      </View>
       <TouchableOpacity style={styles.submitButton} onPress={onPress}>
         <Text style={styles.submitButtonText}>Inscrever-se com email</Text>
       </TouchableOpacity>

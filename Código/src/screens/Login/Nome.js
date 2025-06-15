@@ -12,30 +12,28 @@ const Nome = ({ navigation }) => {
   const { email, senha, setNome } = useCadastro();
 
   const handleCadastro = async () => {
-    if (nomeDigitado.trim() === '') {
-      alert('Digite seu nome');
-      return;
+  if (nomeDigitado.trim() === '') {
+    alert('Digite seu nome');
+    return;
+  }
+
+  setNome(nomeDigitado);
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password: senha,
+    options: {
+      data: { full_name: nomeDigitado }   // <- aqui
     }
+  });
 
-    setNome(nomeDigitado);
-
-    const { error } = await supabase.auth.signUp({
-      email: email,
-      password: senha,
-      options: {
-        data: {
-          nome: nomeDigitado,
-        },
-      },
-    });
-
-    if (error) {
-      alert('Erro ao cadastrar: ' + error.message);
-    } else {
-      alert('Cadastro realizado com sucesso!');
-      navigation.navigate('Programa'); // ou outra tela de boas-vindas
-    }
-  };
+  if (error) {
+    alert('Erro ao cadastrar: ' + error.message);
+  } else {
+    alert('Cadastro realizado com sucesso! Confirme o e‑mail para prosseguir.');
+    navigation.navigate('Programa');
+  }
+};
 
   return (
     <ScrollView contentContainerStyle={styleInterno.container}>

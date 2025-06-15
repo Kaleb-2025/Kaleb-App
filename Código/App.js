@@ -23,8 +23,6 @@ import Tela7 from './src/screens/TesteDeLogica4/Tela7';
 import Tela8 from './src/screens/TesteDeLogica4/tela8';
 import Redefinir from './src/screens/Login/Redefinir';
 import Opcao from './src/screens/Login/Opcao';
-import TelaAnalise from './src/screens/TesteDeLogica4/analise';
-
 
 import { ProgressProvider as LoginProgressProvider } from './src/components/Login/ProgressLogin';
 import { ProgressProvider as QuizProgressProvider } from './src/components/TesteDeLogica4/ProgressContext';
@@ -52,7 +50,6 @@ export default function App() {
               <Stack.Screen name="Tela5" component={Tela5} />
               <Stack.Screen name="Tela7" component={Tela7} />
               <Stack.Screen name="Tela8" component={Tela8} />
-              <Stack.Screen name="TelaAnalise" component={TelaAnalise} />
             </Stack.Navigator>
           </NavigationContainer>
         </QuizProgressProvider>

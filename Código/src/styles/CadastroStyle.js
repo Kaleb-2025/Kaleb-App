@@ -106,7 +106,7 @@ export const CadastroStyles = StyleSheet.create({
   submitButton: {
     borderRadius: 20,
     backgroundColor: '#080C2E',
-    marginTop: 20,
+    marginTop: 0,
     padding: 10,
   },
   submitButtonText: {

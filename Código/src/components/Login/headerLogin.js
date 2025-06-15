@@ -17,10 +17,8 @@ const HeaderLogin = ({ total = 5 }) => {
     <View style={styles.header}>
       <TouchableOpacity onPress={handleBackPress}>
         <Image
-          source={{
-            uri: 'https://cdn.builder.io/api/v1/image/assets/TEMP/d6912de51c1e6ab60d5ca03faf297d850ab42052?placeholderIfAbsent=true&apiKey=9fa5fd1f53e14698946a72b8311015ea'
-          }}
-          style={styles.backButton}
+            source={require('../../assets/seta.png')}
+            style={styles.backButton}
         />
       </TouchableOpacity>
       <View style={styles.progressSection}>

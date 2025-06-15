@@ -17,7 +17,7 @@ const LoginDados = ({ navigation }) => {
       Alert.alert('Erro de login', error.message);
     } else {
       console.log('Login bem-sucedido!', data);
-      navigation.navigate('Home'); // ou qualquer tela que represente o app logado
+      navigation.navigate('Tela1'); // ou qualquer tela que represente o app logado
     }
   };
 

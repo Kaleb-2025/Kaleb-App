@@ -71,7 +71,7 @@ const Tela1 = ({ navigation }) => {
 
 
   return (
-     <ScrollView contentContainerStyle={styles.quizContainer}>
+ <ScrollView contentContainerStyle={styles.quizContainer}>
      <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>

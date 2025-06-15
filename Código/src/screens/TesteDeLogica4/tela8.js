@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, TouchableOpacity, } from 'react-native'; 
-import styles from '../../styles/styleEspecial';  
+import styles from '../../styles/styleteste'; 
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../../components/TesteDeLogica4/header.js'; 
 import CodeExample from '../../components/TesteDeLogica4/CodeExemple.js'; 
@@ -76,19 +76,20 @@ const Tela8 = ({ navigation }) => {
       incrementCorrect(); // ✅ Soma acerto
     }
 
-    next(); // ✅ Avança a contagem
-    navigation.navigate('TelaAnalise'); // ✅ Vai para próxima tela
+   // quando a home for criada, mandar p home e só aparecer um aviso
+
+    // next(); // ✅ Avança a contagem
+    // navigation.navigate(''); // ✅ Vai para próxima tela
   };
 
 
   return (
-    <ScrollView contentContainerStyle={styles.quizContainer}>
-      <Header total={6} />
+ <ScrollView contentContainerStyle={styles.quizContainer}>
+     <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
         </Text>
-
 
         <Text style={styles.question}>
             Kaleb estava realizando mais uma de suas tarefas diárias de programação e, ao finalizar, percebeu que havia esquecido de usar a estrutura de repetição adequada. Ajude Kaleb!
@@ -98,20 +99,20 @@ const Tela8 = ({ navigation }) => {
         </Text>
 
         <CodeExample question={question} />
-         <View style={styles.optionsContainer}> 
-          {options.length > 0 ? (
-            options.map((option, index) => (
-              <QuizOption
-                key={index}
-                content={option.texto}
-                isSelected={selectedOption === index}
-                onSelect={() => handleOptionSelect(index)}
-              />
-            ))
-          ) : (
-            <Text>Carregando respostas...</Text> // Mensagem de carregamento se as respostas não estiverem carregadas
-          )}
-        </View>
+    <View style={styles.optionsContainer}>
+        {options.length > 0 ? (
+          options.map((option, index) => (
+            <QuizOption
+              key={index}
+              content={option.texto}
+              isSelected={selectedOption === index}
+              onSelect={() => handleOptionSelect(index)}
+            />
+          ))
+        ) : (
+          <Text>Carregando respostas...</Text>
+        )}
+      </View>
         
 
       <NextButton onPress={handleNext} />
