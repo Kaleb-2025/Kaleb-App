@@ -76,10 +76,10 @@ const Tela8 = ({ navigation }) => {
       incrementCorrect(); // ✅ Soma acerto
     }
 
-   // quando a home for criada, mandar p home e só aparecer um aviso
+   // SUBSTITUIR PELA HOME QUANDO ELA FOR INSERIDA AQUI
 
-    // next(); // ✅ Avança a contagem
-    // navigation.navigate(''); // ✅ Vai para próxima tela
+    next(); // ✅ Avança a contagem
+    navigation.navigate('TelaCurso'); // ✅ Vai para próxima tela
   };
 
 

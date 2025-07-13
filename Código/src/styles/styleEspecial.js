@@ -70,8 +70,9 @@ quizContainer: {
     width: '100%',
     paddingHorizontal: 16,
     marginVertical: 16,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
 option: {
   marginVertical: 8,

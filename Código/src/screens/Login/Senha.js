@@ -69,26 +69,6 @@ const styleInterno = StyleSheet.create({
     fontSize: 12,
     color: '#000',
   },
-    inputContainer: {
-    borderRadius: 20,
-    backgroundColor: 'rgba(237, 237, 237, 1)',
-    borderWidth: 1,
-    borderColor: 'rgba(206, 206, 206, 1)',
-    marginTop: 0,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-  },
-  submitButton: {
-    borderRadius: 20,
-    backgroundColor: '#080C2E',
-    marginTop: 20,
-    padding: 10,
-  },
-  submitButtonText: {
-    color: 'white',
-    fontSize: 15,
-    textAlign: 'center',
-  },
 });
 
 export default Senha;
