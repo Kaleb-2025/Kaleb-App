@@ -66,9 +66,9 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
   ---
  - [x] Prototipação da aplicação (telas específicas);
  - [x] Documentação do Relatório tecnico (inicial);
- - [ ] Documentação Módulos (inicial);
+ - [x] Documentação Módulos (inicial);
 -  [ ] Documentação dos Matériais Complementares (inicial);
- - [ ] Esquematização do dicionário de dados;
+ - [x] Esquematização do dicionário de dados;
  - [x] Desenvolvimento do banco de dados;
  - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
  - [x] Criação dos repositórios GitHub;
@@ -76,10 +76,10 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
 
 ### Sprint 3. Desenvolvimento Frontend e Backend
  ---
-- [ ] Desenvolvimento das telas (programação do frontend);
-- [ ] Desenvolvimento das funcionalidades principais (programação do backend);
-- [ ] Implementação da lógica básica de navegação;
-- [ ] Documentação do Relatório tecnico (desenvolvimento);
+- [x] Desenvolvimento das telas (programação do frontend);
+- [x] Desenvolvimento das funcionalidades principais (programação do backend);
+- [x] Implementação da lógica básica de navegação;
+- [x] Documentação do Relatório tecnico (desenvolvimento);
 - [ ] Documentação Módulos (final);
 - [ ] Documentação dos Matériais Complementares (final);
 - [ ] Teste e revisão das funcionalidades desenvolvidas;
