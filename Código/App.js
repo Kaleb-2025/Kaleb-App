@@ -15,14 +15,17 @@ import CadastroInicial from './src/screens/Login/CadastroInicial';
 import Senha from './src/screens/Login/Senha';
 import Programa from './src/screens/Login/Programa'; 
 import Nome from './src/screens/Login/Nome';
+import EmailConfirmado from './src/screens/Login/emailConfirmado';
 import Tela1 from './src/screens/TesteDeLogica4/tela1';
 import Tela3 from './src/screens/TesteDeLogica4/Tela3';
 import Tela4 from  './src/screens/TesteDeLogica4/TesteDeLogica41';
 import Tela5 from './src/screens/TesteDeLogica4/tela5';
 import Tela7 from './src/screens/TesteDeLogica4/Tela7';
 import Tela8 from './src/screens/TesteDeLogica4/tela8';
+import Home from './src/screens/homePage';
 import TelaCurso from './src/screens/trilhaCursoLogica';
 import TelaDinamica from './src/screens/cursoLogica/telaDinamica';
+import TelaPerfil from './src/screens/perfil/perfil';
 import Redefinir from './src/screens/Login/Redefinir';
 import Opcao from './src/screens/Login/Opcao';
 
@@ -45,6 +48,7 @@ export default function App() {
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Senha" component={Senha} />
               <Stack.Screen name="Nome" component={Nome} />
+              <Stack.Screen name="EmailConfirmado" component={EmailConfirmado} />
               <Stack.Screen name="CadastroInicial" component={CadastroInicial} />
               <Stack.Screen name="Tela1" component={Tela1} />
               <Stack.Screen name="Tela3" component={Tela3} />
@@ -52,8 +56,10 @@ export default function App() {
               <Stack.Screen name="Tela5" component={Tela5} />
               <Stack.Screen name="Tela7" component={Tela7} />
               <Stack.Screen name="Tela8" component={Tela8} />
+              <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="TelaCurso" component={TelaCurso} />
-              <Stack.Screen name="TelaDinamica" component={TelaDinamica} />
+              <Stack.Screen name="TelaDinamica" component={TelaDinamica}/>
+              <Stack.Screen name="TelaPerfil" component={TelaPerfil}/>
             </Stack.Navigator>
           </NavigationContainer>
         </QuizProgressProvider>

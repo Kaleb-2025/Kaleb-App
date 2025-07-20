@@ -19,21 +19,44 @@ const Nome = ({ navigation }) => {
 
   setNome(nomeDigitado);
 
-  const { error } = await supabase.auth.signUp({
+  const { data: signUpData, error } = await supabase.auth.signUp({
     email,
     password: senha,
     options: {
-      data: { full_name: nomeDigitado }   // <- aqui
-    }
+      data: { full_name: nomeDigitado },
+    },
   });
 
   if (error) {
     alert('Erro ao cadastrar: ' + error.message);
+    return;
+  }
+
+  const user = signUpData?.user;
+  if (user) {
+    const { error: infoError } = await supabase
+      .from('info_user')
+      .insert([
+        {
+          idusuario: user.id,
+          xp: 0,
+          cursoandamento: null,
+        },
+      ]);
+
+    if (infoError) {
+      console.error('Erro ao criar info_users:', infoError);
+      alert('Cadastro feito, mas houve erro ao criar dados do usuário.');
+    } else {
+      alert('Cadastro completo! Confirme seu e‑mail para prosseguir.');
+      navigation.navigate('Programa');
+    }
   } else {
-    alert('Cadastro realizado com sucesso! Confirme o e‑mail para prosseguir.');
+    alert('Cadastro enviado! Confirme seu e-mail.');
     navigation.navigate('Programa');
   }
 };
+
 
   return (
     <ScrollView contentContainerStyle={styleInterno.container}>

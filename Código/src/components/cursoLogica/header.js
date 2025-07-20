@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles/styleteste';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 
 const Header = ({ total = 6 }) => {
 const { progress, resetProgress } = useQuizProgress();
 
  const handleBackPress = () => {
-  resetProgress(); // ✅ correto agora
-  navigation.navigate('TelaCurso'); // ou apenas 'Opcao' se for o nome da rota
+  resetProgress(); 
+  navigation.navigate('TelaCurso'); 
 };
 
 
