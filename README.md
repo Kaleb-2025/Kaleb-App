@@ -70,7 +70,6 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
 -  [x] Documentação dos Matériais Complementares (inicial);
  - [x] Esquematização do dicionário de dados;
  - [x] Desenvolvimento do banco de dados;
- - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
  - [x] Criação dos repositórios GitHub;
  - [x] Primeiro commit da documentação inicial e do Readme de cada repositório.
 
@@ -80,6 +79,7 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
 - [x] Desenvolvimento das funcionalidades principais (programação do backend);
 - [x] Implementação da lógica básica de navegação;
 - [x] Documentação do Relatório tecnico (desenvolvimento);
+- [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
 - [ ] Documentação Módulos (final);
 - [ ] Documentação dos Matériais Complementares (final);
 - [ ] Teste e revisão das funcionalidades desenvolvidas;
@@ -141,7 +141,7 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
         <img src="https://avatars.githubusercontent.com/u/132226469?v=4" width="100px;" alt="Giovanna Clemente"/><br>
         <strong>Giovanna Clemente</strong>
       </a><br><br>
-      <a href="#" title="LinkedIn">
+      <a href="https://br.linkedin.com/in/giovanna-clemente-2a3209329/" title="LinkedIn">
         <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
       </a>
     </td>
