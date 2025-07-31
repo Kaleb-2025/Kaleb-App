@@ -15,7 +15,7 @@
  | Sprint | Previsão | Status |
  | ------ | -------- | ------ |
  | 01     | 30/03/2025 | Concluído |
- | 02     | 01/07/2025 | Em progresso |
+ | 02     | 01/07/2025 | Concluído |
  | 03     | 20/08/25   | A fazer |
  | 04     | 01/10/25   | A fazer |
  | 05     | 01/11/25   | A fazer |
