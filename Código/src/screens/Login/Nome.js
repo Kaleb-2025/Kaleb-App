@@ -1,4 +1,4 @@
-// src/screens/Login/Nome.js
+ // src/screens/Login/Nome.js
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import LogoPags from '../../components/Login/LogoPags';
@@ -40,7 +40,7 @@ const Nome = ({ navigation }) => {
         {
           idusuario: user.id,
           xp: 0,
-          cursoandamento: null,
+          cursoandamento: 1,
         },
       ]);
 

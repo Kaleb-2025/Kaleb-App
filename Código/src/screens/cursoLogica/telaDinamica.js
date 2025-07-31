@@ -27,6 +27,7 @@
       'galindo-font': require('../../fonts/Galindo-Regular.ttf'),
     });
 
+    // Const para usar
     const { next } = useQuizProgress();
     const [tela, setTela] = useState(null);
     const [falas, setFalas] = useState([]);
@@ -41,6 +42,9 @@
     const [respostaCorreta, setRespostaCorreta] = useState(false);
     const [respostaErrada, setRespostaErrada] = useState(false);
     const [quantidadeXp, setQuantidadeXp] = useState(null);
+    const [jaTentou, setJaTentou] = useState(false);
+    const [ganhouXp, setGanhouXp] = useState(false);
+    const [finaldoCapitulo, setfinaldoCapitulo] = useState(false);
 
     useEffect(() => {
       buscarDados();
@@ -49,33 +53,34 @@
     async function buscarDados() {
       setLoading(true);
       
+      // importação das telas do banco
       const { data: telaData } = await supabase
         .from('telas_curso1')
         .select('*')
         .eq('idtela', idTela)
         .single();
 
-        
-
+      // importação dos capítulos atráves da relação com as telas
         if (telaData?.idcapitulo) {
         const { data: capituloData } = await supabase
           .from('capitulos_curso1')
           .select('qtdtelas')
           .eq('idcapitulo', telaData.idcapitulo)
           .single();
-
+      // aqui é p/ o header, mas o header ta bugando :(
         if (capituloData?.qtdtelas) {
           setQtdTelasCapitulo(capituloData.qtdtelas);
         }
       }
-
-
+  
+      // importação das falas do kaleb atráves da relação com as telas
       const { data: falasData } = await supabase
         .from('falaskaleb_curso1')
         .select('*')
         .eq('idtela', idTela);
 
-        const { data: questoesData } = await supabase
+      // importação das questões do kaleb atráves da relação com as telas
+      const { data: questoesData } = await supabase
         .from('perguntas_curso1')
         .select('*')
         .eq('idtela', idTela);
@@ -84,6 +89,7 @@
       setFalas(falasData);
       setQuestoes(questoesData);
 
+      // importação as alternativas das questões fechadas atráves da relação com as questões
       if (questoesData.length && questoesData[0].tipoquestao === 0) {
         const { data: alternativasData } = await supabase
         .from('alternativas_curso1')
@@ -97,6 +103,7 @@
           setAlternativas([]); 
         }
       }
+      // importação para as questões que são completáveis
       else if (questoesData.length && questoesData[0].tipoquestao === 2) {
         const { data: blocosData } = await supabase
           .from('preenchercodigo_curso1')
@@ -107,42 +114,78 @@
       }
       setLoading(false);
     }
-  async function adicionarXP(pontos) {
-  
-  const { data: userInfo, error: userError } = await supabase.auth.getUser();
-  if (userError || !userInfo?.user?.id) {
-    console.error('Erro ao obter usuário:', userError?.message);
-    return;
+    // função para adicionar os xp -> isso aqui vai se relacionar com a tela de rightAnswer
+    async function adicionarXP(pontos) {
+      const { data: userInfo, error: userError } = await supabase.auth.getUser();
+      if (userError || !userInfo?.user?.id) {
+        console.error('Erro ao obter usuário:', userError?.message);
+        return;
+      }
+
+      const uid = userInfo.user.id;
+
+      const { data: perfilData, error: perfilError } = await supabase
+        .from('info_user')
+        .select('xp')
+        .eq('idusuario', uid)
+        .single();
+
+      if (perfilError) {
+        console.error('Erro ao buscar XP atual:', perfilError.message);
+        return;
+      }
+
+      const novoXP = (perfilData.xp || 0) + pontos;
+
+      const { data, error } = await supabase
+        .from('info_user')
+        .update({ xp: novoXP })
+        .eq('idusuario', uid);
+
+      if (error) {
+        console.error('Erro ao atualizar XP:', error.message);
+      } else {
+        console.log('XP atualizado para:', novoXP);
+      }
   }
-
-  const uid = userInfo.user.id;
-
-
-  const { data: perfilData, error: perfilError } = await supabase
-    .from('info_user')
-    .select('xp')
-    .eq('idusuario', uid)
-    .single();
-
-    if (perfilError) {
-      console.error('Erro ao buscar XP atual:', perfilError.message);
+  // essa aqui é para registrar que o capítulo foi concluído (para liberar o próximo na TelaCurso)
+  async function registrarConclusaoCapitulo(idcapitulo) {
+    const { data: userInfo, error: userError } = await supabase.auth.getUser();
+    if (userError || !userInfo?.user?.id) {
+      console.error('Erro ao obter usuário:', userError?.message);
       return;
     }
 
-    
-    const novoXP = (perfilData.xp || 0) + pontos;
+    const uid = userInfo.user.id;
 
-    const { data, error } = await supabase
-      .from('info_user')
-      .update({ xp: novoXP })
-      .eq('idusuario', uid);
+    const { data: existente, error: consultaError } = await supabase
+      .from('progresso_capitulo')
+      .select('idcapitulo')
+      .eq('idusuario', uid)
+      .eq('idcapitulo', idcapitulo)
+      .single();
 
-    if (error) {
-      console.error('Erro ao atualizar XP:', error.message);
-    } else {
-      console.log('XP atualizado para:', novoXP);
+    if (consultaError && consultaError.code !== 'PGRST116') {
+      console.error('Erro ao verificar progresso:', consultaError.message);
+      return;
     }
-  }
+
+    if (!existente) {
+      const { error: insertError } = await supabase
+      .from('progresso_capitulo')
+      .insert({
+        idusuario: uid,
+        idcapitulo: idcapitulo,
+        completou: true,
+      });
+
+      if (insertError) {
+        console.error('Erro ao registrar progresso:', insertError.message);
+      } else {
+        console.log('Progresso registrado para capítulo:', idcapitulo);
+      }
+    }
+}
 
     const tipoBotao = tela ? Number(tela.tipobotao) : 0;
     const tipoFundo = tela ? Number(tela.tipofundo) : 0;
@@ -165,15 +208,16 @@
     if (loading || !tela) {
       return <ActivityIndicator size="large" color="blue" />;
     }
+    
     return (
       <View style={{flex: 1}}>
         <ScrollView contentContainerStyle={styles.quizContainer}>
         <Header total={qtdTelasCapitulo || 0} />
-      <View style={[ // containerBase
-        stylesP.containerBase, 
-        tipoFundo === 1 && stylesP.containerAzul,
-        tipoFundo === 0 && stylesP.containerNormal,
-      ]}>
+  <View style={[ // containerBase
+    stylesP.containerBase, 
+    tipoFundo === 1 && stylesP.containerAzul,
+    tipoFundo === 0 && stylesP.containerNormal,
+  ]}>
     <View style={{ flex: 1, justifyContent: 'flex-start' }}>
       {tela.titulo && (
         <Text style={[
@@ -237,7 +281,7 @@
               <CustomButton
                 tipoBotao={tipoBotao}
                 align={tela.componente === 1 ? 'right' : 'center'}
-                onPress={() => {
+                onPress={async () => {
                   if (tipoBotao === 0) {
                     if (ultimaTela === 1) {
                       alert("Parabéns! Você finalizou o capítulo " + tela.idcapitulo + " 🎉");
@@ -252,42 +296,52 @@
                       const alternativaCerta = alternativas.find(a => a.correta === true);
                       const respostaUsuario = alternativas[selectedOption];
                       if (respostaUsuario && respostaUsuario.idalternativa === alternativaCerta.idalternativa) {
+                         if (!jaTentou) {
+                          adicionarXP(5);
+                          setGanhouXp(true);
+                        }
                         if (ultimaTela === 1) {
-                          adicionarXP(5);
-                          alert("Parabéns! Você finalizou o capítulo " + tela.idcapitulo + " 🎉");
-                          navigation.navigate('TelaCurso');
-                        } else {
-                          adicionarXP(5);
+                          setfinaldoCapitulo(true);
                           setRespostaCorreta(true);
+                          return;
+                        } else {
+                          setRespostaCorreta(true);
+                          setJaTentou(true); 
                           return;
                         }
                       } else {
                         setRespostaErrada(true);
+                        setJaTentou(true); 
                         return;
                       }
                     }
 
-                    // Questão aberta
+                   // Questão aberta
                     else if (tipoQuestao === 1) {
                       const respostaUsuario = respostas[0]?.toLowerCase().trim();
                       const respostaEsperada = respostaCerta?.toLowerCase().trim();
+
                       if (respostaUsuario === respostaEsperada) {
+                        if (!jaTentou) {
+                          adicionarXP(10);
+                          setGanhouXp(true);
+                        }
                         if (ultimaTela === 1) {
-                          adicionarXP(10);
-                          alert("Parabéns! Você finalizou o capítulo " + tela.idcapitulo + " 🎉");
-                          navigation.navigate('TelaCurso');
-                        } else {
-                          adicionarXP(10);
-                            setRespostaCorreta(true);
-                            return;
+                          setfinaldoCapitulo(true);
+                          setRespostaCorreta(true);
+                          return;
+                        }else {
+                          setRespostaCorreta(true);
+                          setJaTentou(true); 
+                          return;
                         }
                       } else {
-                        //alert("Resposta incorreta! Tente novamente. Resposta esperada: " + respostaEsperada);
-                        
                         setRespostaErrada(true);
+                        setJaTentou(true); 
                         return;
                       }
                     }
+
 
                     // Questão com blocos preenchíveis
                     else if (tipoQuestao === 2) {
@@ -296,17 +350,22 @@
                       );
 
                       if (todasCorretas) {
+                        if (!jaTentou) {
+                          adicionarXP(15);
+                          setGanhouXp(true);
+                        }
                         if (ultimaTela === 1) {
-                          adicionarXP(15);
-                          alert("Parabéns! Você finalizou o capítulo " + tela.idcapitulo + " 🎉");
-                          navigation.navigate('TelaCurso');
+                          setfinaldoCapitulo(true);
+                          setRespostaCorreta(true);
+                          return;
                         } else {
-                          adicionarXP(15);
+                          setJaTentou(true);
                           setRespostaCorreta(true);
                           return;
                         }
                       } else {
                         setRespostaErrada(true);
+                        setJaTentou(true); 
                         return;
                       }
                     }
@@ -314,8 +373,9 @@
                 }}
               />
             </View>
-          {respostaCorreta && <RightAnswer 
-          valorXp ={quantidadeXp}/>}
+        {respostaCorreta && (
+          <RightAnswer valorXp={quantidadeXp} ganhouXp={ganhouXp} finaldoCapitulo = {ultimaTela}  idcapitulo={tela.idcapitulo} />
+        )}
         {respostaErrada &&
          <WrongAnswer fechar={() => setRespostaErrada(false)} 
           rightAnswer={respostaCerta} />}

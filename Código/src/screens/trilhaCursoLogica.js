@@ -1,13 +1,43 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import {SafeAreaView,View,Text,StyleSheet,StatusBar,TouchableOpacity,Image,} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import colors from '../constants/colors';
 import textos from '../constants/textos';
 import BarraProgresso from '../components/trilhaCursoLogica/barraProcesso';
 import TrilhaCurso from '../components/trilhaCursoLogica/trilhaCurso';
 import MateriaisCurso from '../components/trilhaCursoLogica/materiaisCurso';
+import {supabase} from '../../App';
 
 const TelaCurso = () => {
   const [abaAtiva, setAbaAtiva] = useState('trilha');
+  const navigation = useNavigation();
+
+    const [perfil, setPerfil] = useState(null);
+    useEffect(() => {
+    buscarDados();
+  }, []);
+
+  async function buscarDados() {
+    const { data: userInfo, error: userError } = await supabase.auth.getUser();
+
+    if (userError || !userInfo?.user?.id) {
+      console.error("Erro ao obter usuário:", userError?.message);
+      return;
+    }
+
+    const uid = userInfo.user.id;
+    const { data: perfilData, error: perfilError } = await supabase
+      .from('info_user')
+      .select('*')
+      .eq('idusuario', uid)
+      .single();
+
+    if (perfilError) {
+      console.error("Erro ao buscar info_user:", perfilError.message);
+    } else {
+      setPerfil(perfilData);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -16,7 +46,10 @@ const TelaCurso = () => {
       {/* Cabeçalho com seta e indicadores */}
       <View style={styles.header}>
         <View style={styles.headerRow}>
-          <TouchableOpacity style={styles.backButton}>
+          <TouchableOpacity style={styles.backButton}
+           onPress={() => navigation.navigate('Home')}
+          >
+            
             <Image
               source={require('../assets/seta_branca.png')}
               style={styles.setaImg}
@@ -27,7 +60,7 @@ const TelaCurso = () => {
           <View style={styles.statsRow}>
             <View style={styles.statBox}>
               <Image source={require('../assets/estrela.png')} style={styles.icon} />
-              <Text style={styles.statText}>3598</Text>
+              <Text style={styles.statText}>{perfil?.xp ?? '0'}</Text>
             </View>
             <View style={styles.statBox}>
               <Image source={require('../assets/kaleb.png')} style={styles.icon} />

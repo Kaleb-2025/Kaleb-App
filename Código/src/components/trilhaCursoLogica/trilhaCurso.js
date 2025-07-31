@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import {
   View, Text, Modal, TouchableOpacity, Image,
   ScrollView, Pressable, Animated, StyleSheet
 } from 'react-native';
 import Svg, { Path, Circle as SvgCircle, Line } from 'react-native-svg';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { supabase } from '../../../App';
 import colors from '../../constants/colors';
 
@@ -18,9 +18,18 @@ export default function TrilhaCurso() {
   const [atividadeSelecionada, setAtividadeSelecionada] = useState(null);
   const scales = useRef([]).current;
 
-  useEffect(() => {
-    async function buscarCapitulos() {
-      const { data, error } = await supabase
+useFocusEffect(
+  useCallback(() => {
+    async function buscarCapitulosComProgresso() {
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      const uid = userData?.user?.id;
+
+      if (!uid) {
+        console.error('Usuário não autenticado');
+        return;
+      }
+
+      const { data: caps, error: capError } = await supabase
         .from('capitulos_curso1')
         .select(`
           idcapitulo,
@@ -31,22 +40,49 @@ export default function TrilhaCurso() {
           cores,
           positionX,
           positionY,
-          bloqueado
+          quantidadexp
         `)
         .order('idcapitulo', { ascending: true });
-      if (error) {
-        console.error('Erro ao buscar capítulos:', error);
-      } else {
-        setCapitulos(data);
-        data.forEach((_, i) => {
-          scales[i] = new Animated.Value(1);
-        });
-      }
-    }
-    buscarCapitulos();
-  }, []);
 
-  console.log(capitulos);
+      const { data: progresso, error: progError } = await supabase
+        .from('progresso_capitulo')
+        .select('idcapitulo, completou')
+        .eq('idusuario', uid);
+
+        console.log("UID", uid);
+
+        console.log('Progresso do usuário:', progresso);
+
+      if (capError || progError) {
+        console.error('Erro ao buscar dados:', capError || progError);
+        return;
+      }
+
+      const idsConcluidos = progresso
+        .filter(p => p.completou === true)
+        .map(p => p.idcapitulo);
+
+      const capitulosAtualizados = caps.map((cap, index) => {
+        if (index === 0) return { ...cap, bloqueado: false };
+
+        const capAnterior = caps[index - 1];
+        const capAnteriorConcluido = idsConcluidos.includes(capAnterior.idcapitulo);
+
+        return {
+          ...cap,
+          bloqueado: !capAnteriorConcluido,
+        };
+      });
+
+      setCapitulos(capitulosAtualizados);
+      capitulosAtualizados.forEach((_, i) => {
+        scales[i] = new Animated.Value(1);
+      });
+    }
+
+    buscarCapitulosComProgresso();
+  }, [navigation])
+);
 
   const handlePress = (index) => {
     const cap = capitulos[index];
@@ -72,7 +108,6 @@ export default function TrilhaCurso() {
     }).start();
   };
 
-  // Helper para gerar linhas entre pontos
   const renderConnections = () => {
     const lines = [];
     for (let i = 0; i < capitulos.length - 1; i++) {
@@ -159,7 +194,7 @@ export default function TrilhaCurso() {
               }}
               style={[styles.modalButton, styles.activeButton]}
             >
-              <Text style={styles.modalButtonText}>Começar +20xp</Text>
+              <Text style={styles.modalButtonText}>Começar +{atividadeSelecionada?.quantidadexp}xp</Text>
             </TouchableOpacity>
           </View>
         </View>

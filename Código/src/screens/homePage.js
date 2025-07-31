@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { supabase } from '../../App';
 
 import {
   View,
@@ -16,15 +17,43 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // Componente StatsHeader
 
 const StatsHeader = () => {
+  const [perfil, setPerfil] = useState(null);
+    useEffect(() => {
+    buscarDados();
+  }, []);
+
+  async function buscarDados() {
+    const { data: userInfo, error: userError } = await supabase.auth.getUser();
+
+    if (userError || !userInfo?.user?.id) {
+      console.error("Erro ao obter usuário:", userError?.message);
+      return;
+    }
+
+    const uid = userInfo.user.id;
+    const { data: perfilData, error: perfilError } = await supabase
+      .from('info_user')
+      .select('*')
+      .eq('idusuario', uid)
+      .single();
+
+    if (perfilError) {
+      console.error("Erro ao buscar info_user:", perfilError.message);
+    } else {
+      setPerfil(perfilData);
+    }
+  }
+
+
   return (
     <View style={styles.statsHeader}>
       <View style={styles.statItem}>
         <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/c032681c1c5654daf16e97d0a148b341dae808bc" }}
-          style={styles.statIcon}
+          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//star.png" }}
+          style={styles.icon}
         />
         <View style={styles.statValueContainer}>
-          <Text style={styles.statValue}>0</Text>
+          <Text style={styles.statValue}>{perfil?.xp ?? '0'}</Text>
         </View>
       </View>
 
@@ -40,7 +69,7 @@ const StatsHeader = () => {
 
       <View style={styles.statItem}>
         <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/5fa4a2f4e07b3a79da8a77aff5adc6e718556f8f" }}
+          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//python-icon.png" }}
           style={styles.statIcon}
         />
         <View style={styles.statValueContainer}>
@@ -82,7 +111,7 @@ const CourseCard = ({ title, progress, status, buttonText }) => {
           </View>
 
           <TouchableOpacity style={styles.actionButton}
-          onPress={() => navigation.navigate('TelaCurso')} // adicionado só p testar -> mudar depois
+          onPress={() => navigation.navigate('CursoLogica')}
           >
           
             <Text style={styles.buttonText}>{buttonText}</Text>
@@ -204,7 +233,7 @@ statIcon: {
   marginRight: 8 // Espaço entre ícone e texto
 },
 statValueContainer: {
-  backgroundColor: '#f3f4f6',
+  backgroundColor: 'none',
   paddingHorizontal: 12,
   paddingVertical: 4,
   borderRadius: 4
@@ -318,6 +347,11 @@ statItemNoBorder: {
   },
   activeNavText: {
     color: '#3b82f6'
-  }
+  },
+    icon: {
+    width: 24,
+    height: 24,
+    marginRight: 4,
+  },
 });
 
