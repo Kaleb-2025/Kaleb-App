@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import styles from '../../styles/styleteste';
 import Header from '../../components/TesteDeLogica4/header.js';
 import QuizOption from '../../components/TesteDeLogica4/QuizOption';
-import ButtonNextQuestion from '../../components/TesteDeLogica4/NextQuestion';
 import NextButton from '../../components/TesteDeLogica4/NextButton'; 
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App';
+import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 
-import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
 
 const Tela4 = ({ navigation }) => {
-  const { next } = useProgress(); 
+  const { next, incrementCorrect } = useQuizProgress();
 
-  const handleNext = () => {
-    next(); // ✅ Avança a contagem
-    navigation.navigate('Tela5'); // ✅ Navega para a próxima tela
-  };
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -64,9 +59,20 @@ const Tela4 = ({ navigation }) => {
     setSelectedOption(index);
   };
 
+  const handleNext = () => {
+    const selected = options[selectedOption];
+
+    if (selected?.iscorrect) {
+      incrementCorrect(); // ✅ Soma acerto
+    }
+
+    next(); // ✅ Avança a contagem
+    navigation.navigate('Tela5'); // ✅ Vai para próxima tela
+  };
+
   return (
-    <>
-      <Header total={6} />
+ <ScrollView contentContainerStyle={styles.quizContainer}>
+     <Header total={6} />
       <View style={styles.container}>
         <Text style={styles.title}>
           Teste de <Text style={styles.highlight}>lógica</Text>
@@ -89,8 +95,7 @@ const Tela4 = ({ navigation }) => {
           )}
         </View>
 
-
-        <NextButton onPress={handleNext} /> {/* ✅ Função do button */}
+        <NextButton onPress={handleNext} />
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -105,7 +110,7 @@ const Tela4 = ({ navigation }) => {
           </Text>
         </View>
       </View>
-    </>
+    </ScrollView>
   );
 };
 

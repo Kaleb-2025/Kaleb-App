@@ -104,7 +104,7 @@ export const Styleprogress = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16,
     paddingHorizontal: 16,
-  },
+},
 
   footerText: {
     color: 'black',
@@ -118,3 +118,4 @@ export const Styleprogress = StyleSheet.create({
     color: 'blue',
   },
 });
+

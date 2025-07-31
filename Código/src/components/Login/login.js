@@ -1,77 +1,101 @@
-import React from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-import { CadastroStyles as styles } from '../../styles/CadastroStyle';
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { supabase } from '../../../App';
 
-const LoginDados = ({ onPress }) => {
+const LoginDados = ({ navigation }) => {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  const handleLoginPress = async () => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: senha,
+    });
+
+    if (error) {
+      console.error('Erro ao fazer login:', error.message);
+      Alert.alert('Erro de login', error.message);
+    } else {
+      console.log('Login bem-sucedido!', data);
+      navigation.navigate('TelaCurso'); // SUBSTITUIR PELA HOME QUANDO A HOME ESTIVER INSERIDA 
+    }
+  };
+
   return (
-  <View style={styles.formContainer}>
-          <View style={styleInterno.inputContainer}>
+    <View style={styles.formContainer}>
+     <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputField}
           placeholder="Digite seu Email"
-          placeholderTextColor="rgba(0, 0, 0, 0.5)"
+          placeholderTextColor="gray"
           keyboardType="email-address"
           autoCapitalize="none"
-          underlineColorAndroid="transparent"
+          value={email}
+          onChangeText={setEmail}
         />
       </View>
-      <View style={styleInterno.inputContainer}>
-        <TextInput
-          style={styleInterno.inputField}
-          placeholder="Digite  sua  Senha"
-          placeholderTextColor="rgba(0, 0, 0, 0.5)"
-          secureTextEntry
-          underlineColorAndroid="transparent"
-        />
+       <View style={styles.inputContainer}>
+      <TextInput
+        style={styles.inputField}
+        placeholder="Digite sua Senha"
+        placeholderTextColor="gray"
+        secureTextEntry
+        value={senha}
+        onChangeText={setSenha}
+      />
       </View>
-      <View style={styleInterno.divider} />
 
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={handleLoginPress}>
         <Text style={styles.submitButtonText}>Login</Text>
       </TouchableOpacity>
 
-          <Text style={styles.welcomeText}>
-        Esqueceu a senha? 
-        <Text style={styles.highlight}> Recuperar senha </Text>
+      <Text style={styles.forgotPasswordText}>
+        Esqueceu a senha?{' '}
+        <Text style={styles.highlight} onPress={() => navigation.navigate('Redefinir')}>
+          Recuperar senha
+        </Text>
       </Text>
-
     </View>
   );
 };
-const styleInterno = StyleSheet.create({
-   container: {
-    flexGrow: 1,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    maxWidth: 420,
-    width: '100%',
-    paddingTop: 120,
-    paddingBottom: 55,
-    paddingHorizontal: 40,
-    alignItems: 'center',
-    backgroundColor: '#f8faf0',
+
+const styles = StyleSheet.create({
+  formContainer: {
+    padding: 20,
   },
-  inputContainer: {
-    borderRadius: 20,
-    backgroundColor: 'rgba(237, 237, 237, 1)',
-    borderWidth: 1,
-    borderColor: 'rgba(206, 206, 206, 1)',
-    marginTop: 30,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-  },
-  inputField: {
+   inputField: {
     padding: 0,
     fontSize: 12,
     color: '#000',
   },
-      
-  divider: {
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(206, 206, 206, 1)',
-    alignSelf: 'stretch',
+    inputContainer: {
+    borderRadius: 20,
+    backgroundColor: 'rgba(237, 237, 237, 1)',
+    borderWidth: 1,
+    borderColor: 'rgba(206, 206, 206, 1)',
     marginTop: 20,
-    marginBottom: 30,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+  },
+  submitButton: {
+    borderRadius: 20,
+    backgroundColor: '#080C2E',
+    marginTop: 20,
+    padding: 10,
+  },
+  submitButtonText: {
+    color: 'white',
+    fontSize: 15,
+    textAlign: 'center',
+  },
+  forgotPasswordText: {
+    marginTop: 15,
+    textAlign: 'center',
+  },
+  highlight: {
+    color: '#080C2E',
+    fontWeight: 'bold',
   },
 });
+
 export default LoginDados;

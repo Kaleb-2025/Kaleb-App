@@ -15,7 +15,7 @@
  | Sprint | Previsão | Status |
  | ------ | -------- | ------ |
  | 01     | 30/03/2025 | Concluído |
- | 02     | 01/07/2025 | Em progresso |
+ | 02     | 01/07/2025 | Concluído |
  | 03     | 20/08/25   | A fazer |
  | 04     | 01/10/25   | A fazer |
  | 05     | 01/11/25   | A fazer |
@@ -54,48 +54,54 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  ---
  - [x] Definição do propósito do template;
  - [x] Esboço do layout;
- - [x] Escolha de cores e fontes;
- - [x] Desenvolvimento do design;
--  [x] Documentação da introdução;
+ - [x] Esboço da logo;
+ - [x] Prototipação da aplicação (fluxo geral do aplicativo);
  - [x] Criação da logo;
- - [x] Teste e revisão;
+ - [x] Escolha de cores e fontes;
+ - [x] Identificação dos elementos principais da interface;
+-  [x] Definição do método ágil;
  - [x] Finalização e aprovação.
 
  ### Sprint 2. Desenvolvimento Inicial e Banco de Dados
   ---
- - [x] Prototipação da aplicação (telas específicas)
+ - [x] Prototipação da aplicação (telas específicas);
  - [x] Documentação do Relatório tecnico (inicial);
- - [ ] Documentação Módulos (inicial)
--  [ ] Documentação dos Matériais Complementares (inicial)
- - [ ] Esquematização do dicionário de dados
+ - [x] Documentação Módulos (inicial);
+-  [x] Documentação dos Matériais Complementares (inicial);
+ - [x] Esquematização do dicionário de dados;
  - [x] Desenvolvimento do banco de dados;
- - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend).
+ - [x] Criação dos repositórios GitHub;
+ - [x] Primeiro commit da documentação inicial e do Readme de cada repositório.
 
 ### Sprint 3. Desenvolvimento Frontend e Backend
  ---
-- [ ] Desenvolvimento das telas (programação do frontend)
-- [ ] Desenvolvimento das funcionalidades principais (programação do backend)
-- [ ] Implementação da lógica básica de navegação.
-- [ ] Documentação do Relatório tecnico (desenvolvimento);
-- [ ] Documentação Módulos (final)
-- [ ] Documentação dos Matériais Complementares (final)
-- [ ] Teste e revisão das funcionalidades desenvolvidas
-- [ ] Desenvolvimento do chatbot
+- [x] Desenvolvimento das telas (programação do frontend);
+- [x] Desenvolvimento das funcionalidades principais (programação do backend);
+- [x] Implementação da lógica básica de navegação;
+- [x] Documentação do Relatório tecnico (desenvolvimento);
+- [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
+- [ ] Documentação Módulos (final);
+- [ ] Documentação dos Matériais Complementares (final);
+- [ ] Teste e revisão das funcionalidades desenvolvidas;
+- [ ] Atualização dos repositórios GitHub.
 
  
 ### Sprint 4. Testes, Ajustes, Treinamento e Implementação
  ---
-- [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança)
-- [ ] Monitoramento e ajustes (correção de bugs e melhorias)
-- [ ] Treinamento com professores (para feedback inicial)
-- [ ] Treinamento com alunos (para feedback final)
+- [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
+- [ ] Monitoramento e ajustes (correção de bugs e melhorias);
+- [ ] Treinamento com professores (para feedback inicial);
+- [ ] Treinamento com alunos (para feedback final);
 - [ ] Documentação do Relatório tecnico (final);
+- [ ] Revisão de código nos repositórios GitHub para garantir a qualidade.
 
 ### Sprint 5. Operacionalização e Publicação
  ---
-- [ ] Preparação dos materiais de apresentação (slides finais)
-- [ ] Geração da versão final do aplicativo
-- [ ] Criação do Vídeo de Funcionalidades
+- [ ] Preparação dos materiais de apresentação (slides finais);
+- [ ] Geração da versão final do aplicativo;
+- [ ] Criação do Vídeo de Funcionalidades;
+- [ ] Encadernamento da documentação (Relatório Técnico);
+- [ ] Revisão e atualização dos repositórios GitHub.
 
 ## 💪 Competências Desenvolvidas 
 ### Hard Skill (saber tecnológico)
@@ -135,7 +141,7 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
         <img src="https://avatars.githubusercontent.com/u/132226469?v=4" width="100px;" alt="Giovanna Clemente"/><br>
         <strong>Giovanna Clemente</strong>
       </a><br><br>
-      <a href="#" title="LinkedIn">
+      <a href="https://br.linkedin.com/in/giovanna-clemente-2a3209329/" title="LinkedIn">
         <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
       </a>
     </td>

@@ -5,21 +5,6 @@ import styles from '../../styles/styleEspecial';
 const MultipleChoiceOptions = () => {
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const options = [
-    {
-      text: "Se o valor digitado for maior\nque zero, aparecerá que o\nvalor é positivo, se não, é\nnegativo.",
-    },
-    {
-      text: "Independente do valor\ndigitado, aparecerá que o\nvalor é positivo."
-    },
-    {
-      text: "Se o valor digitado for maior\nque zero, aparecerá que o\nvalor é negativo, se não, é\npositivo."
-    },
-    {
-      text: "Ao digitar um valor, nada\nacontecerá."
-    }
-  ];
-
   return (
     <View style={styles.optionsContainer}>
       {options.map((option, index) => (

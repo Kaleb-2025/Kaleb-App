@@ -3,24 +3,20 @@ import { View, TextInput } from 'react-native';
 import { Styleprogress as styles } from '../../styles/styleprogress';
 import BotttonContinuar from './BotttonContinuar';
 
-const SenhaLogin = () => {
+const SenhaLogin = ({ onNext }) => {
   const handleSubmit = () => {
-    console.log('Senha enviado');
+    onNext();
   };
 
   return (
     <View style={styles.formContainer}>
       <View style={styles.inputContainer}>
-              <TextInput
+        <TextInput
           style={styles.inputField}
           placeholder="Senha"
           placeholderTextColor="rgba(0, 0, 0, 0.5)"
-          keyboardType="default"
-          autoCapitalize="none"
-          underlineColorAndroid="transparent"
-          secureTextEntry={true}
+          secureTextEntry
         />
-
       </View>
       <BotttonContinuar title="Continuar" onPress={handleSubmit} />
     </View>

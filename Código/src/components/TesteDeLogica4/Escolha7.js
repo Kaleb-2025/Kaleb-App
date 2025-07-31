@@ -1,6 +1,7 @@
 import React, { useState } from 'react'; 
 import { View, Text, TouchableOpacity } from 'react-native';  
 import styles from '../../styles/styleEspecial';
+import QuizOption from './QuizOption';
 
 const Escolha7 = () => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -22,22 +23,20 @@ const Escolha7 = () => {
   ];
 
   return (
-    <View style={styles.optionsContainer}>
-      {options.map((option, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.option}
-          onPress={() => setSelectedOption(index)}
-        >
-          <View style={styles.optionContent}>
-            <View style={[styles.optionCircle, selectedOption === index && styles.optionCircleSelected]}>
-              {selectedOption === index && <View style={styles.optionCircleInner} />}
-            </View>
-            <Text style={styles.optionText}>{option.text}</Text>
-          </View>
-        </TouchableOpacity>
-      ))}
-    </View>
+ <View style={styles.optionsContainer}>
+          {options.length > 0 ? (
+            options.map((option, index) => (
+              <QuizOption
+                key={index}
+                content={option.texto}
+                isSelected={selectedOption === index}
+                onSelect={() => handleOptionSelect(index)}
+              />
+            ))
+          ) : (
+            <Text>Carregando respostas...</Text>
+          )}
+        </View>
   );
 };
 

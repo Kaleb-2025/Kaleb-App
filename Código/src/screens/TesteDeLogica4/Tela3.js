@@ -8,15 +8,12 @@ import NextButton from '../../components/TesteDeLogica4/NextButton';
 import { handleTermsPress, handlePrivacyPress } from '../../links/links.js';
 import { supabase } from '../../../App';
 
-import { useProgress } from '../../components/TesteDeLogica4/ProgressContext';
+import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 
-const Tela4 = ({ navigation }) => {
-  const { next } = useProgress(); 
 
-  const handleNext = () => {
-    next(); // ✅ Avança a contagem
-    navigation.navigate('Tela4'); // ✅ Navega para a próxima tela
-  };
+const Tela3 = ({ navigation }) => {
+  const { next, incrementCorrect } = useQuizProgress();
+
 
 const [question, setQuestion] = useState('');
   const [options, setOptions] = useState([]);
@@ -63,63 +60,75 @@ const [question, setQuestion] = useState('');
 
       // Atualiza o estado com os dados da pergunta e as respostas
       setQuestion(pergunta.enunciado);
-      setOptions(respostasText); // Armazena as respostas
     };
 
     fetchQuestionAndAnswers();
   }, []); // Apenas uma vez no início
 
+
   const handleOptionSelect = (index) => {
-    setSelectedOption(index); // Marca a opção selecionada
+    setSelectedOption(index);
+  };
+
+  const handleNext = () => {
+    const selected = options[selectedOption];
+
+    if (selected?.iscorrect) {
+      incrementCorrect(); // ✅ Soma acerto
+    }
+
+    next(); 
+    navigation.navigate('Tela4'); 
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.quizContainer}>
-      <Header /> 
-      <View style={styles.container}>
-        <Text style={styles.title}>
-          Teste de <Text style={styles.highlight}>lógica</Text>
-        </Text>
+<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+  <View style={{ flex: 1, justifyContent: options.length > 2 ? 'flex-start' : 'center' }}>
+    <View style={styles.container}>
+      <Header total={6} />
+      <Text style={styles.title}>
+        Teste de <Text style={styles.highlight}>lógica</Text>
+      </Text>
+      <Text style={styles.question}>
+        Observe o código abaixo. O que está acontecendo?
+      </Text>
 
-        <Text style={styles.question}>
-          Observe o código abaixo. O que está acontecendo?
-        </Text>
+      <CodeExample question={question} />
 
-        <CodeExample question={question} />
-        <View style={styles.optionsContainer}> 
-          {options.length > 0 ? (
-            options.map((option, index) => (
-              <QuizOption
-                key={index}
-                content={option.texto}
-                isSelected={selectedOption === index}
-                onSelect={() => handleOptionSelect(index)}
-              />
-            ))
-          ) : (
-            <Text>Carregando respostas...</Text> // Mensagem de carregamento se as respostas não estiverem carregadas
-          )}
-        </View>
-        
-
-
-        <NextButton onPress={handleNext} />
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            Ao se inscrever no Kaleb você concorda com os nossos{' '}
-            <Text onPress={handleTermsPress} style={styles.link}>
-              Termos de Uso
-            </Text>{' '}
-            e{' '}
-            <Text onPress={handlePrivacyPress} style={styles.link}>
-              Política de Privacidade
-            </Text>.
-          </Text>
-        </View>
+      <View style={styles.optionsContainer}>
+        {options.length > 0 ? (
+          options.map((option, index) => (
+            <QuizOption
+              key={index}
+              content={option.texto}
+              isSelected={selectedOption === index}
+              onSelect={() => handleOptionSelect(index)}
+            />
+          ))
+        ) : (
+          <Text>Carregando respostas...</Text>
+        )}
       </View>
-    </ScrollView>
+
+      <NextButton onPress={handleNext} />
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          Ao se inscrever no Kaleb você concorda com os nossos{' '}
+          <Text onPress={handleTermsPress} style={styles.link}>
+            Termos de Uso
+          </Text>{' '}
+          e{' '}
+          <Text onPress={handlePrivacyPress} style={styles.link}>
+            Política de Privacidade
+          </Text>.
+        </Text>
+      </View>
+    </View>
+  </View>
+</ScrollView>
+
   );
 };
 
-export default Tela4;
+export default Tela3;

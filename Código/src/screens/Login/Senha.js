@@ -1,18 +1,23 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+// src/screens/Login/Senha.js
+import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
 import LogoPags from '../../components/Login/LogoPags';
-import SenhaLogin from '../../components/Login/Senha';
-import { handleTermsPress, handlePrivacyPress } from '../../links/links';
 import HeaderLogin from '../../components/Login/headerLogin';
-import { useProgress } from '../../components/Login/ProgressLogin';
+import { handleTermsPress, handlePrivacyPress } from '../../links/links';
 import { Styleprogress as styles } from '../../styles/styleprogress';
+import { useCadastro } from './CadastroContext';
 
 const Senha = ({ navigation }) => {
-  const { next } = useProgress(); 
+  const [senhaDigitada, setSenhaDigitada] = useState('');
+  const { setSenha } = useCadastro();
 
   const handleNext = () => {
-    next();
-    navigation.navigate('CadastroInicial');
+    if (senhaDigitada.trim() !== '') {
+      setSenha(senhaDigitada);
+      navigation.navigate('Nome');
+    } else {
+      alert('Digite uma senha válida');
+    }
   };
 
   return (
@@ -20,19 +25,26 @@ const Senha = ({ navigation }) => {
       <HeaderLogin total={5} />
       <LogoPags />
       <View style={{ width: '100%' }}>
-        <Text style={styles.welcomeText}> Crie uma senha</Text>
-        <SenhaLogin onNext={handleNext} />
+        <Text style={styles.welcomeText}>Crie uma senha</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Digite sua senha"
+            value={senhaDigitada}
+            onChangeText={setSenhaDigitada}
+            secureTextEntry
+            style={styleInterno.inputField}
+          />
+        </View>
+         <TouchableOpacity style={styles.submitButton} onPress={handleNext}>
+        <Text style={styles.submitButtonText}>Avançar</Text>
+      </TouchableOpacity>
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           Ao se inscrever no Kaleb você concorda com os nossos{' '}
-          <Text onPress={handleTermsPress} style={styles.link}>
-            Termos de Uso
-          </Text>{' '}
+          <Text onPress={handleTermsPress} style={styles.link}>Termos de Uso</Text>{' '}
           e{' '}
-          <Text onPress={handlePrivacyPress} style={styles.link}>
-            Política de Privacidade.
-          </Text>
+          <Text onPress={handlePrivacyPress} style={styles.link}>Política de Privacidade.</Text>
         </Text>
       </View>
     </ScrollView>
@@ -51,6 +63,11 @@ const styleInterno = StyleSheet.create({
     paddingHorizontal: 40,
     alignItems: 'center',
     backgroundColor: '#f8faf0',
+  },
+    inputField: {
+    padding: 0,
+    fontSize: 12,
+    color: '#000',
   },
 });
 

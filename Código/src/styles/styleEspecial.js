@@ -1,10 +1,13 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  quizContainer: {
-    flexGrow: 1,
-    backgroundColor: '#f8faf0',
-    paddingBottom: 32,
+quizContainer: {
+  flex: 1,
+  width: "100%",
+  backgroundColor: '#f8faf0',
+  alignItems: "center",
+  justifyContent: "center",
+  paddingBottom: 32,
   },
   title: {
     marginTop: 20,
@@ -20,7 +23,7 @@ const styles = StyleSheet.create({
   question: {
     width: 225.6,
     alignSelf: 'center',
-    fontSize: 13.6,
+    fontSize: 12.6,
     color: '#000',
     textAlign: 'center',
     marginBottom: 16,
@@ -50,7 +53,7 @@ const styles = StyleSheet.create({
   },
   codeContent: {
     color: '#70b063',
-    fontSize: 12.8,
+    fontSize: 13.8,
     fontWeight: '500',
     lineHeight: 19.2,
   },
@@ -67,18 +70,24 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 16,
     marginVertical: 16,
-    alignItems: 'center',
-  },
-  option: {
-    marginVertical: 8,
-    width: '100%',
-    alignItems: 'center',
-  },
-  optionContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
+option: {
+  marginVertical: 8,
+  maxWidth: 300,
+  width: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+
+optionContent: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+
   optionCircle: {
     width: 20,
     height: 20,
@@ -103,13 +112,18 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 14,
     color: '#000',
-    flex: 1,
     lineHeight: 19.2,
+    textAlign: 'center',
   },
+  
   footer: {
+    position: 'absolute',
+    bottom: 80,
+    left: 0,
+    right: 0,
+    padding: 16,
+    backgroundColor: '#f8faf0',
     alignItems: 'center',
-    marginTop: 16,
-    paddingHorizontal: 16,
   },
 nextButton: {
   borderRadius: 20,

@@ -15,17 +15,19 @@ const CadastroInicial = ({ navigation }) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Logo />
       <Text style={styles.welcomeText}>
-        Acesse o Kaleb e comece a programar com uma inscrição rápida e gratuita.
+        Acesse o Kaleb e revise seu conhecimento de programação  com uma inscrição rápida e gratuita.
       </Text>
       <View style={styles.socialLoginSection}>
         <SocialLoginButton
-          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/8371874c0c30641abf0accfed78b57d28b9cd053?placeholderIfAbsent=true&apiKey=9fa5fd1f53e14698946a72b8311015ea"
+          icon={require('../../assets/google.png')}
           text="Continuar com Google"
         />
+
         <SocialLoginButton
-          icon="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1024px-Apple_logo_black.svg.png"
+          icon={require('../../assets/maca.png')}
           text="Continuar com Apple"
         />
+
       </View>
       <View style={styles.divider} />
     <EmailSignupForm onPress={handleEmailSignup} navigation={navigation} />

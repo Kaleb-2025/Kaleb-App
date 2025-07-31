@@ -17,7 +17,7 @@ const Login = ({ navigation }) => {
       <Text style={styleInterno.welcomeText}>Faça Login para acessar a plataforma</Text>
       
     
-      <LoginDados onPress={handleEmailSignup} />
+    <LoginDados onPress={handleEmailSignup} navigation={navigation} />
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           Ao se inscrever no Kaleb você concorda com os nossos{' '}

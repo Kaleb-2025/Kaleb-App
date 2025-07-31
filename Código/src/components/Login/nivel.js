@@ -4,19 +4,6 @@ import { Styleprogress as styles } from '../../styles/styleprogress';
 import BotttonContinuar from './BotttonContinuar';
 
 const Nivel = ({ onNext }) => {
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-  };
-
-  const handleSignupPress = () => {
-    if (!selectedOption) {
-      Alert.alert('Atenção', 'Por favor, selecione uma opção.');
-    } else {
-      Alert.alert('Inscrição', `Você selecionou: ${selectedOption}`);
-    }
-  };
 
   const handleSubmit = () => {
     if (onNext) {

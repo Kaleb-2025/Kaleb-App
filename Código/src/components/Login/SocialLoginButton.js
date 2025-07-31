@@ -1,11 +1,11 @@
 import React from 'react';
-import { TouchableOpacity, Image, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Image, Text } from 'react-native';
 import { CadastroStyles as styles } from '../../styles/CadastroStyle';
 
 const SocialLoginButton = ({ icon, text, onPress }) => {
   return (
     <TouchableOpacity style={styles.socialButton} onPress={onPress}>
-      <Image source={{ uri: icon }} style={styles.socialIcon} />
+      <Image source={icon} style={styles.socialIcon} />
       <Text style={styles.socialText}>{text}</Text>
     </TouchableOpacity>
   );

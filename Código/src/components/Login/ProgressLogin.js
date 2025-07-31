@@ -15,5 +15,5 @@ export const ProgressProvider = ({ children }) => {
     </ProgressLogin.Provider>
   );
 };
+export const useLoginProgress = () => useContext(ProgressLogin);
 
-export const useProgress = () => useContext(ProgressLogin);
