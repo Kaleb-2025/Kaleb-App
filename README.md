@@ -67,7 +67,7 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  - [x] Prototipação da aplicação (telas específicas);
  - [x] Documentação do Relatório tecnico (inicial);
  - [x] Documentação Módulos (inicial);
--  [ ] Documentação dos Matériais Complementares (inicial);
+-  [x] Documentação dos Matériais Complementares (inicial);
  - [x] Esquematização do dicionário de dados;
  - [x] Desenvolvimento do banco de dados;
  - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
