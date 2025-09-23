@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import BarraProgresso from '../components/home/barraProcesso';
 import { supabase } from '../../App';
 
 import {
@@ -13,18 +13,75 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-
 // Componente StatsHeader
-
-const StatsHeader = () => {
+const StatsHeader = ({ setAndamentoCurso }) => {
   const [perfil, setPerfil] = useState(null);
-    useEffect(() => {
-    buscarDados();
+
+  useEffect(() => {
+    buscarProgressoCurso();
+    buscarDadosPerfil();
   }, []);
 
-  async function buscarDados() {
-    const { data: userInfo, error: userError } = await supabase.auth.getUser();
+  // Função para buscar progresso por curso
+  async function buscarProgressoCurso() {
+    const { data: userData } = await supabase.auth.getUser();
+    const uid = userData?.user?.id;
+    if (!uid) {
+      console.error('Usuário não autenticado');
+      return;
+    }
 
+    // Busca todos os capítulos com o campo "curso"
+    const { data: capitulos, error: capsError } = await supabase
+      .from('capitulos')
+      .select('idcapitulo, curso');
+
+    if (capsError) {
+      console.error('Erro ao buscar capítulos:', capsError.message);
+      return;
+    }
+
+    // Busca progresso do usuário
+    const { data: progresso, error: progError } = await supabase
+      .from('progresso_capitulo')
+      .select('idcapitulo, completou')
+      .eq('idusuario', uid);
+
+    if (progError) {
+      console.error('Erro ao buscar progresso:', progError.message);
+      return;
+    }
+
+    // Agrupar capítulos por curso
+    const cursosProgresso = {};
+    capitulos.forEach(c => {
+      if (!cursosProgresso[c.curso]) {
+        cursosProgresso[c.curso] = { total: 0, concluidos: 0 };
+      }
+      cursosProgresso[c.curso].total++;
+      if (progresso.find(p => p.idcapitulo === c.idcapitulo && p.completou)) {
+        cursosProgresso[c.curso].concluidos++;
+      }
+    });
+
+    // Transformar em percentual
+      // Transformar em percentual e arredondar
+      const percentuais = {};
+      Object.keys(cursosProgresso).forEach(cursoId => {
+        const { total, concluidos } = cursosProgresso[cursoId];
+        // calcular e arredondar
+        percentuais[cursoId] = total > 0 ? parseFloat(((concluidos / total) * 100).toFixed(1)) : 0;
+      });
+
+      // Aqui pegamos o curso 1 como exemplo (Lógica de Programação)
+      // setAndamentoCurso(percentuais[1] || 0);
+      setAndamentoCurso(percentuais);
+
+  }
+
+  // Busca dados do perfil do usuário
+  async function buscarDadosPerfil() {
+    const { data: userInfo, error: userError } = await supabase.auth.getUser();
     if (userError || !userInfo?.user?.id) {
       console.error("Erro ao obter usuário:", userError?.message);
       return;
@@ -43,78 +100,56 @@ const StatsHeader = () => {
       setPerfil(perfilData);
     }
   }
-
-
   return (
-    <View style={styles.statsHeader}>
-      <View style={styles.statItem}>
-        <Image
-          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//star.png" }}
-          style={styles.icon}
-        />
-        <View style={styles.statValueContainer}>
-          <Text style={styles.statValue}>{perfil?.xp ?? '0'}</Text>
+    <View style={styles.header}>
+      <View style={styles.headerRow}>
+          <View style={styles.statsRow}>
+            <View style={styles.statBox}>
+              <Image source={require('../assets/estrela.png')} style={styles.icon} />
+              <Text style={styles.statText}>{perfil?.xp ?? '0'}</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Image source={require('../assets/kaleb.png')} style={styles.icon} />
+              <Text style={styles.statText}>15</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Image source={require('../assets/curso.png')} style={styles.icon} />
+              <Text style={styles.statText}>{(perfil?.cursoAtual) ?? '1'}</Text>
+            </View>
+          </View>
         </View>
       </View>
 
-      <View style={styles.statItem}>
-        <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/7fde0415441b903316c19e55ea5dd3c71a9ab891" }}
-          style={styles.statIcon}
-        />
-        <View style={styles.statValueContainer}>
-          <Text style={styles.statValue}>0</Text>
-        </View>
-      </View>
-
-      <View style={styles.statItem}>
-        <Image
-          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//python-icon.png" }}
-          style={styles.statIcon}
-        />
-        <View style={styles.statValueContainer}>
-          <Text style={styles.statValue}>0</Text>
-        </View>
-      </View>
-
-      <View style={styles.statItemNoBorder}> {/* Ícone de pesquisa sem borda */}
-        <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/4987ee9e912bad68f5067d74441d6d730ed47a9c" }}
-          style={styles.statIcon}
-        />
-      </View>
-    </View>
   );
 };
 
 // Componente CourseCard
-const CourseCard = ({ title, progress, status, buttonText }) => {
+const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.courseCard}>
       <View style={styles.courseImageContainer}>
-        <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/47a120d4f3d0df1a771fd61bcf1fbd41044695bc" }}
-          style={styles.courseImage}
-        />
-        <Text style={styles.courseProgress}>{progress}%</Text>
+        <BarraProgresso percent={progress} size={90} strokeWidth={6} />
       </View>
-
       <View style={styles.courseInfo}>
         <View style={styles.courseTitleContainer}>
           <Text style={styles.courseTitle}>{title}</Text>
         </View>
-
         <View style={styles.courseFooter}>
           <View style={styles.statusBadge}>
             <Text style={styles.statusText}>{status}</Text>
           </View>
-
-          <TouchableOpacity style={styles.actionButton}
-          onPress={() => navigation.navigate('CursoLogica')}
+          <TouchableOpacity
+            style={[
+              styles.actionButton,
+              bloqueado && { backgroundColor: '#ccc' } // muda a cor se bloqueado
+            ]}
+            onPress={() => !bloqueado && navigation.navigate(tela)} // só navega se não bloqueado
+            disabled={bloqueado} // desabilita toque
           >
-          
-            <Text style={styles.buttonText}>{buttonText}</Text>
+            <Text style={styles.buttonText}>
+              {bloqueado ? 'Bloqueado' : buttonText}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -123,32 +158,45 @@ const CourseCard = ({ title, progress, status, buttonText }) => {
 };
 
 // Componente CoursesList
-const CoursesList = () => {
+const CoursesList = ({ andamentoCurso }) => {
+
+const andamentoLogica = andamentoCurso[1] || 0;
+const andamentoPython = andamentoCurso[2] || 0;
+
+const pythonBloqueado = andamentoLogica < 100;
+
   return (
     <View style={styles.coursesContainer}>
       <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Cursos</Text>
       </View>
 
-      <CourseCard
-        title="Lógica de Programação"
-        progress={0}   status="Não iniciado"
-        buttonText="Iniciar"
-      />
+     <CourseCard
+      title="Lógica de Programação"
+      progress={andamentoLogica} 
+      status={andamentoLogica === 0 ? 'Não Iniciado' : 'Iniciado'}
+      buttonText="Iniciar"
+      tela={andamentoLogica === 0 ? 'CursoLogica' : 'TelaCurso'}
+    />
 
-      <CourseCard
-        title="Python"
-        progress={0}
-        status="Não iniciado"
-        buttonText="Iniciar"
-      />
+    <CourseCard
+      title="Python"
+      progress={pythonBloqueado ? 0 : andamentoPython}
+      status={pythonBloqueado ? 'Bloqueado' : (andamentoPython === 0 ? 'Não Iniciado' : 'Iniciado')}
+      buttonText={pythonBloqueado ? 'Bloqueado' : 'Iniciar'}
+      tela={pythonBloqueado ? null : (andamentoPython === 0 ? 'CursoPython' : 'TelaCursoPython')}
+      bloqueado={pythonBloqueado} // <--- importante
+    />
 
-      <CourseCard
+
+      {/*<CourseCard
         title="Java"
         progress={0}
         status="Não iniciado"
         buttonText="Iniciar"
-      />
+        tela = 'naotem'
+      /> */}
+
     </View>
   );
 };
@@ -174,8 +222,10 @@ const BottomNavigation = () => {
         <Text style={styles.navText}>Cursos</Text>
       </TouchableOpacity>
 
-     <TouchableOpacity style={styles.navItem}
-      onPress={() => navigation.navigate('TelaPerfil')}>
+      <TouchableOpacity
+        style={styles.navItem}
+        onPress={() => navigation.navigate('TelaPerfil')}
+      >
         <Image
           source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/a0296e8b6f65174798cae7c22f2d743ceb252ba2" }}
           style={styles.navIcon}
@@ -188,12 +238,14 @@ const BottomNavigation = () => {
 
 // Componente Principal
 export default function Home() {
+  const [andamentoCurso, setAndamentoCurso] = useState(0);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <ScrollView>
-          <StatsHeader />
-          <CoursesList />
+          <StatsHeader setAndamentoCurso={setAndamentoCurso}/>
+          <CoursesList andamentoCurso={andamentoCurso}/>
         </ScrollView>
         <BottomNavigation />
       </View>
@@ -203,155 +255,133 @@ export default function Home() {
 
 // Estilos
 const styles = StyleSheet.create({
-  safeArea: {
+  safeArea: { 
     flex: 1,
-    backgroundColor: '#f9fafb'
+    backgroundColor: '#0b1658',
   },
-  container: {
-    flex: 1
+  container: { 
+    flex: 1,
+    backgroundColor: '#f9fafb',
   },
-  statsHeader: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  padding: 12, // reduzido para deixar a barra menor
-  backgroundColor: '#8AEAFF'
-},
-statItem: {
-  flexDirection: 'row', // Ícone e número lado a lado
-  alignItems: 'center', // Centraliza verticalmente
-  backgroundColor: '#8AEAFF',
-  borderRadius: 30,
-  borderColor: '#4B5563',
-  borderWidth: 2,
-  padding: 6,
-  marginHorizontal: 4,
-  flex: 1
-},
-statIcon: {
-  width: 32,
-  height: 32,
-  marginRight: 8 // Espaço entre ícone e texto
-},
-statValueContainer: {
-  backgroundColor: 'none',
-  paddingHorizontal: 12,
-  paddingVertical: 4,
-  borderRadius: 4
-},
-statValue: {
-  color: '#1f2937',
-  fontWeight: '500'
-},
-statItemNoBorder: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  backgroundColor: '#8AEAFF',
-  borderRadius: 30,
-  padding: 6,
-  marginHorizontal: 4,
-  flex: 1
-},
-
-  courseCard: {
+  header: {
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#0b1658',
+  },
+headerRow: {
+    flex: 1,
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  statsRow: {
     flexDirection: 'row',
-    backgroundColor: 'white',
-    padding: 16,
-    marginBottom: 16,
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2
+    alignItems: 'center',
+    gap: 8,
   },
-  courseImageContainer: {
-    marginRight: 16,
-    alignItems: 'center'
+  statBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    marginHorizontal: 4,
   },
-  courseImage: {
-    width: 64,
-    height: 64
+  icon: {
+    width: 18,
+    height: 18,
+    marginRight: 4,
   },
-  courseProgress: {
-    marginTop: 4,
-    color: '#2563eb',
+  statText: {
+    color: '#fff',
     fontWeight: 'bold',
-    textAlign: 'center'
+    fontSize: 14,
   },
-  courseInfo: {
-    flex: 1
+  courseCard: { 
+    flexDirection: 'row', 
+    backgroundColor: 'white', 
+    padding: 16, 
+    marginBottom: 16, 
+    borderRadius: 8, 
+    shadowColor: '#000',  
+    shadowOffset: { 
+      width: 0,
+       height: 2 
+      }, 
+    shadowOpacity: 0.1, shadowRadius: 2, elevation: 2 
   },
-  courseTitleContainer: {
+  courseImageContainer: { 
+    marginRight: 16, 
+    alignItems: 'center' 
+  },
+  courseInfo: { 
+    flex: 1 
+  },
+  courseTitleContainer: { 
     marginBottom: 8
   },
-  courseTitle: {
+  courseTitle: { 
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1f2937'
+     fontWeight: 'bold', 
+     color: '#1f2937' },
+  courseFooter: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between' },
+  statusBadge: { 
+    backgroundColor: '#f3f4f6', 
+    paddingHorizontal: 12, 
+    paddingVertical: 4, 
+    borderRadius: 4 },
+  statusText: { 
+    color: '#4b5563' },
+  actionButton: { 
+    backgroundColor: '#0B1658', 
+    paddingHorizontal: 16, 
+    paddingVertical: 8, 
+    borderRadius: 50 },
+  buttonText: { 
+    color: 'white', 
+    fontWeight: '500' 
   },
-  courseFooter: {
+  coursesContainer: { 
+    padding: 16 
+  },
+  sectionTitleContainer: { 
+    marginBottom: 16 
+  },
+  sectionTitle: { 
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    color: '#1f2937' 
+  },
+  bottomNav: { 
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-around', 
+    alignItems: 'center', 
+    backgroundColor: 'white', 
+    paddingVertical: 16, 
+    borderTopWidth: 1, 
+    borderTopColor: '#e5e7eb' 
   },
-  statusBadge: {
-    backgroundColor: '#f3f4f6',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 4
-  },
-  statusText: {
-    color: '#4b5563'
-  },
-  actionButton: {
-    backgroundColor: '#0B1658',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 50
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '500'
-  },
-  coursesContainer: {
-    padding: 16
-  },
-  sectionTitleContainer: {
-    marginBottom: 16
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#1f2937'
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    paddingVertical: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#e5e7eb'
-  },
-  navItem: {
+  navItem: { 
     alignItems: 'center'
   },
-  navIcon: {
-    width: 24,
-    height: 24,
-    marginBottom: 4
+  navIcon: { 
+    width: 24, 
+    height: 24, 
+    marginBottom: 4 
   },
-  navText: {
+  navText: { 
     fontSize: 12,
     color: '#4b5563'
   },
-  activeNavText: {
-    color: '#3b82f6'
-  },
-    icon: {
-    width: 24,
-    height: 24,
-    marginRight: 4,
+  activeNavText: { 
+    color: '#3b82f6' 
   },
 });
-
