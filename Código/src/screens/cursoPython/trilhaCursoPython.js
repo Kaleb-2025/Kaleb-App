@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'; 
-import {SafeAreaView, View,Text,StyleSheet,StatusBar,TouchableOpacity,Image,} from 'react-native';
+import { View,Text,StyleSheet,StatusBar,TouchableOpacity,Image,} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../constants/colors';
-import textos from '../../constants/textos';
+import textos from '../../constants/textosPython';
 import BarraProgresso from '../../components/trilhaCursoLogica/barraProcesso';
 import TrilhaCurso from '../../components/trilhaCursoPython/trilhaCurso';
 import MateriaisCurso from '../../components/trilhaCursoLogica/materiaisCurso';
@@ -33,7 +34,7 @@ async function buscarProgressoCurso() {
   }
 
   const capsConcluidos = progresso.filter(p => p.completou === true).length;
-  const totalCapitulos = 16;
+  const totalCapitulos = 32;
 
   const progressoPercentual = (capsConcluidos / totalCapitulos) * 100;
 
@@ -109,7 +110,7 @@ async function buscarProgressoCurso() {
         {/* Logo do Python */}
         <View style={styles.logoContainer}>
           <Image
-            source={require('../../assets/logica_logo1.png')}
+            source={require('../../assets/python.png')}
             style={styles.logoImg}
             resizeMode="contain"
           />
