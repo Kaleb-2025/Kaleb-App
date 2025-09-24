@@ -2,6 +2,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Animated, Text, Dimensions, View, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import ConfettiCannon from 'react-native-confetti-cannon';
 import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 import stylesP from '../../styles/styleCursoLogica';
 import { Audio } from 'expo-av'; 
@@ -144,17 +145,28 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
           <Text style={stylesP.xpText}>+ {valorXp} xp</Text>
         </Animated.View>
       )}
+
+        {/*confetes*/}
+        <ConfettiCannon
+          count={150}
+          origin={{ x: 0, y: 0 }}
+          fadeOut={true}
+          autoStart={true}
+        />
+
       <View style={stylesP.containerProgress}>
         <View style={stylesP.insideProgress}>
           <Text
             style={{
-              color: '#2CDA3B',
-              fontSize: 16,
+              color: '#F8FAF0',
+              fontSize: 20,
               fontWeight: 'bold',
               textAlign: 'center',
+              fontFamily: 'galindo-font',
             }}
           >
-            Correto!
+
+            PARABÉNS!
           </Text>
         </View>
         <View style={stylesP.insideProgress2}>
