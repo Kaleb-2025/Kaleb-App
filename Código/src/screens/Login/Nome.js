@@ -1,4 +1,4 @@
- // src/screens/Login/Nome.js
+// src/screens/Login/Nome.js
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import LogoPags from '../../components/Login/LogoPags';
@@ -10,8 +10,9 @@ import { supabase } from '../../../App';
 const Nome = ({ navigation }) => {
   const [nomeDigitado, setNomeDigitado] = useState('');
   const { email, senha, setNome } = useCadastro();
+  const [usuarioCadastrado, setUsuarioCadastrado] = useState(false);
 
-  const handleCadastro = async () => {
+const handleCadastro = async () => {
   if (nomeDigitado.trim() === '') {
     alert('Digite seu nome');
     return;
@@ -19,41 +20,56 @@ const Nome = ({ navigation }) => {
 
   setNome(nomeDigitado);
 
-  const { data: signUpData, error } = await supabase.auth.signUp({
-    email,
-    password: senha,
-    options: {
-      data: { full_name: nomeDigitado },
-    },
-  });
+  try {
+    // Cadastro do usuário
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password: senha,
+      options: { data: { full_name: nomeDigitado } },
+    });
 
-  if (error) {
-    alert('Erro ao cadastrar: ' + error.message);
-    return;
+    if (signUpError) {
+      alert('Erro ao cadastrar: ' + signUpError.message);
+      return;
+    }
+
+    alert('Cadastro enviado! Por favor, confirme seu e-mail antes de prosseguir.');
+    setUsuarioCadastrado(true);
+
+  } catch (error) {
+    console.error('Erro inesperado:', error);
+    alert('Ocorreu um erro inesperado.');
   }
+};
 
-  const user = signUpData?.user;
-  if (user) {
-    const { error: infoError } = await supabase
-      .from('info_user')
-      .insert([
-        {
-          idusuario: user.id,
-          xp: 0,
-          cursoandamento: 1,
-        },
-      ]);
+// Login automático após confirmação do e-mail
+const loginAutomatico = async () => {
+  try {
+    const { data: sessionData, error: loginError } = await supabase.auth.signInWithPassword({
+      email,
+      password: senha,
+    });
+
+    if (loginError) {
+      alert('Não foi possível fazer login. Confirme seu e-mail primeiro.');
+      return;
+    }
+
+    // Agora sim, podemos inserir na tabela info_user
+    const userId = sessionData.user.id;
+    const { error: infoError } = await supabase.from('info_user').insert([
+      { idusuario: userId, xp: 0, cursoandamento: 1 }
+    ]);
 
     if (infoError) {
-      console.error('Erro ao criar info_users:', infoError);
-      alert('Cadastro feito, mas houve erro ao criar dados do usuário.');
-    } else {
-      alert('Cadastro completo! Confirme seu e‑mail para prosseguir.');
-      navigation.navigate('Programa');
+      console.error('Erro ao criar info_user:', infoError);
     }
-  } else {
-    alert('Cadastro enviado! Confirme seu e-mail.');
-    navigation.navigate('Programa');
+
+    navigation.navigate('Home');
+
+  } catch (err) {
+    console.error(err);
+    alert('Erro ao tentar logar.');
   }
 };
 
@@ -72,9 +88,16 @@ const Nome = ({ navigation }) => {
             style={styleInterno.input}
           />
         </View>
-         <TouchableOpacity style={styles.submitButton} onPress={handleCadastro}>
-        <Text style={styles.submitButtonText}>Finalizar cadastro</Text>
-      </TouchableOpacity>
+
+        {!usuarioCadastrado ? (
+          <TouchableOpacity style={styles.submitButton} onPress={handleCadastro}>
+            <Text style={styles.submitButtonText}>Finalizar cadastro</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.submitButton} onPress={loginAutomatico}>
+            <Text style={styles.submitButtonText}>Já confirmei meu e-mail / Fazer login</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </ScrollView>
   );
