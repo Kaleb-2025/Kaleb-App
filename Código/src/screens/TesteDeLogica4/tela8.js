@@ -79,7 +79,7 @@ const Tela8 = ({ navigation }) => {
    // SUBSTITUIR PELA HOME QUANDO ELA FOR INSERIDA AQUI
 
     next(); // ✅ Avança a contagem
-    navigation.navigate('TelaCurso'); // ✅ Vai para próxima tela
+    navigation.navigate('Home'); // ✅ Vai para próxima tela
   };
 
 

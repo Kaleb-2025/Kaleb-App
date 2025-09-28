@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+<<<<<<< Updated upstream
 import BarraProgresso from '../components/home/barraProcesso';
+=======
+import BarraProgresso from '../components/trilhaCursoLogica/barraProcesso';
+>>>>>>> Stashed changes
 import { supabase } from '../../App';
 
 import {
@@ -22,7 +26,10 @@ const StatsHeader = ({ setAndamentoCurso }) => {
     buscarDadosPerfil();
   }, []);
 
+<<<<<<< Updated upstream
   // Função para buscar progresso por curso
+=======
+>>>>>>> Stashed changes
   async function buscarProgressoCurso() {
     const { data: userData } = await supabase.auth.getUser();
     const uid = userData?.user?.id;
@@ -31,6 +38,7 @@ const StatsHeader = ({ setAndamentoCurso }) => {
       return;
     }
 
+<<<<<<< Updated upstream
     // Busca todos os capítulos com o campo "curso"
     const { data: capitulos, error: capsError } = await supabase
       .from('capitulos')
@@ -42,6 +50,8 @@ const StatsHeader = ({ setAndamentoCurso }) => {
     }
 
     // Busca progresso do usuário
+=======
+>>>>>>> Stashed changes
     const { data: progresso, error: progError } = await supabase
       .from('progresso_capitulo')
       .select('idcapitulo, completou')
@@ -52,6 +62,7 @@ const StatsHeader = ({ setAndamentoCurso }) => {
       return;
     }
 
+<<<<<<< Updated upstream
     // Agrupar capítulos por curso
     const cursosProgresso = {};
     capitulos.forEach(c => {
@@ -77,6 +88,13 @@ const StatsHeader = ({ setAndamentoCurso }) => {
       // setAndamentoCurso(percentuais[1] || 0);
       setAndamentoCurso(percentuais);
 
+=======
+    const capsConcluidos = progresso.filter(p => p.completou === true).length;
+    const totalCapitulos = 16;
+    const progressoPercentual = (capsConcluidos / totalCapitulos) * 100;
+
+    setAndamentoCurso(progressoPercentual); 
+>>>>>>> Stashed changes
   }
 
   // Busca dados do perfil do usuário
@@ -100,6 +118,10 @@ const StatsHeader = ({ setAndamentoCurso }) => {
       setPerfil(perfilData);
     }
   }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   return (
     <View style={styles.header}>
       <View style={styles.headerRow}>
@@ -120,6 +142,36 @@ const StatsHeader = ({ setAndamentoCurso }) => {
         </View>
       </View>
 
+<<<<<<< Updated upstream
+=======
+      <View style={styles.statItem}>
+        <Image
+          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/7fde0415441b903316c19e55ea5dd3c71a9ab891" }}
+          style={styles.statIcon}
+        />
+        <View style={styles.statValueContainer}>
+          <Text style={styles.statValue}>0</Text>
+        </View>
+      </View>
+
+      <View style={styles.statItem}>
+        <Image
+          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//python-icon.png" }}
+          style={styles.statIcon}
+        />
+        <View style={styles.statValueContainer}>
+          <Text style={styles.statValue}>0</Text>
+        </View>
+      </View>
+
+      <View style={styles.statItemNoBorder}>
+        <Image
+          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/4987ee9e912bad68f5067d74441d6d730ed47a9c" }}
+          style={styles.statIcon}
+        />
+      </View>
+    </View>
+>>>>>>> Stashed changes
   );
 };
 
@@ -129,7 +181,12 @@ const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) =>
   return (
     <View style={styles.courseCard}>
       <View style={styles.courseImageContainer}>
+<<<<<<< Updated upstream
         <BarraProgresso percent={progress} size={90} strokeWidth={6} />
+=======
+        <BarraProgresso percent={progress} size={75} strokeWidth={6} />
+         <Text style={styles.courseProgress}>{progress}%</Text>
+>>>>>>> Stashed changes
       </View>
       <View style={styles.courseInfo}>
         <View style={styles.courseTitleContainer}>
@@ -140,6 +197,7 @@ const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) =>
             <Text style={styles.statusText}>{status}</Text>
           </View>
           <TouchableOpacity
+<<<<<<< Updated upstream
             style={[
               styles.actionButton,
               bloqueado && { backgroundColor: '#ccc' } // muda a cor se bloqueado
@@ -150,6 +208,12 @@ const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) =>
             <Text style={styles.buttonText}>
               {bloqueado ? 'Bloqueado' : buttonText}
             </Text>
+=======
+            style={styles.actionButton}
+            onPress={() => navigation.navigate('CursoLogica')}
+          >
+            <Text style={styles.buttonText}>{buttonText}</Text>
+>>>>>>> Stashed changes
           </TouchableOpacity>
         </View>
       </View>
@@ -159,18 +223,22 @@ const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) =>
 
 // Componente CoursesList
 const CoursesList = ({ andamentoCurso }) => {
+<<<<<<< Updated upstream
 
 const andamentoLogica = andamentoCurso[1] || 0;
 const andamentoPython = andamentoCurso[2] || 0;
 
 const pythonBloqueado = andamentoLogica < 100;
 
+=======
+>>>>>>> Stashed changes
   return (
     <View style={styles.coursesContainer}>
       <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Cursos</Text>
       </View>
 
+<<<<<<< Updated upstream
      <CourseCard
       title="Lógica de Programação"
       progress={andamentoLogica} 
@@ -178,6 +246,14 @@ const pythonBloqueado = andamentoLogica < 100;
       buttonText="Iniciar"
       tela={andamentoLogica === 0 ? 'CursoLogica' : 'TelaCurso'}
     />
+=======
+      <CourseCard
+        title="Lógica de Programação"
+        progress={andamentoCurso} 
+        status="Não iniciado"
+        buttonText="Iniciar"
+      />
+>>>>>>> Stashed changes
 
     <CourseCard
       title="Python"
@@ -257,6 +333,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   safeArea: { 
     flex: 1,
+<<<<<<< Updated upstream
     backgroundColor: '#0b1658',
   },
   container: { 
@@ -299,8 +376,57 @@ headerRow: {
   },
   statText: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
+=======
+    backgroundColor: '#f9fafb' 
+  },
+  container: { 
+    flex: 1
+  },
+  statsHeader: {
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
+    padding: 12,
+    backgroundColor: '#8AEAFF' 
+  },
+  statItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#8AEAFF',
+    borderRadius: 30,
+    borderColor: '#4B5563',
+    borderWidth: 2, 
+    padding: 6, 
+    marginHorizontal: 4, 
+    flex: 1 
+  },
+  statIcon: { 
+    width: 32, 
+    height: 32, 
+    marginRight: 8 
+  },
+  statValueContainer: { 
+    backgroundColor: 'transparent', 
+    paddingHorizontal: 12, 
+    paddingVertical: 4, 
+    borderRadius: 4 
+  },
+  statValue: { 
+    color: '#1f2937', 
+    fontWeight: '500' 
+  },
+  statItemNoBorder: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    backgroundColor: '#8AEAFF',
+    borderRadius: 30, 
+    padding: 6, 
+    marginHorizontal: 4, 
+    flex: 1 
+  },
+  icon: { 
+    width: 24, 
+    height: 24,
+    marginRight: 4 
   },
   courseCard: { 
     flexDirection: 'row', 
@@ -360,6 +486,74 @@ headerRow: {
     fontWeight: 'bold', 
     color: '#1f2937' 
   },
+    courseProgress: {
+    marginTop: 4,
+    color: '#2563eb',
+>>>>>>> Stashed changes
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+<<<<<<< Updated upstream
+  courseCard: { 
+    flexDirection: 'row', 
+    backgroundColor: 'white', 
+    padding: 16, 
+    marginBottom: 16, 
+    borderRadius: 8, 
+    shadowColor: '#000',  
+    shadowOffset: { 
+      width: 0,
+       height: 2 
+      }, 
+    shadowOpacity: 0.1, shadowRadius: 2, elevation: 2 
+  },
+  courseImageContainer: { 
+    marginRight: 16, 
+    alignItems: 'center' 
+  },
+  courseInfo: { 
+    flex: 1 
+  },
+  courseTitleContainer: { 
+    marginBottom: 8
+  },
+  courseTitle: { 
+    fontSize: 18,
+     fontWeight: 'bold', 
+     color: '#1f2937' },
+  courseFooter: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'space-between' },
+  statusBadge: { 
+    backgroundColor: '#f3f4f6', 
+    paddingHorizontal: 12, 
+    paddingVertical: 4, 
+    borderRadius: 4 },
+  statusText: { 
+    color: '#4b5563' },
+  actionButton: { 
+    backgroundColor: '#0B1658', 
+    paddingHorizontal: 16, 
+    paddingVertical: 8, 
+    borderRadius: 50 },
+  buttonText: { 
+    color: 'white', 
+    fontWeight: '500' 
+  },
+  coursesContainer: { 
+    padding: 16 
+  },
+  sectionTitleContainer: { 
+    marginBottom: 16 
+  },
+  sectionTitle: { 
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    color: '#1f2937' 
+  },
+=======
+>>>>>>> Stashed changes
   bottomNav: { 
     flexDirection: 'row',
     justifyContent: 'space-around', 

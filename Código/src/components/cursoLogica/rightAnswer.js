@@ -1,18 +1,28 @@
+<<<<<<< Updated upstream
 // Importações
 import React, { useRef, useEffect, useState } from 'react';
 import { Animated, Text, Dimensions, View, TouchableOpacity } from 'react-native';
+=======
+import React, { useRef, useEffect, useState } from 'react';
+import { Animated, Text, StyleSheet, Dimensions, View, Image, TouchableOpacity } from 'react-native';
+>>>>>>> Stashed changes
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 import stylesP from '../../styles/styleCursoLogica';
 import { Audio } from 'expo-av'; 
+<<<<<<< Updated upstream
 import { supabase } from '../../../App';
+=======
+import {supabase} from '../../../App';
+>>>>>>> Stashed changes
 
 export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapitulo, fechar, resetProgress }) {
   const navigation = useNavigation();
   const route = useRoute();
   const { idTela = 1 } = route.params || {};
   const { next } = useQuizProgress();
+  const [successSound, setSuccessSound] = useState();
 
   // Dimensões e animações
   const { height } = Dimensions.get('window');
@@ -128,10 +138,47 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
         }),
       ]),
     ]).start();
-  }, []);
+
+   let soundRef;
+
+  async function carregarSons() {
+    try {
+      const { sound: success } = await Audio.Sound.createAsync(
+        require('../../assets/som/xp.m4a')
+      );
+      soundRef = success;
+      setSuccessSound(success);
+    } catch (error) {
+      console.error('Erro ao carregar o som:', error);
+    }
+  }
+
+  carregarSons();
+
+  return () => {
+    if (soundRef) {
+      soundRef.unloadAsync();
+    }
+  };
+  }, [])
+
+  useEffect(() => {
+  const reproduzirSomSucesso = async () => {
+      try {
+        if (successSound) {
+          await successSound.replayAsync();
+        }
+      } catch (error) {
+        console.error('Erro ao reproduzir som de acerto:', error);
+      }
+    };
+
+    reproduzirSomSucesso();
+  }, [successSound]);
 
   return (
     <View style={stylesP.greenContainer}>
+<<<<<<< Updated upstream
       {ganhouXp && (
         <Animated.View
           style={[
@@ -177,6 +224,39 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
           </TouchableOpacity>
         </View>
       </View>
+=======
+    {ganhouXp && (
+      <Animated.View
+        style={[
+          stylesP.caixa,
+          {
+            transform: [{ translateY }],
+            opacity: opacity,
+          },
+        ]}
+      >
+        <Text style={stylesP.xpText}>+ {valorXp} xp</Text>
+      </Animated.View>
+    )}
+       <View style={stylesP.containerProgress}>
+          <View style={stylesP.insideProgress}>
+            <Text style={{color:'#2CDA3B', fontSize: '16', fontWeight: 'bold', textAlign: 'center'}}>Correto!</Text>
+          </View>
+          <View style={stylesP.insideProgress2}>
+            <TouchableOpacity style={stylesP.continueButton} onPress={onPress}>
+              <Text style={{color:'#FFF', fontSize: '14', fontWeight: 'bold'}}>Continuar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+>>>>>>> Stashed changes
     </View>
   );
 }
+      // <View style={stylesP.containerKaleb2}>
+      //   <View style={stylesP.kalebContainer2}>
+      //     <Image
+      //       source={{ uri: 'https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/kaleb-image//image%203.png' }}
+      //       style={stylesP.kalebImagem2}
+      //     />
+      //   </View>
+      // </View>

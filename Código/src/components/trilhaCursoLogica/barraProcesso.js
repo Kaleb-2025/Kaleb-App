@@ -3,10 +3,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Svg, Circle } from 'react-native-svg';
 import colors from '../../constants/colors';
 
-const BarraProgresso = ({ percent, size = 60, strokeWidth = 5 }) => {
+const BarraProgresso = ({ percent = 0, size = 60, strokeWidth = 5 }) => {
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const progress = circumference * (1 - percent / 100);
+  const percentNumber = Math.min(Math.max(Number(percent), 0), 100); // garante 0-100
+  const progress = circumference * (1 - percentNumber / 100);
 
   return (
     <View style={{ width: size, height: size }}>
@@ -34,11 +35,12 @@ const BarraProgresso = ({ percent, size = 60, strokeWidth = 5 }) => {
         />
       </Svg>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>{percent}%</Text>
+        <Text style={styles.text}>{percentNumber}%</Text>
       </View>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   textContainer: {

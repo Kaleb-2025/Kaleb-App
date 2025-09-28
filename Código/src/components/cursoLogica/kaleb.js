@@ -15,15 +15,24 @@ export default function Kaleb({ falas = [] }) {
 
   return (
     <View style={stylesP.containerKaleb}>
+    {falaAtual?.texto !== "" && (
       <View style={stylesP.balao}>
-      <Text style={stylesP.falaTexto}>
-        {falaAtual?.texto || '...'}
-      </Text>
-      <View style={stylesP.trianguloBorda} />
-      <View style={stylesP.triangulo} />
-    </View>
+        <Text style={stylesP.falaTexto}>
+          {falaAtual.texto}
+        </Text>
+        <View style={stylesP.trianguloBorda} />
+        <View style={stylesP.triangulo} />
+      </View>
+    )}
       <View style={stylesP.kalebContainer}>
-        <Image source={{ uri: 'https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/kaleb-image//image%203.png'}} style={stylesP.kalebImagem} />
+        <Image
+          source={{
+            uri: falaAtual?.texto === "" 
+              ? 'https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/kaleb-image/image%204.png'  // imagem alternativa
+              : 'https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/kaleb-image//image%203.png' // imagem padrão
+          }}
+          style={stylesP.kalebImagem}
+        />
       </View>
     </View>
   );

@@ -1,6 +1,7 @@
   import React, { useEffect, useState } from 'react';
   import { useFonts } from 'expo-font';
   import { View, Text, Image, ActivityIndicator, ScrollView, Modal } from 'react-native';
+  import Markdown from "react-native-markdown-display";
   import { useNavigation, useRoute } from '@react-navigation/native';
   import Header from '../../components/cursoLogica/header';
   import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
@@ -63,7 +64,7 @@
       // importação dos capítulos atráves da relação com as telas
         if (telaData?.idcapitulo) {
         const { data: capituloData } = await supabase
-          .from('capitulos_curso1')
+          .from('capitulos')
           .select('qtdtelas')
           .eq('idcapitulo', telaData.idcapitulo)
           .single();
@@ -211,7 +212,8 @@
     
     return (
       <View style={{flex: 1}}>
-        <ScrollView contentContainerStyle={styles.quizContainer}>
+        {tela.componente === 1 && <Kaleb falas={falas} />}
+        <ScrollView contentContainerStyle={styles.quizContainer} removeClippedSubviews={true}>
         <Header total={qtdTelasCapitulo || 0} />
   <View style={[ // containerBase
     stylesP.containerBase, 
@@ -230,25 +232,52 @@
       )}
 
       {tela.texto && (
-        <Text style={[
-          styles.texto,
-          tipoFundo === 1 && stylesP.textoBranco,
-          tipoFundo === 0 && stylesP.textoPreto,
-        ]}>
+        <Markdown
+          style={{
+            body: [
+              styles.texto,
+              tipoFundo === 1 ? stylesP.textoBranco : stylesP.textoPreto,
+            ],
+            em: {
+              color: '#E47500', 
+              fontStyle: 'italic',
+            },
+            bullet_list: {
+              textAlign: "left",
+              lineHeight: 30,
+            }, 
+          }}
+        >
           {tela.texto}
-        </Text>
-      )}
+        </Markdown>
+      )} // esse body foi adicionado pq esse componente "Markdown" não aceita array de styles, só objetos com chaves...
 
-      {tela.imagemurl !== '' && (
+
+      {(tela?.imagemurl || '').trim() !== '' && (
         <View style={stylesP.imageContainer}>
-          <Image source={{ uri: tela.imagemurl }} style={stylesP.imagem} />
+          {(tela?.imagemurl || '').split(';').map((url, i) => (
+            <Image 
+              key={i} 
+              source={{ uri: url.trim() }} 
+              style={stylesP.imagem} 
+            />
+          ))}
         </View>
       )}
+
+
 
       {questoes.map((questao, index) => (
         <View key={index}>
           {questao.enunciado !== '' && (
-            <Text style={stylesP.enunciado}>{questao.enunciado}</Text>
+            <Markdown 
+              style={{
+                body: [
+                  stylesP.enunciado
+                ]
+              }}>
+              {questao.enunciado}
+            </Markdown>
           )}
 
           {tipoQuestao === 0 && (
@@ -380,7 +409,6 @@
          <WrongAnswer fechar={() => setRespostaErrada(false)} 
           rightAnswer={respostaCerta} />}
         </ScrollView>
-        {tela.componente === 1 && <Kaleb falas={falas} />}
       </View>
     );
   }

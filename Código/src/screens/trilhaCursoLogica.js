@@ -11,7 +11,34 @@ import {supabase} from '../../App';
 const TelaCurso = () => {
   const [abaAtiva, setAbaAtiva] = useState('trilha');
   const navigation = useNavigation();
+  const [andamentoCurso, setAndamentoCurso] = useState([]);
 
+async function buscarProgressoCurso() {
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  const uid = userData?.user?.id;
+
+  if (!uid) {
+    console.error('Usuário não autenticado');
+    return;
+  }
+
+  const { data: progresso, error: progError } = await supabase
+    .from('progresso_capitulo')
+    .select('idcapitulo, completou')
+    .eq('idusuario', uid);
+
+  if (progError) {
+    console.error('Erro ao buscar progresso:', progError.message);
+    return;
+  }
+
+  const capsConcluidos = progresso.filter(p => p.completou === true).length;
+  const totalCapitulos = 16;
+
+  const progressoPercentual = (capsConcluidos / totalCapitulos) * 100;
+
+  setAndamentoCurso(progressoPercentual);
+}
     const [perfil, setPerfil] = useState(null);
     useEffect(() => {
     buscarDados();
@@ -38,6 +65,10 @@ const TelaCurso = () => {
       setPerfil(perfilData);
     }
   }
+  useEffect(() => {
+  buscarProgressoCurso();
+}, []);
+
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -94,7 +125,7 @@ const TelaCurso = () => {
             <Text style={styles.difficulty}>{textos.difficulty}</Text>
             <Text style={styles.duration}>{textos.duration}</Text>
           </View>
-          <BarraProgresso percent={60} size={86} strokeWidth={3} />
+          <BarraProgresso percent={andamentoCurso} size={86} strokeWidth={3} />
         </View>
       </View>
 

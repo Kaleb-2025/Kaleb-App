@@ -21,6 +21,7 @@ const stylesP = StyleSheet.create({
     width: '90%',
     minHeight: '82%',
     justifyContent: 'space-between', 
+    
   },
   tituloBranco: {
     color: '#ffffff',
@@ -32,7 +33,7 @@ const stylesP = StyleSheet.create({
   },
   textoBranco: {
     color: '#ffffff',
-    fontSize: 24,
+    fontSize: 20,
     textAlign: 'center',
     textAlignVertical: 'flex-start',
     marginTop: 20,
@@ -69,8 +70,8 @@ const stylesP = StyleSheet.create({
 
   containerKaleb: {
     position: 'absolute',
-    bottom: '-50',
-    left: '-30', 
+    bottom: -50,
+    left: -30,
   },
   kalebContainer: {
     position: 'absolute',
@@ -83,11 +84,13 @@ const stylesP = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 3,
     borderColor: '#FFBE0A',
+    zIndex: 1,
   },
   kalebImagem: {
     width: 230,
     height: 230,
     resizeMode: 'contain',
+    zIndex: 1,
   },
 
   balao: {
@@ -95,11 +98,12 @@ const stylesP = StyleSheet.create({
   borderRadius: 15,
   padding: 12,
   maxWidth: 280,
-  marginBottom: 270,
-  marginLeft: 100,
+  marginBottom: 230,
+  marginLeft: 120,
   position: 'relative',
   borderWidth: 2,
   borderColor: '#000',
+  zIndex: 2,
 },
 
 trianguloBorda: {
@@ -114,6 +118,7 @@ trianguloBorda: {
   borderLeftColor: 'transparent',
   borderRightColor: 'transparent',
   borderTopColor: '#000', 
+  zIndex: 2,
 },
 
 triangulo: {
@@ -128,6 +133,7 @@ triangulo: {
   borderLeftColor: 'transparent',
   borderRightColor: 'transparent',
   borderTopColor: 'white', 
+  zIndex: 3,
 },
 
   falaTexto: {
@@ -147,20 +153,19 @@ triangulo: {
     fontSize: 16,
   },
   textoD: {
-    color: '#FFFFFF',
+    color: '#FFD700',
     fontSize: 16,
   },
   input: {
     borderBottomWidth: 1,
-    borderBottomColor: '#FFD700',
+    borderBottomColor: '#0A8DFF',
     width: 40,
     marginHorizontal: 8,
-    color: '#fff',
+    color: '#0A8DFF',
   },
   linha: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 8,
     flexWrap: 'wrap',
   },
     editorBase: {
@@ -180,7 +185,45 @@ triangulo: {
     borderRadius: 50,
     marginTop: 20,
   },
-
+    editorContainer: {
+    padding: 20,
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 10,
+    backgroundColor: '#d1d5db',
+    width: 360,
+    position: 'relative',
+    minHeight: 100,
+  },
+  editorBorder: {
+    borderWidth: 2,
+    justifyContent: 'center',
+    borderColor: 'black',
+    borderRadius: 10,
+    padding: 2,
+    flexGrow: 1, 
+  },
+  editorInnerBorder: {
+    borderWidth: 2,
+    justifyContent: 'center',
+    borderColor: 'black',
+    borderRadius: 10,
+    flexGrow: 1,
+  },
+  editorContent: {
+    backgroundColor: '#2B2E28',
+    padding: 10,
+    borderRadius: 10,
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+  editorHeaderTextEnd: {
+    color: 'black',
+    fontSize: 10,
+    fontWeight: 'bold',
+    alignSelf: 'flex-end',
+    textAlign: 'right',
+  },
   // STYLE DO COMPONENTE CUSTOM BUTTON
   textBase: {
     fontSize: 14,
@@ -213,11 +256,11 @@ alignCenter: {
 optionsContainer: {
   alignSelf: 'center',   
   justifyContent: 'center',
-  width: '90%',   
+  width: '100%',   
 },
 
 option: {
-  paddingVertical: 10,
+  paddingVertical: 5,
   paddingHorizontal: 16,
   marginVertical: 6,
   borderRadius: 8,
@@ -261,6 +304,107 @@ optionText: {
   fontWeight: '500',
 },
 
+
+// COMPONENTE DE RESPOSTAS CERTAS (RIGHT ANSWER COMPONENT)
+greenContainer: {
+  backgroundColor: 'rgba(18,114,55,0.55)',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 999,
+},
+xpText:{
+  color: 'white',
+  fontSize: 20,
+  fontWeight: 'bold', 
+},
+caixa: {
+ position: 'absolute',
+  top: 0, 
+  left: 0,
+  right: 0,
+  alignItems: 'center',
+  zIndex: 999,
+},
+continueButton: {
+  backgroundColor: '#12721A',
+  paddingVertical: 12,
+  paddingHorizontal: 24,
+  borderRadius: 50, 
+  marginTop: 15,
+  zIndex: 999,
+},
+containerProgress: {
+  justifyContent: 'center',
+  alignItems: 'center',
+  width:'100%',
+  position: 'absolute',
+  bottom: 0,
+  zIndex: '0',
+},
+insideProgress:{
+  width:'100%',
+  backgroundColor: '#0B1658',
+  padding: 10,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+insideProgress2:{
+  width:'100%',
+  backgroundColor: '#080C2E',
+  padding: 20,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+containerKaleb2: {
+    position: 'absolute',
+    bottom: '-40',
+    left: '-45', 
+    zIndex: '1',
+  },
+kalebContainer2: {
+    position: 'absolute',
+    bottom: 0,
+    width: 240,
+    height: 240,
+    borderRadius: 120,
+    backgroundColor: '#080C2E',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+kalebImagem2: {
+    width: 220,
+    height: 220,
+    resizeMode: 'contain',
+  },
+
+// COMPONENTE DE RESPOSTAS ERRADAS (WRONG ANSWER COMPONENT)
+redContainer: {
+  backgroundColor: 'rgba(152,12,12,0.55)',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 9999,
+},
+tryButton: {
+  backgroundColor: '#CF0000',
+  alignItems: 'center',
+  paddingVertical: 12,
+  paddingHorizontal: 24,
+  borderRadius: 50,
+  marginTop: 15,
+},
+insideText: {
+  alignItems: 'center',
+}
 
 });
 
