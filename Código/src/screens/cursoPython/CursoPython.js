@@ -18,7 +18,7 @@ export default CursoPython;
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 40,
+    flex: 1,
     backgroundColor: '#ffffff',
     alignItems: 'center',
   },

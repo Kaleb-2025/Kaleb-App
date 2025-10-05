@@ -100,7 +100,7 @@ async function buscarProgressoCurso() {
             </View>
             <View style={styles.statBox}>
               <Image source={require('../../assets/curso.png')} style={styles.icon} />
-              <Text style={styles.statText}>1</Text>
+              <Text style={styles.statText}>{perfil?.cursoandamento === 1 ? 'Lógica' : 'Python'}</Text>
             </View>
           </View>
 
