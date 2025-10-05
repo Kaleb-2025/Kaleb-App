@@ -93,7 +93,9 @@ const [question, setQuestion] = useState('');
         Observe o código abaixo. O que está acontecendo?
       </Text>
 
-      <CodeExample question={question} />
+        <View style={{ alignItems: 'center'}}>
+          <CodeExample question={question} />
+        </View>
 
       <View style={styles.optionsContainer}>
         {options.length > 0 ? (
@@ -111,19 +113,6 @@ const [question, setQuestion] = useState('');
       </View>
 
       <NextButton onPress={handleNext} />
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          Ao se inscrever no Kaleb você concorda com os nossos{' '}
-          <Text onPress={handleTermsPress} style={styles.link}>
-            Termos de Uso
-          </Text>{' '}
-          e{' '}
-          <Text onPress={handlePrivacyPress} style={styles.link}>
-            Política de Privacidade
-          </Text>.
-        </Text>
-      </View>
     </View>
   </View>
 </ScrollView>

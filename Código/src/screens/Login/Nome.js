@@ -65,7 +65,7 @@ const loginAutomatico = async () => {
       console.error('Erro ao criar info_user:', infoError);
     }
 
-    navigation.navigate('Home');
+    navigation.navigate('Tela1');
 
   } catch (err) {
     console.error(err);
