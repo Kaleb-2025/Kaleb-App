@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import BarraProgresso from '../components/trilhaCursoLogica/barraProcesso';
+import BarraProgresso from '../components/home/barraProcesso';
 import { supabase } from '../../App';
 
 import {
@@ -14,40 +14,14 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Componente StatsHeader
-const StatsHeader = ({ setAndamentoCurso }) => {
-  const [perfil, setPerfil] = useState(null);
+const StatsHeader = ({ setAndamentoCurso, setPerfil }) => {
+  const [perfilState, setPerfilState] = useState(null);
 
   useEffect(() => {
     buscarProgressoCurso();
     buscarDadosPerfil();
   }, []);
 
-  async function buscarProgressoCurso() {
-    const { data: userData } = await supabase.auth.getUser();
-    const uid = userData?.user?.id;
-    if (!uid) {
-      console.error('Usuário não autenticado');
-      return;
-    }
-
-    const { data: progresso, error: progError } = await supabase
-      .from('progresso_capitulo')
-      .select('idcapitulo, completou')
-      .eq('idusuario', uid);
-
-    if (progError) {
-      console.error('Erro ao buscar progresso:', progError.message);
-      return;
-    }
-
-    const capsConcluidos = progresso.filter(p => p.completou === true).length;
-    const totalCapitulos = 16;
-    const progressoPercentual = (capsConcluidos / totalCapitulos) * 100;
-
-    setAndamentoCurso(progressoPercentual); 
-  }
-
-  // Busca dados do perfil do usuário
   async function buscarDadosPerfil() {
     const { data: userInfo, error: userError } = await supabase.auth.getUser();
     if (userError || !userInfo?.user?.id) {
@@ -58,54 +32,91 @@ const StatsHeader = ({ setAndamentoCurso }) => {
     const uid = userInfo.user.id;
     const { data: perfilData, error: perfilError } = await supabase
       .from('info_user')
-      .select('*')
+      .select('xp, cursoandamento')
       .eq('idusuario', uid)
       .single();
 
     if (perfilError) {
       console.error("Erro ao buscar info_user:", perfilError.message);
     } else {
-      setPerfil(perfilData);
+      setPerfil(perfilData);          // envia para o Home
+      setPerfilState(perfilData);     // atualiza o estado interno do StatsHeader
+      console.log('Perfil vindo do banco:', perfilData);
     }
   }
+
+  // Função para buscar progresso por curso
+  async function buscarProgressoCurso() {
+    const { data: userData } = await supabase.auth.getUser();
+    const uid = userData?.user?.id;
+    if (!uid) {
+      console.error('Usuário não autenticado');
+      return;
+    }
+
+    // Busca todos os capítulos com o campo "curso"
+    const { data: capitulos, error: capsError } = await supabase
+      .from('capitulos')
+      .select('idcapitulo, curso');
+
+    if (capsError) {
+      console.error('Erro ao buscar capítulos:', capsError.message);
+      return;
+    }
+
+    // Busca progresso do usuário
+    const { data: progresso, error: progError } = await supabase
+      .from('progresso_capitulo')
+      .select('idcapitulo, completou')
+      .eq('idusuario', uid);
+
+    if (progError) {
+      console.error('Erro ao buscar progresso:', progError.message);
+      return;
+    }
+
+    // Agrupar capítulos por curso
+    const cursosProgresso = {};
+    capitulos.forEach(c => {
+      if (!cursosProgresso[c.curso]) {
+        cursosProgresso[c.curso] = { total: 0, concluidos: 0 };
+      }
+      cursosProgresso[c.curso].total++;
+      if (progresso.find(p => p.idcapitulo === c.idcapitulo && p.completou)) {
+        cursosProgresso[c.curso].concluidos++;
+      }
+    });
+
+    // Transformar em percentual
+      // Transformar em percentual e arredondar
+      const percentuais = {};
+      Object.keys(cursosProgresso).forEach(cursoId => {
+        const { total, concluidos } = cursosProgresso[cursoId];
+        // calcular e arredondar
+        percentuais[cursoId] = total > 0 ? parseFloat(((concluidos / total) * 100).toFixed(1)) : 0;
+      });
+
+      setAndamentoCurso(percentuais);
+  }
   return (
-    <><View style={styles.header}>
+    <View style={styles.header}>
       <View style={styles.headerRow}>
-        <View style={styles.statsRow}>
-          <View style={styles.statBox}>
-            <Image source={require('../assets/estrela.png')} style={styles.icon} />
-            <Text style={styles.statText}>{perfil?.xp ?? '0'}</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Image source={require('../assets/kaleb.png')} style={styles.icon} />
-            <Text style={styles.statText}>15</Text>
-          </View>
-          <View style={styles.statBox}>
-            <Image source={require('../assets/curso.png')} style={styles.icon} />
-            <Text style={styles.statText}>{(perfil?.cursoAtual) ?? '1'}</Text>
+          <View style={styles.statsRow}>
+            <View style={styles.statBox}>
+              <Image source={require('../assets/estrela.png')} style={styles.icon} />
+              <Text style={styles.statText}>{perfilState?.xp ?? '0'}</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Image source={require('../assets/kaleb.png')} style={styles.icon} />
+              <Text style={styles.statText}>15</Text>
+            </View>
+            <View style={styles.statBox}>
+              <Image source={require('../assets/curso.png')} style={styles.icon} />
+              <Text style={styles.statText}>{perfilState?.cursoandamento === 1 ? 'Lógica' : 'Python'}</Text>
+            </View>
           </View>
         </View>
       </View>
-    </View><View style={styles.statItem}>
-        <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/7fde0415441b903316c19e55ea5dd3c71a9ab891" }}
-          style={styles.statIcon} />
-        <View style={styles.statValueContainer}>
-          <Text style={styles.statValue}>0</Text>
-        </View>
-      </View><View style={styles.statItem}>
-        <Image
-          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//python-icon.png" }}
-          style={styles.statIcon} />
-        <View style={styles.statValueContainer}>
-          <Text style={styles.statValue}>0</Text>
-        </View>
-      </View><View style={styles.statItemNoBorder}>
-        <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/4987ee9e912bad68f5067d74441d6d730ed47a9c" }}
-          style={styles.statIcon} />
-      </View></>
-    </View>
   );
 };
 
@@ -115,8 +126,7 @@ const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) =>
   return (
     <View style={styles.courseCard}>
       <View style={styles.courseImageContainer}>
-        <BarraProgresso percent={progress} size={75} strokeWidth={6} />
-         <Text style={styles.courseProgress}>{progress}%</Text>
+        <BarraProgresso percent={progress} size={90} strokeWidth={6} />
       </View>
       <View style={styles.courseInfo}>
         <View style={styles.courseTitleContainer}>
@@ -127,10 +137,16 @@ const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) =>
             <Text style={styles.statusText}>{status}</Text>
           </View>
           <TouchableOpacity
-            style={styles.actionButton}
-            onPress={() => navigation.navigate('CursoLogica')}
+            style={[
+              styles.actionButton,
+              bloqueado && { backgroundColor: '#ccc' } // muda a cor se bloqueado
+            ]}
+            onPress={() => !bloqueado && navigation.navigate(tela)} // só navega se não bloqueado
+            disabled={bloqueado} // desabilita toque
           >
-            <Text style={styles.buttonText}>{buttonText}</Text>
+            <Text style={styles.buttonText}>
+              {bloqueado ? 'Bloqueado' : buttonText}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -139,29 +155,43 @@ const CourseCard = ({ title, progress, status, buttonText, tela, bloqueado }) =>
 };
 
 // Componente CoursesList
-const CoursesList = ({ andamentoCurso }) => {
+const CoursesList = ({ andamentoCurso, cursoandamento }) => {
+  let andamentoLogica = andamentoCurso[1] || 0;
+  const andamentoPython = andamentoCurso[2] || 0;
+
+  let pythonBloqueado = true;
+
+  if (cursoandamento === 2) {
+    andamentoLogica = 100; // Lógica concluído
+    pythonBloqueado = false; // Python liberado
+  } else if (cursoandamento === 1) {
+    pythonBloqueado = true;
+  }
+
+
   return (
     <View style={styles.coursesContainer}>
       <View style={styles.sectionTitleContainer}>
         <Text style={styles.sectionTitle}>Cursos</Text>
       </View>
 
-      <CourseCard
+    <CourseCard
         title="Lógica de Programação"
-        progress={andamentoCurso} 
-        status="Não iniciado"
-        buttonText="Iniciar"
+        progress={andamentoLogica}
+        status={andamentoLogica === 100 ? 'Concluído' : (andamentoLogica === 0 ? 'Não Iniciado' : 'Iniciado')}
+        buttonText={andamentoLogica === 100 ? 'Concluído' : 'Iniciar'}
+        tela={andamentoLogica === 0 ? 'CursoLogica' : 'TelaCurso'}
+        bloqueado={false}
       />
 
-    <CourseCard
-      title="Python"
-      progress={pythonBloqueado ? 0 : andamentoPython}
-      status={pythonBloqueado ? 'Bloqueado' : (andamentoPython === 0 ? 'Não Iniciado' : 'Iniciado')}
-      buttonText={pythonBloqueado ? 'Bloqueado' : 'Iniciar'}
-      tela={pythonBloqueado ? null : (andamentoPython === 0 ? 'CursoPython' : 'TelaCursoPython')}
-      bloqueado={pythonBloqueado} // <--- importante
-    />
-
+      <CourseCard
+        title="Python"
+        progress={pythonBloqueado ? 0 : andamentoPython}
+        status={pythonBloqueado ? 'Bloqueado' : (andamentoPython === 0 ? 'Não Iniciado' : 'Iniciado')}
+        buttonText={pythonBloqueado ? 'Bloqueado' : 'Iniciar'}
+        tela={pythonBloqueado ? null : (andamentoPython === 0 ? 'CursoPython' : 'TelaCursoPython')}
+        bloqueado={pythonBloqueado}
+      />
 
       {/*<CourseCard
         title="Java"
@@ -212,14 +242,15 @@ const BottomNavigation = () => {
 
 // Componente Principal
 export default function Home() {
-  const [andamentoCurso, setAndamentoCurso] = useState(0);
+  const [andamentoCurso, setAndamentoCurso] = useState({});
+  const [perfil, setPerfil] = useState(null); // <--- adicionar aqui
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <ScrollView>
-          <StatsHeader setAndamentoCurso={setAndamentoCurso}/>
-          <CoursesList andamentoCurso={andamentoCurso}/>
+          <StatsHeader setAndamentoCurso={setAndamentoCurso} setPerfil={setPerfil} />
+          <CoursesList andamentoCurso={andamentoCurso} cursoandamento={perfil?.cursoandamento} />
         </ScrollView>
         <BottomNavigation />
       </View>
@@ -227,60 +258,55 @@ export default function Home() {
   );
 }
 
+
 // Estilos
 const styles = StyleSheet.create({
   safeArea: { 
     flex: 1,
-    backgroundColor: '#f9fafb' 
+    backgroundColor: '#0b1658',
   },
   container: { 
-    flex: 1
+    flex: 1,
+    backgroundColor: '#f9fafb',
   },
-  statsHeader: {
+  header: {
     flexDirection: 'row', 
-    justifyContent: 'space-between',
-    padding: 12,
-    backgroundColor: '#8AEAFF' 
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#0b1658',
   },
-  statItem: {
+headerRow: {
+    flex: 1,
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+  },
+  statsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#8AEAFF',
-    borderRadius: 30,
-    borderColor: '#4B5563',
-    borderWidth: 2, 
-    padding: 6, 
-    marginHorizontal: 4, 
-    flex: 1 
+    gap: 8,
   },
-  statIcon: { 
-    width: 32, 
-    height: 32, 
-    marginRight: 8 
+  statBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    marginHorizontal: 4,
   },
-  statValueContainer: { 
-    backgroundColor: 'transparent', 
-    paddingHorizontal: 12, 
-    paddingVertical: 4, 
-    borderRadius: 4 
+  icon: {
+    width: 18,
+    height: 18,
+    marginRight: 4,
   },
-  statValue: { 
-    color: '#1f2937', 
-    fontWeight: '500' 
-  },
-  statItemNoBorder: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    backgroundColor: '#8AEAFF',
-    borderRadius: 30, 
-    padding: 6, 
-    marginHorizontal: 4, 
-    flex: 1 
-  },
-  icon: { 
-    width: 24, 
-    height: 24,
-    marginRight: 4 
+  statText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   courseCard: { 
     flexDirection: 'row', 
@@ -339,12 +365,6 @@ const styles = StyleSheet.create({
     fontSize: 24, 
     fontWeight: 'bold', 
     color: '#1f2937' 
-  },
-    courseProgress: {
-    marginTop: 4,
-    color: '#2563eb',
-    fontWeight: 'bold',
-    fontSize: 14,
   },
   bottomNav: { 
     flexDirection: 'row',
