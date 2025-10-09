@@ -80,16 +80,16 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
 - [x] Implementação da lógica básica de navegação;
 - [x] Documentação do Relatório tecnico (desenvolvimento);
 - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
-- [ ] Documentação Módulos (final);
+- [x] Documentação Módulos (final);
 - [ ] Documentação dos Matériais Complementares (final);
 - [ ] Teste e revisão das funcionalidades desenvolvidas;
-- [ ] Atualização dos repositórios GitHub.
+- [x] Atualização dos repositórios GitHub.
 
  
 ### Sprint 4. Testes, Ajustes, Treinamento e Implementação
  ---
 - [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
-- [ ] Monitoramento e ajustes (correção de bugs e melhorias);
+- [x] Monitoramento e ajustes (correção de bugs e melhorias);
 - [ ] Treinamento com professores (para feedback inicial);
 - [ ] Treinamento com alunos (para feedback final);
 - [ ] Documentação do Relatório tecnico (final);
