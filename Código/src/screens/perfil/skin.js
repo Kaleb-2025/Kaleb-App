@@ -1,147 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import { supabase } from '../../../App';
 
+// ================== MASCOTE ==================
+const skinsMap = {
+  "Ovinho": require('../../assets/skins/ovinho.png'),
+  "Baby Kaleb": require('../../assets/skins/babykaleb.png'),
+  "Casca Quebrada": require('../../assets/skins/casca.png'),
+  "Kaleb": require('../../assets/logo.png'),
+  "Pythonete": require('../../assets/skins/pythonete_01.png'),
+  "Baby Kaleb Nerd": require('../../assets/skins/baby_kalebNerd.png'),
+  "Kaleb Nerd": require('../../assets/skins/kalebNerd.png'),
+};
 
-function Mascote() {
+function Mascote({ skin }) {
   return (
-   <View style={mascoteStyles.mascote}>
-      <View style={mascoteStyles.avatarWrapper}>
-        <Image
-          source={{ uri: "https://api.builder.io/api/v1/image/assets/TEMP/e7ba94c882f5e99e152ac82d3caca3b8421d99f4?placeholderIfAbsent=true&apiKey=9fa5fd1f53e14698946a72b8311015ea" }}
-          style={mascoteStyles.avatar}
-          resizeMode="contain"
-        />
-      </View>
+    <View style={mascoteStyles.mascote}>
+      <Image
+        source={skinsMap[skin] || skinsMap["Ovinho"]} 
+        style={mascoteStyles.avatar}
+        resizeMode="contain"
+      />
     </View>
   );
 }
 
 const mascoteStyles = StyleSheet.create({
-   mascote:{
+  mascote: {
     backgroundColor: '#0B1658',
-    flexDirection: 'column',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 0, 
-   },
-    avatarWrapper: {
-    backgroundColor: '#0B1658',
-    padding: 80,
+    flex: 1,
   },
   avatar: {
-    width: 250,
-    height: 250,
-  },
-});
-
-function UserProfile() {
-  return (
-    <View style={userProfileStyles.userProfile}>
-      <Image
-        source={{ uri: "https://api.builder.io/api/v1/image/assets/TEMP/bba24e956901abfc925c4fb3c58d7bf328dedf7d?placeholderIfAbsent=true&apiKey=9fa5fd1f53e14698946a72b8311015ea" }}
-        style={userProfileStyles.avatar}
-      />
-      <Text style={userProfileStyles.username}>Kaleb Silva</Text>
-      <Text style={userProfileStyles.userLevel}>iniciante</Text>
-    </View>
-  );
-}
-
-const userProfileStyles = 
-StyleSheet.create({
-  userProfile: {
-    flexDirection: 'column',
+    height: 280,
     alignItems: 'center',
-    position: 'absolute',
-    top: 430, 
-  },
-
-  username: {
-    color: 'rgba(0, 0, 0, 1)',
-    textAlign: 'center',
-    fontSize: 36,
-    fontFamily: 'Galindo',
-    fontWeight: 'bold',
-    marginBottom: 6,
-  },
-  userLevel: {
-    color: 'rgba(100, 100, 100, 1)',
-    textAlign: 'center',
-    fontSize: 20,
-    fontFamily: 'Inter',
-  },
-});
-
-function ProgressTrack() {
-  return (
-    <View style={progressTrackStyles.progressSection}>
-      <View style={progressTrackStyles.trackContainer}>
-        <View style={progressTrackStyles.trackBar}>
-          <View style={progressTrackStyles.trackFill} />
-        </View>
-        <Image
-          source={{
-            uri: 'https://api.builder.io/api/v1/image/assets/TEMP/4f2c245ab4e8ba748290e7dfc9b3ce0d3e82c873?placeholderIfAbsent=true&apiKey=9fa5fd1f53e14698946a72b8311015ea',
-          }}
-          style={progressTrackStyles.progressIndicator}
-        />
-      </View>
-    </View>
-  );
-}
-
-const progressTrackStyles = StyleSheet.create({
-  progressSection: {
-    alignSelf: 'stretch',
-    position: 'absolute',
-    zIndex: 10,
-    top:520, // posição fixa
-    width: '100%',
-    paddingHorizontal: 18,
-  },
-  trackContainer: {
-    position: 'relative',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-  trackBar: {
-    zIndex: 0,
-    minWidth: 240,
-    flexDirection: 'column',
-    alignItems: 'stretch',
     justifyContent: 'center',
-    flex: 1,
-    paddingVertical: 4,
-    alignSelf: 'center',
-  },
-  trackFill: {
-    borderRadius: 8,
-    backgroundColor: '#e8def8',
-    height: 4,
-  },
-  progressIndicator: {
-    aspectRatio: 1,
-    width: 4,
-    height: 4,
-    position: 'absolute',
-    zIndex: 1,
-    right: 0,
-    top: '50%',
-    transform: [{ translateY: -2 }],
+    width: '100%',
+    marginTop: -10,
   },
 });
+
+// ================== SKIN CARD ==================
 function SkinCard({ imageSrc, title, selected, onPress }) {
   return (
     <TouchableOpacity onPress={onPress}>
       <View
         style={[
           skinCardStyles.skinCard,
-            selected
-          ? { borderWidth: 2, borderColor: '#FFBE0A',  }
+          selected
+            ? { borderWidth: 2, borderColor: '#FFBE0A' }
             : { borderWidth: 0 },
-        ]}
-      >
+        ]}>
         <View style={skinCardStyles.imageWrapper}>
           <Image
             source={imageSrc}
@@ -159,7 +76,7 @@ const skinCardStyles = StyleSheet.create({
   skinCard: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 15,
     borderRadius: 16,
     padding: 8,
   },
@@ -185,351 +102,406 @@ const skinCardStyles = StyleSheet.create({
   },
 });
 
-function SkinsSection() {
+// ================== SKINS SECTION ==================
+function SkinsSection({ onChangeSkin }) {
   const [selectedSkin, setSelectedSkin] = useState(null);
+  const [conquistas, setConquistas] = useState([]); 
+
+  const toggleSelect = (skinName) => {
+    setSelectedSkin(selectedSkin === skinName ? null : skinName);
+  };
+
+  useEffect(() => {
+  const carregarConquistas = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from("conquistas_desbloqueadas")
+      .select("conquista")    // só precisamos do id
+      .eq("idusuario", user.id);
+
+    if (error) {
+      console.log("Erro:", error.message);
+    } else {
+      // pega só os ids em um array simples, ex: [4, 5]
+      const lista = data.map(item => item.conquista);
+      setConquistas(lista);
+    }
+
+    setLoading(false);
+  };
+
+  carregarConquistas();
+}, []);
+
+  const isUnlocked = (id) => conquistas.includes(id);
+
+async function toggleOculos() {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+
+  const { data: perfil, error } = await supabase
+    .from("info_user")
+    .select("skin_atual")
+    .eq("idusuario", user.id)
+    .single();
+
+  if (error) return;
+
+  const skinAtual = perfil.skin_atual;
+
+  if (skinAtual.endsWith(" Nerd")) {
+    const normal = skinAtual.replace(" Nerd", "");
+
+    await supabase
+      .from("info_user")
+      .update({ skin_atual: normal })
+      .eq("idusuario", user.id);
+
+    setSelectedSkin(normal);
+    onChangeSkin();  
+    return;
+  }
+
+  const nerd = skinAtual + " Nerd";
+
+  await supabase
+    .from("info_user")
+    .update({ skin_atual: nerd })
+    .eq("idusuario", user.id);
+
+  setSelectedSkin(nerd);
+  onChangeSkin();
+}
+
 
   return (
     <View style={skinsSectionStyles.skinsContent}>
-      <View style={skinsSectionStyles.commonSkinsSection}>
-        <Text style={skinsSectionStyles.sectionTitle}>
-          {'\n\n'}
-          {'\n\n'}Skins Comuns
-        </Text>
-        <View style={skinsSectionStyles.sectionDescription}>
-          <Image
-            source={{
-              uri: 'https://api.builder.io/api/v1/image/assets/TEMP/8e9cd8c1d76a79dda5292d18b67e637981082070?placeholderIfAbsent=true&apiKey=9fa5fd1f53e14698946a72b8311015ea',
-            }}
-            style={skinsSectionStyles.descriptionIcon}
-          />
-          <Text style={skinsSectionStyles.descriptionText}>Desbloqueadas com acúmulo de xp</Text>
-        </View>
+      {/* Skins Comuns */}
+      <Text style={skinsSectionStyles.sectionTitle}>Skins Comuns</Text>
+      <Text style={skinsSectionStyles.commonDescription}>
+        ✨ Desbloqueadas com acúmulo de XP
+      </Text>
 
-        <View style={skinsSectionStyles.skinsGrid}>
-          <View style={skinsSectionStyles.skinColumn}>
-            <SkinCard 
-              imageSrc={require("../../assets/skins/ovinho.png")} 
-              title="Ovinho" 
-              selected={selectedSkin === 'Ovinho'}
-              onPress={() => setSelectedSkin('Ovinho')}
-            />
-            <View style={skinsSectionStyles.skinSpacing}>
-              <SkinCard
-                imageSrc={require("../../assets/skins/babykaleb.png")} 
-                title="Baby Kaleb"
-                selected={selectedSkin === 'Baby Kaleb'}
-                onPress={() => setSelectedSkin('Baby Kaleb')}
-              />
-            </View>
-          </View>
-
-          <View style={skinsSectionStyles.skinColumn}>
-            <SkinCard
-              imageSrc={require("../../assets/skins/casca.png")} 
-              title="Casca Quebrada"
-              selected={selectedSkin === 'Casca Quebrada'}
-              onPress={() => setSelectedSkin('Casca Quebrada')}
-            />
-            <View style={skinsSectionStyles.skinSpacing}>
-              <SkinCard
-                 imageSrc={require("../../assets/logo.png")}
-                title="Kaleb"
-                selected={selectedSkin === 'Kaleb'}
-                onPress={() => setSelectedSkin('Kaleb')}
-              />
-            </View>
-          </View>
-        </View>
+      <View style={skinsSectionStyles.skinsGrid}>
+        <SkinCard
+          imageSrc={require('../../assets/skins/ovinho.png')}
+          title="Ovinho"
+          selected={selectedSkin === 'Ovinho'}
+          onPress={() => toggleSelect('Ovinho')}
+        />
+        <SkinCard
+          imageSrc={require('../../assets/skins/babykaleb.png')}
+          title="Baby Kaleb"
+          selected={selectedSkin === 'Baby Kaleb'}
+          onPress={() => toggleSelect('Baby Kaleb')}
+        />
+        <SkinCard
+          imageSrc={require('../../assets/skins/casca.png')}
+          title="Casca Quebrada"
+          selected={selectedSkin === 'Casca Quebrada'}
+          onPress={() => toggleSelect('Casca Quebrada')}
+        />
+        <SkinCard
+          imageSrc={require('../../assets/logo.png')}
+          title="Kaleb"
+          selected={selectedSkin === 'Kaleb'}
+          onPress={() => toggleSelect('Kaleb')}
+        />
       </View>
 
-      <View style={skinsSectionStyles.rareSkinsSection}>
-        <Text style={skinsSectionStyles.rareSectionTitle}>
-          Skins <Text style={skinsSectionStyles.rareHighlight}>Raras</Text>
-        </Text>
-        <Text style={skinsSectionStyles.rareDescription}>Desbloqueadas ao terminar os cursos</Text>
-      </View>
+      {/* Skins Raras */}
+      <Text style={skinsSectionStyles.rareSectionTitle}>
+        Skins <Text style={skinsSectionStyles.rareHighlight}>Raras</Text>
+      </Text>
+      <Text style={skinsSectionStyles.rareDescription}>
+        🔒 Desbloqueadas ao terminar os cursos
+      </Text>
 
-      <Image
-        source={{
-          uri: 'https://api.builder.io/api/v1/image/assets/TEMP/82662f9832d8d6a3b216516bc48a808bcc645556?placeholderIfAbsent=true&apiKey=9fa5fd1f53e14698946a72b8311015ea',
-        }}
-        style={skinsSectionStyles.rareSkinsImage}
-      />
+      <View style={skinsSectionStyles.rareGrid}>
+        {/* Pythonete */}
+        <TouchableOpacity
+          style={skinsSectionStyles.rareWrapper}
+          activeOpacity={isUnlocked(5) ? 0.8 : 1}
+          disabled={!isUnlocked(5)}
+          onPress={() => isUnlocked(5) && toggleSelect('Pythonete')}
+        >
+          <View
+            style={[
+              skinsSectionStyles.rareCard,
+              selectedSkin === 'Pythonete' && { borderColor: '#FFBE0A' },
+            ]}
+          >
+            <Image
+              source={require('../../assets/skins/pythonete_01.png')}
+              style={skinsSectionStyles.rareImage}
+              resizeMode="contain"
+            />
+
+            {/* Mostra cadeado apenas se estiver bloqueado */}
+            {!isUnlocked(5) && (
+              <>
+                <View pointerEvents="none" style={skinsSectionStyles.overlay} />
+                <Image
+                  source={require('../../assets/skins/cadeado_icon.png')}
+                  style={skinsSectionStyles.lockIcon}
+                />
+              </>
+            )}
+          </View>
+          <Text style={skinsSectionStyles.rareName}>Pythonete</Text>
+        </TouchableOpacity>
+
+        {/* Acessório Nerd */}
+        <TouchableOpacity
+          style={skinsSectionStyles.rareWrapper}
+          activeOpacity={isUnlocked(4) ? 0.8 : 1}
+          disabled={!isUnlocked(4)}
+          onPress={() => isUnlocked(4) && toggleOculos()}
+        >
+          <View
+            style={[
+              skinsSectionStyles.rareCard,
+              selectedSkin === 'Acessório Nerd' && { borderColor: '#FFBE0A' },
+            ]}
+          >
+            <Image
+              source={require('../../assets/skins/acessorio.png')}
+              style={skinsSectionStyles.rareImage}
+              resizeMode="contain"
+            />
+
+            {/* Cadeado se estiver bloqueado */}
+            {!isUnlocked(4) && (
+              <>
+                <View pointerEvents="none" style={skinsSectionStyles.overlay} />
+                <Image
+                  source={require('../../assets/skins/cadeado_icon.png')}
+                  style={skinsSectionStyles.lockIcon}
+                />
+              </>
+            )}
+          </View>
+          <Text style={skinsSectionStyles.rareName}>Acessório Nerd</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const skinsSectionStyles = StyleSheet.create({
   skinsContent: {
-    position: 'relative',
+    flex: 1,
+    alignItems: 'center',
     width: '100%',
-    zIndex: 10,
-    flexDirection: 'column',
-    alignItems: 'stretch',
     paddingHorizontal: 16,
     marginTop: 20,
   },
-  commonSkinsSection: {
-   top: 470,
-  },
-  
   sectionTitle: {
-    color: 'rgba(0, 0, 0, 1)',
-    marginLeft: 26,
-    marginBottom: 15,
     fontSize: 20,
-    fontFamily: 'Inter',
     fontWeight: '600',
+    color: '#000',
+    marginBottom: 2,
+    alignSelf: 'center',
   },
-  sectionDescription: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 26,
-    marginBottom: 51,
-  },
-  descriptionIcon: {
-    aspectRatio: 1.25,
-    width: 15,
-  },
-  descriptionText: {
-    color: 'rgba(100, 100, 100, 1)',
+  commonDescription: {
     fontSize: 15,
-    fontFamily: 'Inter',
-    flex: 1,
-    marginLeft: 7,
+    color: '#646464',
+    textAlign: 'center',
+    marginBottom: 30,
   },
   skinsGrid: {
+    width: '100%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop: 0,
+    marginBottom: 10,
   },
-  skinColumn: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  skinSpacing: {
-    marginTop: 24,
-  },
-  rareSkinsSection: {
-    fontWeight: 'bold',
-    top: 440,
-  },
+  // SKINS RARAS
   rareSectionTitle: {
-    color: 'rgba(0, 0, 0, 1)',
-    marginLeft: 20,
-    marginBottom: 18,
-    fontSize: 18,
-    fontFamily: 'Inter',
+    fontSize: 20,
     fontWeight: '600',
-    top: 80,
+    marginTop: 20,
+    alignSelf: 'center',
+    color: '#000',
   },
   rareHighlight: {
-    fontWeight: 'bold',
     color: 'rgba(255, 136, 10, 1)',
+    fontWeight: 'bold',
   },
   rareDescription: {
-    color: 'rgba(100, 100, 100, 1)',
-    textAlign: 'center',
-    marginLeft: 25,
-    marginBottom: 18,
     fontSize: 15,
-    fontFamily: 'Inter',
-    top: 80,
+    color: '#646464',
+    textAlign: 'center',
+    marginBottom: 15,
   },
-  rareSkinsImage: {
-    aspectRatio: 1.91,
+  rareGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     width: '100%',
-    maxWidth: 372,
-    alignSelf: 'flex-end',
-    top: 530,
-    marginBottom: 180,
+    flexWrap: 'wrap',
+    marginBottom: 30,
+  },
+  rareWrapper: {
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  rareCard: {
+    width: 150,
+    height: 130,
+    backgroundColor: '#fff', // antes era '#2F2F2F'
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: 'transparent', // fica invisível até clicar
+  },
+  rareImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.45)',
+  },
+  lockIcon: {
+    position: 'absolute',
+    width: 30,
+    height: 30,
+    tintColor: '#FFBE0A',
+  },
+  rareName: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#000',
+    textAlign: 'center',
+    marginTop: 6,
   },
 });
 
+// ================== STATS MENU ==================
 function StatsMenu({ perfil }) {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={menuStyles.containerHeader}>
-    <View style={menuStyles.statsHeader}>
-            <TouchableOpacity
-          style={menuStyles.backButton}
-          onPress={() => navigation.navigate('Home')}
-        >
-          <Image
-            source={require('../../assets/seta_branca.png')}
-            style={menuStyles.setaImg}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-
-      <View style={menuStyles.statItem}>
-        <Image
-          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//star.png" }}
-          style={menuStyles.icon}
-        />
-        <View style={menuStyles.statValueContainer}>
-          <Text style={menuStyles.statValue}>{perfil?.xp ?? '0'}</Text>
+      <View style={menuStyles.header}>
+        <View style={menuStyles.headerRow}>
+          <TouchableOpacity
+            style={menuStyles.backButton}
+            onPress={() => navigation.goBack()}>
+            <Image
+              source={require('../../assets/seta_branca.png')}
+              style={menuStyles.setaImg}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <View style={menuStyles.statsRow}>
+            <View style={menuStyles.statBox}>
+              <Image
+                source={require('../../assets/estrela.png')}
+                style={menuStyles.icon}
+              />
+              <Text style={menuStyles.statText}>{perfil?.xp ?? '0'}</Text>
+            </View>
+            <View style={menuStyles.statBox}>
+              <Image
+                source={require('../../assets/kaleb.png')}
+                style={menuStyles.icon}
+              />
+              <Text style={menuStyles.statText}>15</Text>
+            </View>
+            <View style={menuStyles.statBox}>
+              <Image
+                source={require('../../assets/curso.png')}
+                style={menuStyles.icon}
+              />
+              <Text style={menuStyles.statText}>1</Text>
+            </View>
+          </View>
+          <View style={{ width: 38 }} />
         </View>
       </View>
-
-      <View style={menuStyles.statItem}>
-        <Image
-          source={{ uri: "https://cdn.builder.io/api/v1/image/assets/TEMP/7fde0415441b903316c19e55ea5dd3c71a9ab891" }}
-          style={menuStyles.statIcon}
-        />
-        <View style={menuStyles.statValueContainer}>
-          <Text style={menuStyles.statValue}>0</Text>
-        </View>
-      </View>
-
-      <View style={menuStyles.statItem}>
-        <Image
-          source={{ uri: "https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/home//python-icon.png" }}
-          style={menuStyles.statIcon}
-        />
-        <View style={menuStyles.statValueContainer}>
-          <Text style={menuStyles.statValue}>0</Text>
-        </View>
-      </View>
-    </View>
     </SafeAreaView>
   );
 }
 
+const menuStyles = StyleSheet.create({
+  containerHeader: { width: '100%', backgroundColor: '#0b1658' },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 4,
+    backgroundColor: '#0b1658',
+  },
+  headerRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  backButton: { padding: 6, marginRight: 5 },
+  setaImg: { width: 28, height: 28 },
+  statsRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  statBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    marginHorizontal: 3,
+  },
+  icon: { width: 18, height: 18, marginRight: 4 },
+  statText: { color: '#fff', fontWeight: 'bold', fontSize: 14 },
+});
+
+// ================== TELA SKIN ==================
 function TelaSkin() {
   const [perfil, setPerfil] = useState(null);
+  const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
     buscarDadosPerfil();
-  }, []);
+  }, [refetch]);
 
   async function buscarDadosPerfil() {
     const { data: userInfo, error: userError } = await supabase.auth.getUser();
-    if (userError || !userInfo?.user?.id) {
-      console.error("Erro ao obter usuário:", userError?.message);
-      return;
-    }
+    if (userError || !userInfo?.user?.id) return;
 
     const uid = userInfo.user.id;
-    const { data: perfilData, error: perfilError } = await supabase
-      .from('info_user')
-      .select('*')
-      .eq('idusuario', uid)
+
+    const { data: perfilData } = await supabase
+      .from("info_user")
+      .select("*")
+      .eq("idusuario", uid)
       .single();
 
-    if (perfilError) {
-      console.error("Erro ao buscar info_user:", perfilError.message);
-    } else {
-      setPerfil(perfilData);
-    }
+    setPerfil(perfilData);
   }
 
   return (
     <ScrollView style={telaSkinStyles.skinScreen}>
-      <View style={telaSkinStyles.mainContent}>
-        {/* MENU FIXO NO TOPO */}
-        <StatsMenu perfil={perfil} />
-        <View style={telaSkinStyles.contentOverlay}>
-          <Mascote/>
-          <UserProfile />
-          <ProgressTrack />
-          <SkinsSection />
-        </View>
-      </View>
-
-      <View style={telaSkinStyles.spacer} />
+      <StatsMenu perfil={perfil} />
+      <Mascote skin={perfil?.skin_atual} />
+      <SkinsSection onChangeSkin={() => setRefetch(!refetch)} />
     </ScrollView>
   );
 }
 
 const telaSkinStyles = StyleSheet.create({
   skinScreen: {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
-    maxWidth: 480,
+    backgroundColor: '#fff',
     width: '100%',
-    paddingBottom: 18,
-    flexDirection: 'column',
-    overflow: 'hidden',
-    alignItems: 'stretch',
-    alignSelf: 'center',
+    maxWidth: 480,
     flex: 1,
   },
-  mainContent: {
-    flexDirection: 'column',
-    position: 'relative',
-    minHeight: 1500,
-    width: '100%',
-    alignItems: 'center',
-  },
-  contentOverlay: {
-    position: 'relative',
-    zIndex: 10,
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%',
-    paddingTop: 0, 
-  },
-  spacer: {
-    minHeight: 111,
-    width: '100%',
-  },
-});
-
-const menuStyles = StyleSheet.create({
-  containerHeader: { 
-    width: '100%',
-    backgroundColor: '#0b1658' 
-  },
-   statsHeader: {
-    flexDirection: 'row', 
-    justifyContent: 'space-between',
-    padding: 12,
-    backgroundColor: '#0b1658' 
-  },
-  statItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 30,
-    borderColor: '#fff',
-    borderWidth: 2, 
-    padding: 6, 
-    marginHorizontal: 4, 
-    flex: 1 
-  },
-  statIcon: { 
-    width: 32, 
-    height: 32, 
-    marginRight: 8 
-  },
-  statValueContainer: { 
-    backgroundColor: 'transparent', 
-    paddingHorizontal: 12, 
-    paddingVertical: 4, 
-    borderRadius: 4 
-  },
-  statValue: { 
-    color: '#fff', 
-    fontWeight: '500' 
-  },
-  icon: { 
-    width: 24, 
-    height: 24,
-    marginRight: 4 
-  },
-  backButton: {
-    zIndex: 20,
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  setaImg: {
-    width: 24,
-    height: 24,
-  },
-
 });
 
 export default TelaSkin;
