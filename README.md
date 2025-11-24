@@ -16,8 +16,8 @@
  | ------ | -------- | ------ |
  | 01     | 30/03/2025 | Concluído |
  | 02     | 01/07/2025 | Concluído |
- | 03     | 20/08/25   | A fazer |
- | 04     | 01/10/25   | A fazer |
+ | 03     | 20/08/25   | Concluído |
+ | 04     | 01/10/25   | Em andamento |
  | 05     | 01/11/25   | A fazer |
 
  ## 📚 Índice
@@ -79,27 +79,26 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
 - [x] Desenvolvimento das funcionalidades principais (programação do backend);
 - [x] Implementação da lógica básica de navegação;
 - [x] Documentação do Relatório tecnico (desenvolvimento);
-- [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
 - [x] Documentação Módulos (final);
-- [ ] Documentação dos Matériais Complementares (final);
-- [ ] Teste e revisão das funcionalidades desenvolvidas;
+- [x] Documentação dos Matériais Complementares (final);
+- [x] Teste e revisão das funcionalidades desenvolvidas;
 - [x] Atualização dos repositórios GitHub.
 
  
 ### Sprint 4. Testes, Ajustes, Treinamento e Implementação
  ---
-- [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
+- [x] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
 - [x] Monitoramento e ajustes (correção de bugs e melhorias);
 - [ ] Treinamento com professores (para feedback inicial);
-- [ ] Treinamento com alunos (para feedback final);
-- [ ] Documentação do Relatório tecnico (final);
-- [ ] Revisão de código nos repositórios GitHub para garantir a qualidade.
+- [x] Treinamento com alunos (para feedback final);
+- [x] Documentação do Relatório tecnico (final);
+- [x] Revisão de código nos repositórios GitHub para garantir a qualidade.
 
 ### Sprint 5. Operacionalização e Publicação
  ---
-- [ ] Preparação dos materiais de apresentação (slides finais);
-- [ ] Geração da versão final do aplicativo;
-- [ ] Criação do Vídeo de Funcionalidades;
+- [x] Preparação dos materiais de apresentação (slides finais);
+- [x] Geração da versão final do aplicativo;
+- [x] Criação do Vídeo de Funcionalidades;
 - [ ] Encadernamento da documentação (Relatório Técnico);
 - [ ] Revisão e atualização dos repositórios GitHub.
 
