@@ -17,7 +17,7 @@
  | 01     | 30/03/2025 | Concluído |
  | 02     | 01/07/2025 | Concluído |
  | 03     | 20/08/25   | Concluído |
- | 04     | 01/10/25   | Em andamento |
+ | 04     | 01/10/25   | Concluído |
  | 05     | 01/11/25   | A fazer |
 
  ## 📚 Índice
@@ -89,7 +89,7 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  ---
 - [x] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
 - [x] Monitoramento e ajustes (correção de bugs e melhorias);
-- [ ] Treinamento com professores (para feedback inicial);
+- [x] Treinamento com professores (para feedback inicial);
 - [x] Treinamento com alunos (para feedback final);
 - [x] Documentação do Relatório tecnico (final);
 - [x] Revisão de código nos repositórios GitHub para garantir a qualidade.
