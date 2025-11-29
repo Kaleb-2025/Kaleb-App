@@ -1,13 +1,75 @@
-import React, { useState } from 'react'; 
-import {SafeAreaView,View,Text,StyleSheet,StatusBar,TouchableOpacity,Image,} from 'react-native';
-import colors from '../constants/colors';
-import textos from '../constants/textos';
-import BarraProgresso from '../components/trilhaCursoLogica/barraProcesso';
-import TrilhaCurso from '../components/trilhaCursoLogica/trilhaCurso';
-import MateriaisCurso from '../components/trilhaCursoLogica/materiaisCurso';
+import React, { useState, useEffect } from 'react'; 
+import { View,Text,StyleSheet,StatusBar,TouchableOpacity,Image,} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import colors from '../../constants/colors';
+import textos from '../../constants/textosPython';
+import BarraProgresso from '../../components/trilhaCursoLogica/barraProcesso';
+import TrilhaCurso from '../../components/trilhaCursoPython/trilhaCurso';
+import MateriaisCurso from '../../components/trilhaCursoLogica/materiaisCurso';
+import {supabase} from '../../../App';
 
-const TelaCurso = () => {
+const TelaCursoPython = () => {
   const [abaAtiva, setAbaAtiva] = useState('trilha');
+  const navigation = useNavigation();
+  const [andamentoCurso, setAndamentoCurso] = useState([]);
+
+async function buscarProgressoCurso() {
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+  const uid = userData?.user?.id;
+
+  if (!uid) {
+    console.error('Usuário não autenticado');
+    return;
+  }
+
+  const { data: progresso, error: progError } = await supabase
+    .from('progresso_capitulo')
+    .select('idcapitulo, completou')
+    .eq('idusuario', uid);
+
+  if (progError) {
+    console.error('Erro ao buscar progresso:', progError.message);
+    return;
+  }
+
+  const capsConcluidos = progresso.filter(p => p.completou === true).length;
+  const totalCapitulos = 32;
+
+  const progressoPercentual = (capsConcluidos / totalCapitulos) * 100;
+
+  setAndamentoCurso(progressoPercentual);
+}
+    const [perfil, setPerfil] = useState(null);
+    useEffect(() => {
+    buscarDados();
+  }, []);
+
+  async function buscarDados() {
+    const { data: userInfo, error: userError } = await supabase.auth.getUser();
+
+    if (userError || !userInfo?.user?.id) {
+      console.error("Erro ao obter usuário:", userError?.message);
+      return;
+    }
+
+    const uid = userInfo.user.id;
+    const { data: perfilData, error: perfilError } = await supabase
+      .from('info_user')
+      .select('*')
+      .eq('idusuario', uid)
+      .single();
+
+    if (perfilError) {
+      console.error("Erro ao buscar info_user:", perfilError.message);
+    } else {
+      setPerfil(perfilData);
+    }
+  }
+  useEffect(() => {
+  buscarProgressoCurso();
+}, []);
+
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -16,9 +78,12 @@ const TelaCurso = () => {
       {/* Cabeçalho com seta e indicadores */}
       <View style={styles.header}>
         <View style={styles.headerRow}>
-          <TouchableOpacity style={styles.backButton}>
+          <TouchableOpacity style={styles.backButton}
+           onPress={() => navigation.navigate('Home')}
+          >
+            
             <Image
-              source={require('../assets/seta_branca.png')}
+              source={require('../../assets/seta_branca.png')}
               style={styles.setaImg}
               resizeMode="contain"
             />
@@ -26,15 +91,15 @@ const TelaCurso = () => {
 
           <View style={styles.statsRow}>
             <View style={styles.statBox}>
-              <Image source={require('../assets/estrela.png')} style={styles.icon} />
-              <Text style={styles.statText}>3598</Text>
+              <Image source={require('../../assets/estrela.png')} style={styles.icon} />
+              <Text style={styles.statText}>{perfil?.xp ?? '0'}</Text>
             </View>
             <View style={styles.statBox}>
-              <Image source={require('../assets/kaleb.png')} style={styles.icon} />
+              <Image source={require('../../assets/kaleb.png')} style={styles.icon} />
               <Text style={styles.statText}>15</Text>
             </View>
             <View style={styles.statBox}>
-              <Image source={require('../assets/curso.png')} style={styles.icon} />
+              <Image source={require('../../assets/curso.png')} style={styles.icon} />
               <Text style={styles.statText}>1</Text>
             </View>
           </View>
@@ -45,7 +110,7 @@ const TelaCurso = () => {
         {/* Logo do Python */}
         <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/logica_logo1.png')}
+            source={require('../../assets/python.png')}
             style={styles.logoImg}
             resizeMode="contain"
           />
@@ -61,7 +126,7 @@ const TelaCurso = () => {
             <Text style={styles.difficulty}>{textos.difficulty}</Text>
             <Text style={styles.duration}>{textos.duration}</Text>
           </View>
-          <BarraProgresso percent={60} size={86} strokeWidth={3} />
+          <BarraProgresso percent={andamentoCurso} size={86} strokeWidth={3} />
         </View>
       </View>
 
@@ -219,4 +284,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TelaCurso;
+export default TelaCursoPython;

@@ -79,7 +79,7 @@ const Tela8 = ({ navigation }) => {
    // SUBSTITUIR PELA HOME QUANDO ELA FOR INSERIDA AQUI
 
     next(); // ✅ Avança a contagem
-    navigation.navigate('TelaCurso'); // ✅ Vai para próxima tela
+    navigation.navigate('TelaFinal'); // ✅ Vai para próxima tela
   };
 
 
@@ -98,7 +98,9 @@ const Tela8 = ({ navigation }) => {
          *DICA: o exercício de Kaleb pedia para somar todos os números de 1 a 10.
         </Text>
 
-        <CodeExample question={question} />
+        <View style={{ alignItems: 'center'}}>
+          <CodeExample question={question} />
+        </View>
     <View style={styles.optionsContainer}>
         {options.length > 0 ? (
           options.map((option, index) => (
@@ -116,19 +118,6 @@ const Tela8 = ({ navigation }) => {
         
 
       <NextButton onPress={handleNext} />
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
-            Ao se inscrever no Kaleb você concorda com os nossos{' '}
-            <Text onPress={handleTermsPress} style={styles.link}>
-              Termos de Uso
-            </Text>{' '}
-            e{' '}
-            <Text onPress={handlePrivacyPress} style={styles.link}>
-              Política de Privacidade.
-            </Text>
-          </Text>
-        </View>
       </View>
     </ScrollView>
   );

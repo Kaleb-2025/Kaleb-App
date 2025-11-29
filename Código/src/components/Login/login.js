@@ -16,8 +16,7 @@ const LoginDados = ({ navigation }) => {
       console.error('Erro ao fazer login:', error.message);
       Alert.alert('Erro de login', error.message);
     } else {
-      console.log('Login bem-sucedido!', data);
-      navigation.navigate('TelaCurso'); // SUBSTITUIR PELA HOME QUANDO A HOME ESTIVER INSERIDA 
+      navigation.navigate('Home'); 
     }
   };
 

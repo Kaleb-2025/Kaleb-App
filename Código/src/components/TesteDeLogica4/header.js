@@ -17,7 +17,7 @@ const { progress, resetProgress } = useQuizProgress();
     <View style={styles.header}>
        <TouchableOpacity onPress={handleBackPress}>
       <Image
-            source={require('../../assets/seta.png')}
+            source={require('../../assets/seta_preta.png')}
             style={styles.backButton}
         />
       </TouchableOpacity>

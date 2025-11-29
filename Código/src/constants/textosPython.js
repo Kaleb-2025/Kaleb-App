@@ -1,9 +1,8 @@
 // Textos da tela Python
 export default {
-  courseName: 'LÓGICA DE PROGRAMAÇÃO',
+  courseName: 'Python',
   difficulty: 'Dificuldade: Iniciante',
-  duration: 'Este curso tem a duração de 16 capítulos',
-  progress: '60%',
+  duration: 'Este curso tem a duração de 32 capítulos',
   tabCourse: 'Trilha do curso',
   tabMaterials: 'Materiais',
 };

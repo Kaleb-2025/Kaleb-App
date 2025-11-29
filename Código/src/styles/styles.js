@@ -136,20 +136,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  inputContainer: {
-    borderWidth: 2,
-    borderColor: 'black',
-    borderRadius: 10,
-    padding: 10,
-    height: 150,
-    width: '90%',
-    alignSelf: 'center',
-    alignContent: 'center',
-  },
-  input: {
-    fontSize: 16,
-    color: '#374151',
-  },
+    inputContainer: {
+      borderWidth: 2,
+      borderColor: 'black',
+      borderRadius: 10,
+      padding: 10,
+      height: 150,
+      width: '90%',
+      alignSelf: 'center',
+    },
+
+    input: {
+      flex: 1, // <<< adiciona isso
+      fontSize: 16,
+      color: '#374151',
+    },
   button: {
     backgroundColor: '#FF880A',
     padding: 10,

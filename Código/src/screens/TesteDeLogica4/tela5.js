@@ -1,6 +1,7 @@
 // src/screens/Tela5.js
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, View, Text, StyleSheet } from 'react-native';
+import {ScrollView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../components/TesteDeLogica4/header';
 import CodeExample from '../../components/TesteDeLogica4/CodeExemple';
 import styles from '../../styles/styleteste';
@@ -61,8 +62,8 @@ const Tela5 = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.page}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+     <SafeAreaView style={{ flexGrow: 1, backgroundColor: '#f8faf0' }}>
+      <ScrollView  contentContainerStyle={{ backgroundColor: '#f8faf0', padding: 20 }}>
         <Header total={6} />
 
         <Text style={styles.title}>
@@ -73,7 +74,10 @@ const Tela5 = ({ navigation }) => {
           Observe as variáveis definidas abaixo e com base na análise das afirmações escolha a alternativa correta.
         </Text>
 
-        <CodeExample question={question} />
+        <View style={{ alignItems: 'center'}}>
+          <CodeExample question={question} />
+        </View>
+
 
         <Text style={styles.question}>
           I. d pode receber os valores: FALSE ou TRUE.{'\n'}
@@ -101,20 +105,7 @@ const Tela5 = ({ navigation }) => {
 
         <NextButton onPress={handleNext} />
       </ScrollView>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          Ao se inscrever no Kaleb você concorda com os nossos{' '}
-          <Text onPress={handleTermsPress} style={styles.link}>
-            Termos de Uso
-          </Text>{' '}
-          e{' '}
-          <Text onPress={handlePrivacyPress} style={styles.link}>
-            Política de Privacidade
-          </Text>.
-        </Text>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
   );
 };
 

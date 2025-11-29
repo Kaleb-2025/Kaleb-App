@@ -15,9 +15,9 @@
  | Sprint | Previsão | Status |
  | ------ | -------- | ------ |
  | 01     | 30/03/2025 | Concluído |
- | 02     | 01/07/2025 | Em progresso |
- | 03     | 20/08/25   | A fazer |
- | 04     | 01/10/25   | A fazer |
+ | 02     | 01/07/2025 | Concluído |
+ | 03     | 20/08/25   | Concluído |
+ | 04     | 01/10/25   | Concluído |
  | 05     | 01/11/25   | A fazer |
 
  ## 📚 Índice
@@ -67,10 +67,9 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
  - [x] Prototipação da aplicação (telas específicas);
  - [x] Documentação do Relatório tecnico (inicial);
  - [x] Documentação Módulos (inicial);
--  [ ] Documentação dos Matériais Complementares (inicial);
+-  [x] Documentação dos Matériais Complementares (inicial);
  - [x] Esquematização do dicionário de dados;
  - [x] Desenvolvimento do banco de dados;
- - [ ] Desenvolvimento da infraestrutura básica do chatbot (conexão com o backend);
  - [x] Criação dos repositórios GitHub;
  - [x] Primeiro commit da documentação inicial e do Readme de cada repositório.
 
@@ -80,26 +79,26 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
 - [x] Desenvolvimento das funcionalidades principais (programação do backend);
 - [x] Implementação da lógica básica de navegação;
 - [x] Documentação do Relatório tecnico (desenvolvimento);
-- [ ] Documentação Módulos (final);
-- [ ] Documentação dos Matériais Complementares (final);
-- [ ] Teste e revisão das funcionalidades desenvolvidas;
-- [ ] Atualização dos repositórios GitHub.
+- [x] Documentação Módulos (final);
+- [x] Documentação dos Matériais Complementares (final);
+- [x] Teste e revisão das funcionalidades desenvolvidas;
+- [x] Atualização dos repositórios GitHub.
 
  
 ### Sprint 4. Testes, Ajustes, Treinamento e Implementação
  ---
-- [ ] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
-- [ ] Monitoramento e ajustes (correção de bugs e melhorias);
-- [ ] Treinamento com professores (para feedback inicial);
-- [ ] Treinamento com alunos (para feedback final);
-- [ ] Documentação do Relatório tecnico (final);
-- [ ] Revisão de código nos repositórios GitHub para garantir a qualidade.
+- [x] Teste e revisão completa do aplicativo (Usabilidade, Performance e Segurança);
+- [x] Monitoramento e ajustes (correção de bugs e melhorias);
+- [x] Treinamento com professores (para feedback inicial);
+- [x] Treinamento com alunos (para feedback final);
+- [x] Documentação do Relatório tecnico (final);
+- [x] Revisão de código nos repositórios GitHub para garantir a qualidade.
 
 ### Sprint 5. Operacionalização e Publicação
  ---
-- [ ] Preparação dos materiais de apresentação (slides finais);
-- [ ] Geração da versão final do aplicativo;
-- [ ] Criação do Vídeo de Funcionalidades;
+- [x] Preparação dos materiais de apresentação (slides finais);
+- [x] Geração da versão final do aplicativo;
+- [x] Criação do Vídeo de Funcionalidades;
 - [ ] Encadernamento da documentação (Relatório Técnico);
 - [ ] Revisão e atualização dos repositórios GitHub.
 
@@ -141,7 +140,7 @@ O objetivo desse trabalho é desenvolver um aplicativo mobile para o exercício 
         <img src="https://avatars.githubusercontent.com/u/132226469?v=4" width="100px;" alt="Giovanna Clemente"/><br>
         <strong>Giovanna Clemente</strong>
       </a><br><br>
-      <a href="#" title="LinkedIn">
+      <a href="https://br.linkedin.com/in/giovanna-clemente-2a3209329/" title="LinkedIn">
         <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
       </a>
     </td>
