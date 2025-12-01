@@ -1,28 +1,18 @@
-<<<<<<< Updated upstream
 // Importações
 import React, { useRef, useEffect, useState } from 'react';
 import { Animated, Text, Dimensions, View, TouchableOpacity } from 'react-native';
-=======
-import React, { useRef, useEffect, useState } from 'react';
-import { Animated, Text, StyleSheet, Dimensions, View, Image, TouchableOpacity } from 'react-native';
->>>>>>> Stashed changes
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import { useQuizProgress } from '../../components/TesteDeLogica4/ProgressContext';
 import stylesP from '../../styles/styleCursoLogica';
-import { Audio } from 'expo-av'; 
-<<<<<<< Updated upstream
+import { Audio } from 'expo-av';
 import { supabase } from '../../../App';
-=======
-import {supabase} from '../../../App';
->>>>>>> Stashed changes
 
 export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapitulo, fechar, resetProgress }) {
   const navigation = useNavigation();
   const route = useRoute();
   const { idTela = 1 } = route.params || {};
   const { next } = useQuizProgress();
-  const [successSound, setSuccessSound] = useState();
 
   // Dimensões e animações
   const { height } = Dimensions.get('window');
@@ -39,7 +29,7 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
       console.error('Erro ao obter usuário:', userError?.message);
       return;
     }
-    
+
     const uid = userInfo.user.id;
 
     const { data: caps } = await supabase
@@ -75,13 +65,165 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
 
   // Botão Continuar
   const onPress = async () => {
-    fechar(); // fecha o modal
+    fechar();
+    const { data: userInfo, error: userError } = await supabase.auth.getUser();
+    if (userError || !userInfo?.user?.id) {
+      console.error('Erro ao obter usuário:', userError?.message);
+      return;
+    }
+
+    const uid = userInfo.user.id;
+
+    const { data: userData, error: infoError } = await supabase
+      .from('info_user')
+      .select('cursoandamento')
+      .eq('idusuario', uid)
+      .single();
+
+    if (infoError) {
+      console.error('Erro ao buscar curso atual:', infoError.message);
+      return;
+    }
+
+    const cursoAtual = userData?.cursoandamento;
+
     if (finaldoCapitulo) {
       await registrarConclusaoCapitulo(idcapitulo);
+      const { data: progresso, error: progError } = await supabase
+        .from('progresso_capitulo')
+        .select('idcapitulo')
+        .eq('idusuario', uid)
+        .eq('curso', cursoAtual);
+
+      if (progError) {
+        console.error('Erro ao buscar progresso:', progError.message);
+        return;
+      }
+
+      // Para ganhar conquista: Ovo quebrando
+      const completouMeioCap = progresso.some(cap => cap.idcapitulo === 9);
+
+      if (completouMeioCap) {
+        console.log('Verificação de Conquista: Capítulo 09 COMPLETADO.');
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log(user.id);
+        const { error: insertError } = await supabase
+          .from('conquistas_desbloqueadas')
+          .insert({
+            idusuario: user.id,
+            conquista: 1
+          })
+          .select();
+
+        if (insertError) {
+          console.error('Erro ao inserir conquista:', insertError.message);
+        } else {
+          console.log('Conquista registrada!');
+        }
+
+        // 3. Navegar para a tela de conclusão
+        navigation.navigate('TelaConquista');
+
+        // Retorna aqui para evitar a navegação padrão após o alert
+        return;
+      }
+
+      // Para ganhar conquista: Baby Kaleb e Óculos Nerd
+      if (progresso.some(cap => cap.idcapitulo === 18)) {
+        const { data: { user } } = await supabase.auth.getUser();
+
+        // Conquista Baby Kaleb 
+        await supabase.from("conquistas_desbloqueadas").insert({
+          idusuario: user.id,
+          conquista: 2
+        });
+
+        // Conquista Óculos Nerd 
+        await supabase.from("conquistas_desbloqueadas").insert({
+          idusuario: user.id,
+          conquista: 4
+        });
+
+        // Atualizar curso
+        await supabase
+          .from('info_user')
+          .update({ cursoandamento: 2 })
+          .eq('idusuario', user.id);
+
+        navigation.navigate("TelaConclusaoLogica");
+        return;
+      }
+
+      // Para ganhar conquista: Kaleb
+      const completouMeioCapPython = progresso.some(cap => cap.idcapitulo === 34); {/* Alterar o valor depois */ }
+
+      if (completouMeioCapPython) {
+        console.log('Verificação de Conquista: Capítulo 38 COMPLETADO.');
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log(user.id);
+        const { error: insertError } = await supabase
+          .from('conquistas_desbloqueadas')
+          .insert({
+            idusuario: user.id,
+            conquista: 3
+          })
+          .select();
+
+        if (insertError) {
+          console.error('Erro ao inserir conquista:', insertError.message);
+        } else {
+          console.log('Conquista registrada!');
+        }
+
+        // 3. Navegar para a tela de conclusão
+        navigation.navigate('TelaConquista')
+
+        // Retorna aqui para evitar a navegação padrão após o alert
+        return;
+      }
+
+
+      // Para ganhar conquista: Pythonete
+      const completouUltimoCapPython = progresso.some(cap => cap.idcapitulo === 50); {/* Mudar esse valor depois */ }
+
+      if (completouUltimoCapPython) {
+        console.log('Verificação de Conquista: Capítulo 50 COMPLETADO.');
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log(user.id);
+        const { error: insertError } = await supabase
+          .from('conquistas_desbloqueadas')
+          .insert({
+            idusuario: user.id,
+            conquista: 5
+          })
+          .select();
+
+        if (insertError) {
+          console.error('Erro ao inserir conquista:', insertError.message);
+        } else {
+          console.log('Conquista registrada!');
+        }
+
+        // 3. Navegar para a tela de conclusão
+        navigation.navigate('TelaConclusaoPython');
+
+        // Retorna aqui para evitar a navegação padrão após o alert
+        return;
+      }
+
       alert(`Parabéns! Você finalizou o capítulo ${idcapitulo} 🎉`);
-       resetProgress?.();
-      navigation.navigate('TelaCurso');
+      resetProgress?.();
+
+      // Senão, redireciona normalmente
+      if (cursoAtual === 1) {
+        navigation.navigate('TelaCurso');
+      } else {
+        navigation.navigate('TelaCursoPython');
+      }
+
+
     } else {
+      // Avança para a próxima tela normalmente
       next();
       navigation.push('TelaDinamica', { idTela: idTela + 1 });
     }
@@ -138,47 +280,10 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
         }),
       ]),
     ]).start();
-
-   let soundRef;
-
-  async function carregarSons() {
-    try {
-      const { sound: success } = await Audio.Sound.createAsync(
-        require('../../assets/som/xp.m4a')
-      );
-      soundRef = success;
-      setSuccessSound(success);
-    } catch (error) {
-      console.error('Erro ao carregar o som:', error);
-    }
-  }
-
-  carregarSons();
-
-  return () => {
-    if (soundRef) {
-      soundRef.unloadAsync();
-    }
-  };
-  }, [])
-
-  useEffect(() => {
-  const reproduzirSomSucesso = async () => {
-      try {
-        if (successSound) {
-          await successSound.replayAsync();
-        }
-      } catch (error) {
-        console.error('Erro ao reproduzir som de acerto:', error);
-      }
-    };
-
-    reproduzirSomSucesso();
-  }, [successSound]);
+  }, []);
 
   return (
     <View style={stylesP.greenContainer}>
-<<<<<<< Updated upstream
       {ganhouXp && (
         <Animated.View
           style={[
@@ -193,13 +298,13 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
         </Animated.View>
       )}
 
-        {/*confetes*/}
-        <ConfettiCannon
-          count={150}
-          origin={{ x: 0, y: 0 }}
-          fadeOut={true}
-          autoStart={true}
-        />
+      {/*confetes*/}
+      <ConfettiCannon
+        count={150}
+        origin={{ x: 0, y: 0 }}
+        fadeOut={true}
+        autoStart={true}
+      />
 
       <View style={stylesP.containerProgress}>
         <View style={stylesP.insideProgress}>
@@ -224,39 +329,6 @@ export default function RightAnswer({ valorXp, ganhouXp, finaldoCapitulo, idcapi
           </TouchableOpacity>
         </View>
       </View>
-=======
-    {ganhouXp && (
-      <Animated.View
-        style={[
-          stylesP.caixa,
-          {
-            transform: [{ translateY }],
-            opacity: opacity,
-          },
-        ]}
-      >
-        <Text style={stylesP.xpText}>+ {valorXp} xp</Text>
-      </Animated.View>
-    )}
-       <View style={stylesP.containerProgress}>
-          <View style={stylesP.insideProgress}>
-            <Text style={{color:'#2CDA3B', fontSize: '16', fontWeight: 'bold', textAlign: 'center'}}>Correto!</Text>
-          </View>
-          <View style={stylesP.insideProgress2}>
-            <TouchableOpacity style={stylesP.continueButton} onPress={onPress}>
-              <Text style={{color:'#FFF', fontSize: '14', fontWeight: 'bold'}}>Continuar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
->>>>>>> Stashed changes
     </View>
   );
 }
-      // <View style={stylesP.containerKaleb2}>
-      //   <View style={stylesP.kalebContainer2}>
-      //     <Image
-      //       source={{ uri: 'https://rsggftidydvuzvmealpg.supabase.co/storage/v1/object/public/kaleb-image//image%203.png' }}
-      //       style={stylesP.kalebImagem2}
-      //     />
-      //   </View>
-      // </View>

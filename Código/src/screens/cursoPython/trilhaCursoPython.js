@@ -1,47 +1,48 @@
-import React, { useState, useEffect } from 'react'; 
-import { View,Text,StyleSheet,StatusBar,TouchableOpacity,Image,} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Image, } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../constants/colors';
 import textos from '../../constants/textosPython';
 import BarraProgresso from '../../components/trilhaCursoLogica/barraProcesso';
 import TrilhaCurso from '../../components/trilhaCursoPython/trilhaCurso';
-import MateriaisCurso from '../../components/trilhaCursoLogica/materiaisCurso';
-import {supabase} from '../../../App';
+import MateriaisCursoPython from '../../components/trilhaCursoPython/materiaisCurso';
+import { supabase } from '../../../App';
 
 const TelaCursoPython = () => {
   const [abaAtiva, setAbaAtiva] = useState('trilha');
   const navigation = useNavigation();
   const [andamentoCurso, setAndamentoCurso] = useState([]);
 
-async function buscarProgressoCurso() {
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-  const uid = userData?.user?.id;
+  async function buscarProgressoCurso() {
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    const uid = userData?.user?.id;
 
-  if (!uid) {
-    console.error('Usuário não autenticado');
-    return;
+    if (!uid) {
+      console.error('Usuário não autenticado');
+      return;
+    }
+
+    const { data: progresso, error: progError } = await supabase
+      .from('progresso_capitulo')
+      .select('idcapitulo, completou')
+      .eq('idusuario', uid)
+      .eq('curso', 2);
+
+    if (progError) {
+      console.error('Erro ao buscar progresso:', progError.message);
+      return;
+    }
+
+    const capsConcluidos = progresso.filter(p => p.completou === true).length;
+    const totalCapitulos = 32;
+
+    const progressoPercentual = parseFloat(((capsConcluidos / totalCapitulos) * 100).toFixed(1));
+
+    setAndamentoCurso(progressoPercentual);
   }
-
-  const { data: progresso, error: progError } = await supabase
-    .from('progresso_capitulo')
-    .select('idcapitulo, completou')
-    .eq('idusuario', uid);
-
-  if (progError) {
-    console.error('Erro ao buscar progresso:', progError.message);
-    return;
-  }
-
-  const capsConcluidos = progresso.filter(p => p.completou === true).length;
-  const totalCapitulos = 32;
-
-  const progressoPercentual = (capsConcluidos / totalCapitulos) * 100;
-
-  setAndamentoCurso(progressoPercentual);
-}
-    const [perfil, setPerfil] = useState(null);
-    useEffect(() => {
+  const [perfil, setPerfil] = useState(null);
+  useEffect(() => {
     buscarDados();
   }, []);
 
@@ -67,8 +68,41 @@ async function buscarProgressoCurso() {
     }
   }
   useEffect(() => {
-  buscarProgressoCurso();
-}, []);
+    buscarProgressoCurso();
+  }, []);
+  const [presenca, setPresenca] = useState("");
+  useEffect(() => {
+    const buscarPresenca = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from("progresso_capitulo")
+        .select("data_completado")
+        .eq("idusuario", user.id)
+        .order("data_completado", { ascending: false })
+        .limit(1);
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      if (data && data.length > 0) {
+        const ultimaData = new Date(data[0].data_completado);
+        setPresenca(formatarDiaSemana(ultimaData));
+      } else {
+        setPresenca(0);
+      }
+    };
+
+    buscarPresenca();
+  }, []);
+
+  const formatarDiaSemana = (data) => {
+    const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+    return dias[data.getDay()];
+  };
 
 
   return (
@@ -79,9 +113,9 @@ async function buscarProgressoCurso() {
       <View style={styles.header}>
         <View style={styles.headerRow}>
           <TouchableOpacity style={styles.backButton}
-           onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.goBack()}
           >
-            
+
             <Image
               source={require('../../assets/seta_branca.png')}
               style={styles.setaImg}
@@ -96,11 +130,11 @@ async function buscarProgressoCurso() {
             </View>
             <View style={styles.statBox}>
               <Image source={require('../../assets/kaleb.png')} style={styles.icon} />
-              <Text style={styles.statText}>15</Text>
+              <Text style={styles.statText}>{presenca}</Text>
             </View>
             <View style={styles.statBox}>
               <Image source={require('../../assets/curso.png')} style={styles.icon} />
-              <Text style={styles.statText}>1</Text>
+              <Text style={styles.statText}>{perfil?.cursoandamento === 1 ? 'Lógica' : 'Python'}</Text>
             </View>
           </View>
 
@@ -122,7 +156,7 @@ async function buscarProgressoCurso() {
         {/* Textos + Barra de progresso */}
         <View style={styles.progressRow}>
           <View style={styles.progressTextGroup}>
-            <Text style={styles.courseName}>{textos.courseName}</Text>
+            <Text style={styles.courseName}>{textos.courseName ? textos.courseName.toUpperCase() : ''}</Text>
             <Text style={styles.difficulty}>{textos.difficulty}</Text>
             <Text style={styles.duration}>{textos.duration}</Text>
           </View>
@@ -157,7 +191,7 @@ async function buscarProgressoCurso() {
 
       {/* Conteúdo */}
       <View style={styles.areaConteudo}>
-        {abaAtiva === 'trilha' ? <TrilhaCurso /> : <MateriaisCurso />}
+        {abaAtiva === 'trilha' ? <TrilhaCurso /> : <MateriaisCursoPython />}
       </View>
     </SafeAreaView>
   );
@@ -230,7 +264,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
     letterSpacing: 2,
-    marginBottom:15,
+    marginBottom: 15,
   },
   progressRow: {
     flexDirection: 'row',
